@@ -6,9 +6,7 @@
     <title>手机应用界面</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 新增：引入 Remix Icon 图标库 -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- 引入 Inter 字体作为英文字体备用 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* 基础字体样式 */
@@ -43,14 +41,12 @@
             box-shadow: none;
         }
 
-        /* --- 修改开始：为App图标添加毛玻璃质感 --- */
         .app-icon-glass {
             background: rgba(55, 65, 81, 0.5); /* bg-gray-600 with 50% opacity */
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* --- 修改结束 --- */
         
         /* 訊息提示框樣式 */
         .message-box {
@@ -99,16 +95,13 @@
             display: none;
         }
         
-        /* 長方形背景的默認樣式 */
         .music-block-background {
             background-image: url('https://placehold.co/400x150/1a1a1a/ffffff?text=UPLOAD+BACKGROUND');
-            /* 圖片自動裁剪，以完全覆蓋容器 */
             background-size: cover;
             background-position: center;
             cursor: pointer;
         }
         
-        /* 黑膠唱片容器的樣式 */
         .vinyl-container {
             position: relative;
             width: 100%;
@@ -116,7 +109,7 @@
             padding-bottom: 100%;
             border-radius: 50%;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.7); /* 加深背景色 */
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -124,7 +117,6 @@
             cursor: pointer;
         }
         
-        /* 唱片專輯圖的容器 */
         .vinyl-image-container {
             position: absolute;
             inset: 0;
@@ -135,13 +127,11 @@
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             background-image: url('https://placehold.co/100x100/000000/ffffff?text=UPLOAD');
-            /* 圖片自動裁剪，以完全覆蓋容器 */
             background-size: cover;
             background-position: center;
             cursor: pointer;
         }
         
-        /* 唱片中心的小圓標 */
         .vinyl-center {
             position: absolute;
             inset: 0;
@@ -152,7 +142,6 @@
             border-radius: 50%;
         }
 
-        /* 弹窗通用样式 */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -219,20 +208,17 @@
             padding-left: 0.75rem;
         }
         .delete-button.pending-delete {
-            color: #ef4444; /* 紅色 */
+            color: #ef4444;
         }
 
-        /* 播放控制按鈕 */
         .player-button {
             transition: color 0.2s;
         }
 
-        /* 單曲循環按鈕啟用時的顏色 */
         .loop-button.active, .single-loop-button.active {
             color: #ffffff;
         }
         
-        /* 新增的小組件樣式 */
         .text-widget-input {
             width: 100%;
             background: transparent;
@@ -241,7 +227,6 @@
             padding: 0.25rem 0;
         }
         
-        /* 新增：文字輸入小組件中的圖片佔位符 */
         .image-placeholder {
             background-color: rgba(255, 255, 255, 0.2);
             background-size: cover;
@@ -252,13 +237,10 @@
             justify-content: center;
         }
         
-        /* ========================================================= */
         /* 日夜间模式样式 */
-        /* ========================================================= */
-        /* 夜间模式 */
         .dark-mode {
-            background-color: #333333; /* 深灰色背景 */
-            color: #ffffff; /* 白色字体 */
+            background-color: #333333;
+            color: #ffffff;
         }
         .dark-mode .phone-frame { background-color: #1a1a1a; }
         .dark-mode .phone-screen { background-color: transparent; }
@@ -273,7 +255,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .dark-mode .app-screen-view:not(#home-screen):not(#wechat-chat-screen) { background-color: #1a1a1a; }
-        .dark-mode #wechat-chat-screen { background-color: #1a1a1a; } /* Set a base color */
+        .dark-mode #wechat-chat-screen { background-color: #1a1a1a; }
         .dark-mode .app-header { background-color: #1a1a1a; border-color: rgba(255, 255, 255, 0.15); }
         .dark-mode .wechat-tab-bar { background-color: #2c2c2c; border-color: #4a4a4a; }
         .dark-mode .image-placeholder { background-color: rgba(255, 255, 255, 0.2); }
@@ -282,10 +264,9 @@
         .dark-mode .wechat-list-item { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         .dark-mode .wechat-list-item:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dark-mode .api-status-on { color: #ffffff; }
-        .dark-mode .chat-input-btn { color: #d1d5db; } /* 修复：夜间模式按钮颜色 */
+        .dark-mode .chat-input-btn { color: #d1d5db; }
         .dark-mode .chat-system-message { background-color: rgba(255, 255, 255, 0.1); }
         
-        /* 白天模式 */
         .light-mode { background-color: #f0f2f5; color: #1f2937; }
         .light-mode .phone-frame { background-color: #1a1a1a; }
         .light-mode .phone-screen { background-color: transparent; }
@@ -303,7 +284,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .light-mode .app-screen-view:not(#home-screen):not(#wechat-chat-screen) { background-color: #f0f2f5; }
-        .light-mode #wechat-chat-screen { background-color: #f0f2f5; } /* Set a base color */
+        .light-mode #wechat-chat-screen { background-color: #f0f2f5; }
         .light-mode .app-header { background-color: #ffffff; border-color: rgba(0, 0, 0, 0.1); }
         .light-mode .wechat-tab-bar { background-color: #ffffff; border-color: #e5e7eb; }
         .light-mode .image-placeholder { background-color: rgba(0, 0, 0, 0.1); }
@@ -312,40 +293,34 @@
         .light-mode .wechat-list-item { border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
         .light-mode .wechat-list-item:hover { background-color: rgba(0, 0, 0, 0.05); }
         .light-mode .api-status-on { color: #1f2937; }
-        .light-mode .chat-input-btn { color: #4b5563; } /* 修复：白天模式按钮颜色 */
+        .light-mode .chat-input-btn { color: #4b5563; }
         .light-mode .chat-system-message { background-color: rgba(0, 0, 0, 0.1); }
 
-        /* ========================================================= */
-        /* 聊天界面样式更新 (布局修复) */
-        /* ========================================================= */
-        /* --- 修改开始：减小聊天窗口顶部间距 --- */
+        /* 聊天界面样式 */
         #wechat-content-chat {
             padding-top: 0.5rem;
         }
         #wechat-content-chat .chat-message-wrapper.new-sender:first-child {
             margin-top: 0.5rem;
         }
-        /* --- 修改结束 --- */
         .chat-message-wrapper {
             display: flex;
-            align-items: flex-start; /* 修改：垂直顶部对齐 */
+            align-items: flex-start;
             width: 100%;
-            position: relative; /* 为菜单定位提供上下文 */
+            position: relative;
         }
         .chat-message-wrapper.sent {
-            justify-content: flex-end; /* 用户消息靠右 */
+            justify-content: flex-end;
         }
         .chat-message-wrapper.received {
-            justify-content: flex-start; /* AI消息靠左 */
+            justify-content: flex-start;
         }
-
         .chat-message-wrapper + .chat-message-wrapper {
             margin-top: 0.25rem; 
         }
         .chat-message-wrapper.new-sender {
             margin-top: 1rem;
         }
-        
         .chat-avatar {
             width: 44px;
             height: 44px;
@@ -360,7 +335,6 @@
             align-items: center;
             justify-content: center;
         }
-        
         .chat-avatar i {
             font-size: 22px;
             color: rgba(255, 255, 255, 0.8);
@@ -368,17 +342,15 @@
         .light-mode .chat-avatar i {
              color: rgba(0, 0, 0, 0.6);
         }
-
         .chat-message-content {
             display: flex;
             flex-direction: column;
             min-width: 0;
-            margin: 0 0.5rem; /* 气泡与头像/时间戳的间距 */
-            max-width: 75%; /* 修改：限制气泡最大宽度 */
+            margin: 0 0.5rem;
+            max-width: 75%;
         }
         .chat-message-wrapper.sent .chat-message-content { align-items: flex-end; }
         .chat-message-wrapper.received .chat-message-content { align-items: flex-start; }
-
         .chat-message {
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -390,9 +362,8 @@
             width: -moz-fit-content;
             width: fit-content;
             max-width: 100%; 
-            cursor: pointer; /* 新增：为点击菜单做准备 */
+            cursor: pointer;
         }
-        /* 新增：图片消息样式 */
         .chat-message.image-message {
             padding: 0.25rem;
             background-color: transparent !important;
@@ -405,11 +376,10 @@
             border-radius: 1rem;
             display: block;
         }
-        /* 新增：语音消息样式 */
         .chat-message.voice-message {
             display: flex;
-            flex-direction: column; /* 修复：改为垂直布局 */
-            align-items: flex-start; /* 修复：内容靠左/右 */
+            flex-direction: column;
+            align-items: flex-start;
         }
         .voice-main {
             display: flex;
@@ -428,15 +398,12 @@
             margin-top: 0.5rem;
             border-top: 1px solid rgba(128, 128, 128, 0.2);
             font-size: 0.9em;
-            display: none; /* 默认隐藏 */
+            display: none;
         }
-        
-        /* 修改：字体大小继承 */
         .chat-message p, .chat-message i {
             font-size: inherit;
             line-height: 1.5;
         }
-
         .chat-message::before {
             content: '';
             position: absolute;
@@ -452,7 +419,6 @@
         .chat-message.image-message::before, .chat-message.voice-message::before {
             display: none;
         }
-
         .chat-message::after {
             content: '';
             position: absolute;
@@ -473,43 +439,37 @@
         .chat-message.received::after {
             left: -6px;
         }
-
         .message-meta {
             font-size: 0.65rem;
             color: #9ca3af;
             display: flex;
-            flex-direction: column; /* 时间和已读垂直排列 */
+            flex-direction: column;
             flex-shrink: 0;
-            margin-bottom: 5px; /* 与气泡底部对齐 */
+            margin-bottom: 5px;
             white-space: nowrap;
-            align-self: flex-end; /* 修改：让时间戳始终在底部 */
+            align-self: flex-end;
         }
         .chat-message-wrapper.sent .message-meta {
-            align-items: flex-end; /* 用户时间戳文字靠右对齐 */
+            align-items: flex-end;
         }
         .chat-message-wrapper.received .message-meta {
-            align-items: flex-start; /* AI时间戳文字靠左对齐 */
+            align-items: flex-start;
         }
-
         .message-read-status {
-            margin-left: 0; /* 移除左边距 */
+            margin-left: 0;
             display: none;
         }
         .message-read-status.visible {
             display: inline;
         }
-
         .dark-mode .chat-message { border: 1px solid rgba(255, 255, 255, 0.1); }
         .light-mode .chat-message { border: 1px solid rgba(0, 0, 0, 0.05); }
         .dark-mode .chat-message.sent { background-color: rgba(219, 39, 119, 0.3); }
         .dark-mode .chat-message.received { background-color: rgba(74, 74, 74, 0.3); }
         .light-mode .chat-message.sent { background-color: rgba(249, 168, 212, 0.4); }
         .light-mode .chat-message.received { background-color: rgba(229, 231, 250, 0.6); }
-        
         .dark-mode .chat-message.sent.image-message, .light-mode .chat-message.sent.image-message { border: 2px solid rgba(249, 168, 212, 0.6); }
         .dark-mode .chat-message.received.image-message, .light-mode .chat-message.received.image-message { border: 2px solid rgba(229, 231, 250, 0.8); }
-
-        /* 新增：系统消息样式 */
         .chat-system-message {
             background-color: rgba(128, 128, 128, 0.2);
             color: #d1d5db;
@@ -522,7 +482,6 @@
         .light-mode .chat-system-message {
             color: #4b5563;
         }
-
         .chat-input-bar {
             background-color: transparent;
             border-top-width: 1px;
@@ -530,27 +489,22 @@
         }
         .dark-mode .chat-input-bar { border-color: rgba(255, 255, 255, 0.1); }
         .light-mode .chat-input-bar { border-color: rgba(0, 0, 0, 0.1); }
-
-        /* 修改: 文本输入框样式 */
         #chat-input {
             border: 1px solid transparent;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
             transition: background-color 0.3s, box-shadow 0.3s, height 0.2s ease-in-out;
-            resize: none; /* 禁止用户手动调整大小 */
-            overflow-y: auto; /* 内容超出时显示滚动条 */
-            line-height: 1.5; /* 确保行高一致 */
+            resize: none;
+            overflow-y: auto;
+            line-height: 1.5;
         }
         .dark-mode #chat-input { background-color: rgba(31, 41, 55, 0.8); color: #ffffff; }
         .light-mode #chat-input { background-color: rgba(243, 244, 246, 0.8); color: #1f2937; }
-
         .status-bar.transparent-override {
             background-color: transparent !important;
         }
-        
         #wechat-chat-screen.has-custom-bg {
             background-color: transparent !important;
         }
-
         #wechat-chat-screen.has-custom-bg .app-header,
         #wechat-chat-screen.has-custom-bg .chat-input-bar,
         #wechat-chat-screen.has-custom-bg #chat-quick-actions-bar {
@@ -571,20 +525,17 @@
             display: none;
         }
         
-        /* ========================================================= */
-        /* 气泡菜单样式 (已根据要求修改) */
-        /* ========================================================= */
         .bubble-context-menu {
             position: absolute;
             background: rgba(20, 20, 20, 0.9);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 2rem;
-            padding: 2px 4px; /* 调整内边距，使其更紧凑 */
+            padding: 2px 4px;
             display: none;
             flex-direction: row;
             align-items: center;
-            z-index: 10; /* 现在只需要比气泡高即可 */
+            z-index: 10;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transform: translateY(5px) scale(0.95);
@@ -602,9 +553,9 @@
             background: none;
             border: none;
             color: #f0f0f0;
-            padding: 0.25rem 0.5rem; /* 减小按钮内边距 */
+            padding: 0.25rem 0.5rem;
             cursor: pointer;
-            font-size: 11px; /* 减小字体 */
+            font-size: 11px;
             border-radius: 2rem;
             transition: background-color 0.2s;
             white-space: nowrap;
@@ -619,12 +570,10 @@
             cursor: not-allowed;
         }
         .bubble-menu-button i {
-            font-size: 12px; /* 减小图标大小 */
-            margin-right: 3px; /* 减小图标与文字间距 */
+            font-size: 12px;
+            margin-right: 3px;
         }
-        /* ========================================================= */
         
-        /* 多选模式样式 */
         .chat-message-wrapper.selected .chat-message {
             background-color: rgba(59, 130, 246, 0.4) !important;
             border-color: rgba(96, 165, 250, 0.8) !important;
@@ -634,7 +583,6 @@
         }
 
 
-        /* 颜色选择器样式 */
         .color-picker-input {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -659,7 +607,6 @@
             border-radius: 50%;
         }
 
-        /* 修复：标题栏样式 */
         .app-header { 
             display: flex; 
             align-items: center; 
@@ -670,7 +617,7 @@
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             transition: background-color 0.3s, border-color 0.3s;
-            flex-shrink: 0; /* 确保header不被压缩 */
+            flex-shrink: 0;
             z-index: 10;
         }
         .light-mode .app-header {
@@ -684,14 +631,11 @@
             top: 2px;
         }
         .app-header-title.clickable { cursor: pointer; }
-        /* --- 修改开始：按钮颜色 --- */
         .app-header-btn.text-pink-500 {
-            color: #d1d5db; /* text-gray-300 */
+            color: #d1d5db;
         }
-        /* --- 修改结束 --- */
         .app-header-btn { font-size: 1.25em; }
 
-        /* 通用列表項樣式 */
         .list-item {
             padding: 1rem;
             cursor: pointer;
@@ -735,10 +679,8 @@
         .wb-checkbox-label:hover { background-color: rgba(255, 255, 255, 0.1); }
         .wb-checkbox-label input { margin-right: 0.75rem; }
 
-        /* 微信導航欄 */
         .wechat-tab-bar { display: flex; border-top-width: 1px; }
         .wechat-tab-item { flex: 1; text-align: center; padding: 0.5rem 0; cursor: pointer; color: #9ca3af; }
-        /* --- 修改开始：修复日夜间模式下微信菜单激活颜色 --- */
         .wechat-tab-item.active {
             font-weight: 600;
         }
@@ -746,13 +688,11 @@
             color: #ffffff;
         }
         .light-mode .wechat-tab-item.active {
-            color: #1f2937; /* Dark text color for light mode */
+            color: #1f2937;
         }
-        /* --- 修改结束 --- */
         .wechat-tab-item i { font-size: 1.25em; }
         .wechat-tab-item span { display: block; font-size: 0.75em; }
 
-        /* 微信會話列表項 */
         .wechat-list-item {
             display: flex;
             align-items: center;
@@ -770,10 +710,9 @@
             cursor: pointer;
         }
 
-        /* 修复：应用页面布局 */
         .app-screen-view { 
             height: 100%;
-            padding-top: 3rem; /* 为状态栏留出空间 */
+            padding-top: 3rem;
         }
 
 
@@ -797,17 +736,14 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            z-index: -1; /* 确保在最底层 */
+            z-index: -1;
         }
         
-        /* ========================================================= */
-        /* 新增：聊天输入区 & 功能面板样式 (已优化) */
-        /* ========================================================= */
         #chat-quick-actions-bar {
             background: transparent;
             padding: 0.25rem 1rem;
             display: flex;
-            justify-content: flex-start; /* 改为居左 */
+            justify-content: flex-start;
             gap: 1rem;
         }
         .quick-action-btn {
@@ -824,15 +760,15 @@
         }
 
         #chat-input-bar {
-            padding: 0.5rem 0.25rem; /* 减小垂直内边距 */
+            padding: 0.5rem 0.25rem;
         }
         #chat-input-bar .chat-input-btn {
-            font-size: 1.25rem; /* 调小图标 */
-            padding: 0.5rem; /* 统一padding */
-            flex-shrink: 0; /* 防止被压缩 */
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            flex-shrink: 0;
         }
         #emoji-btn {
-            margin-left: -0.25rem; /* 减小与+号的间距 */
+            margin-left: -0.25rem;
         }
 
         #more-features-panel {
@@ -884,9 +820,6 @@
             opacity: 0.8;
         }
 
-        /* ========================================================= */
-        /* 新增: 通话界面样式 (已修复) */
-        /* ========================================================= */
         .call-screen {
             position: absolute;
             inset: 0;
@@ -908,9 +841,7 @@
             inset: 0;
             background-size: cover;
             background-position: center;
-            /* --- 修改开始：减弱视频通话背景模糊 --- */
             filter: blur(4px) brightness(0.6);
-            /* --- 修改结束 --- */
             transform: scale(1.1);
         }
         .call-content {
@@ -919,7 +850,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            padding: 3.5rem 1rem 1rem; /* 修复：调整顶部内边距以避开状态栏 */
+            padding: 3.5rem 1rem 1rem;
         }
         #voice-call-avatar {
             width: 150px;
@@ -928,11 +859,11 @@
             border: 4px solid rgba(255,255,255,0.5);
             object-fit: cover;
             box-shadow: 0 0 30px rgba(255,255,255,0.3);
-            margin-top: 2rem; /* 增加一点顶部间距 */
+            margin-top: 2rem;
         }
         #user-video-preview {
             position: absolute;
-            top: 3.5rem; /* 修复：调整位置以避开状态栏 */
+            top: 3.5rem;
             right: 1rem;
             width: 90px;
             height: 120px;
@@ -980,9 +911,8 @@
             color: white;
             resize: none;
         }
-        /* --- 修改开始：按钮颜色 --- */
         .call-input-area button {
-            background-color: #374151; /* bg-gray-700 */
+            background-color: #374151;
             border-radius: 50%;
             width: 44px;
             height: 44px;
@@ -990,9 +920,8 @@
             transition: background-color 0.2s;
         }
         .call-input-area button:hover {
-            background-color: #4b5563; /* bg-gray-600 */
+            background-color: #4b5563;
         }
-        /* --- 修改结束 --- */
         .call-controls {
             display: flex;
             justify-content: center;
@@ -1010,9 +939,6 @@
         }
         .hangup-btn { background-color: #ef4444; }
 
-        /* ========================================================= */
-        /* 新增: 来电提醒样式 */
-        /* ========================================================= */
         #incoming-call-alert {
             position: absolute;
             top: 3.5rem;
@@ -1062,25 +988,17 @@
     <input type="file" id="import-data-input" class="hidden" accept=".json">
     <input type="file" id="image-upload-input" class="hidden" accept="image/*">
     <input type="file" id="user-video-image-input" class="hidden" accept="image/*">
-    <!-- --- 修改开始：为“我的视频照片”添加独立的文件输入框 --- -->
     <input type="file" id="my-video-image-input" class="hidden" accept="image/*">
-    <!-- --- 修改结束 --- -->
-
-    <!-- 手机外框 -->
     <div class="phone-frame relative w-full max-w-[375px] h-[720px] rounded-[3rem] p-2 shadow-2xl flex flex-col overflow-hidden transform transition-all duration-300">
         
-        <!-- 容器：用於切換主畫面和應用程式畫面 -->
         <div id="phone-screen" class="phone-screen flex-1 rounded-[2.5rem] overflow-hidden relative animate-fade-in">
             
             <div id="home-wallpaper" class="absolute inset-0 w-full h-full bg-cover bg-center z-0"></div>
 
-            <!-- 狀態列 (現在始終位於最上方) -->
             <div id="status-bar" class="status-bar absolute top-0 left-0 right-0 z-50 px-5 py-3 text-sm font-semibold flex justify-between items-center transition-colors">
-                <!-- 左側：時間 -->
                 <div class="flex items-center space-x-2">
                     <span id="currentTime">12:45</span>
                 </div>
-                <!-- 右側：API狀態和模式切換 -->
                 <div class="flex items-center space-x-4">
                     <span id="api-status-text" class="text-red-500">API OFF</span>
                     <button id="theme-toggle" class="p-1 rounded-full hover:bg-white/20 transition-colors">
@@ -1089,10 +1007,8 @@
                 </div>
             </div>
 
-            <!-- 訊息提示框 -->
             <div id="messageBox" class="message-box"></div>
             
-            <!-- 弹窗们 -->
             <div id="song-list-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
@@ -1102,8 +1018,7 @@
                         </button>
                     </div>
                     <ul id="song-list-container" class="space-y-2 max-h-60 overflow-y-auto">
-                        <!-- 歌曲项目会在这里动态插入 -->
-                    </ul>
+                        </ul>
                 </div>
             </div>
             <div id="new-chat-modal" class="modal-overlay">
@@ -1115,12 +1030,10 @@
                         </button>
                     </div>
                     <ul id="new-chat-character-list" class="space-y-2 max-h-60 overflow-y-auto">
-                        <!-- 角色列表会在这里动态插入 -->
-                    </ul>
+                        </ul>
                 </div>
             </div>
-             <!-- 确认删除弹窗 -->
-            <div id="confirm-delete-modal" class="modal-overlay">
+             <div id="confirm-delete-modal" class="modal-overlay">
                 <div class="modal-content text-center text-white">
                     <h3 id="delete-modal-title" class="text-lg font-bold mb-4">确认删除吗？</h3>
                     <p id="delete-modal-text" class="text-sm mb-6">此操作无法撤销。</p>
@@ -1130,24 +1043,19 @@
                     </div>
                 </div>
             </div>
-            <!-- 新增：语音输入弹窗 -->
             <div id="voice-input-modal" class="modal-overlay">
                 <div class="modal-content">
                     <h3 class="text-lg font-bold mb-4 text-center">发送语音消息</h3>
                     <textarea id="voice-text-input" class="form-textarea w-full h-24 resize-none" placeholder="在此输入文字..."></textarea>
                     <div class="flex justify-end mt-4 gap-2">
                         <button id="cancel-voice-btn" class="px-4 py-2 rounded-lg">取消</button>
-                        <!-- --- 修改开始：按钮颜色 --- -->
                         <button id="send-voice-btn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">发送</button>
-                        <!-- --- 修改结束 --- -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
 
-            <!-- 主畫面 -->
             <div id="home-screen" class="app-screen-view relative">
-                <!-- 網易雲音樂風格組件 -->
                 <div id="music-block-container" class="p-2 mt-2">
                     <div id="music-block" class="music-block relative w-full p-3 rounded-2xl flex items-center justify-between shadow-xl music-block-background">
                         <div class="relative w-1/2 flex-shrink-0 flex items-center justify-center">
@@ -1163,9 +1071,7 @@
                         <div class="flex-grow flex flex-col justify-center h-24 ml-4">
                             <textarea id="mood-text" class="w-full bg-transparent placeholder-gray-300 text-sm p-1 rounded-md resize-none border-none outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/10 transition-all text-center" placeholder="点击填写心情..."></textarea>
                             <div class="flex items-center justify-center space-x-3 mt-2">
-                                <!-- --- 修改开始：修复重播键图标 --- -->
                                 <button id="loop-button" class="player-button"><i class="fas fa-rotate-right text-base"></i></button>
-                                <!-- --- 修改结束 --- -->
                                 <button id="prev-button" class="player-button"><i class="fas fa-step-backward text-base"></i></button>
                                 <button id="play-pause-button" class="player-button"><i class="fas fa-play text-xl"></i></button>
                                 <button id="next-button" class="player-button"><i class="fas fa-step-forward text-base"></i></button>
@@ -1199,22 +1105,16 @@
                     </div>
                 </div>
                 
-                <!-- Home Screen Apps -->
                 <div class="px-4 grid grid-cols-2 gap-4 mt-4">
-                    <!-- Left side spacer -->
                     <div></div> 
-                    <!-- Right side 2x2 grid -->
                     <div class="grid grid-cols-2 gap-4">
-                        <!-- --- 修改开始：修改App图标样式 --- -->
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 1"><i class="fas fa-question text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="设置"><i class="fas fa-cog text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 2"><i class="fas fa-question text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 3"><i class="fas fa-question text-white text-2xl"></i></div>
-                        <!-- --- 修改结束 --- -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Dock: 3 icons -->
                 <div class="dock absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[340px] h-18 rounded-3xl p-2 flex items-center justify-around shadow-xl">
                     <div class="flex flex-col items-center"><div class="w-14 h-14 bg-zinc-800 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="世界书"><i class="fas fa-book text-white text-2xl"></i></div></div>
                     <div class="flex flex-col items-center"><div class="w-14 h-14 bg-zinc-800 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="角色书"><i class="fas fa-theater-masks text-white text-2xl"></i></div></div>
@@ -1222,7 +1122,6 @@
                 </div>
             </div>
 
-            <!-- NEW: 微信會話列表 -->
             <div id="wechat-list-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="wechat-list-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1230,10 +1129,8 @@
                     <button id="wechat-new-chat-button" class="app-header-btn"><i class="fas fa-plus"></i></button>
                 </div>
                 <div id="wechat-list-container" class="flex-1 overflow-y-auto">
-                    <!-- 會話列表項將在這裡動態生成 -->
-                </div>
-                 <!-- 底部導航欄 -->
-                <div class="wechat-tab-bar">
+                    </div>
+                 <div class="wechat-tab-bar">
                     <div class="wechat-tab-item active" data-tab="chat">
                         <i class="ri-chat-heart-line"></i>
                         <span>聊天</span>
@@ -1253,24 +1150,20 @@
                 </div>
             </div>
 
-            <!-- 微信聊天界面 -->
             <div id="wechat-chat-screen" class="app-screen-view flex-col hidden">
                 <div class="chat-background"></div>
                 <div class="app-header">
-                    <!-- Normal Header Content -->
                     <div id="chat-header-normal" class="flex items-center justify-between w-full">
                         <button id="wechat-chat-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                         <h3 id="wechat-contact-name" class="app-header-title"></h3>
                         <button id="wechat-options-button" class="app-header-btn"><i class="fas fa-ellipsis-h"></i></button>
                     </div>
-                    <!-- Multiselect Header Content -->
                     <div id="chat-header-multiselect" class="hidden items-center justify-between w-full text-sm">
                         <button id="cancel-multiselect-btn" class="font-semibold px-2 py-1">取消</button>
                         <span id="multiselect-count" class="font-bold">已选择 0 项</span>
                         <button id="confirm-multiselect-btn" class="font-semibold text-red-500 px-2 py-1">删除</button>
                     </div>
                 </div>
-                <!-- 菜单的HTML结构现在只是一个模板，会被JS复制 -->
                 <template id="bubble-menu-template">
                     <div class="bubble-context-menu">
                         <button data-action="delete" class="bubble-menu-button"><i class="fas fa-trash"></i><span>删除</span></button>
@@ -1280,7 +1173,6 @@
                         <button data-action="retry" class="bubble-menu-button"><i class="fas fa-sync-alt"></i><span>重生成</span></button>
                     </div>
                 </template>
-                <!-- 新增：来电提醒UI -->
                 <div id="incoming-call-alert">
                     <img id="incoming-call-avatar" src="https://placehold.co/96x96/777/FFF?text=?" alt="avatar">
                     <div id="incoming-call-info">
@@ -1290,21 +1182,16 @@
                     <button id="answer-call-btn" class="call-btn"><i class="ri-phone-fill"></i></button>
                     <button id="decline-call-btn" class="call-btn"><i class="ri-phone-fill rotate-135"></i></button>
                 </div>
-                <!-- 內容區域 -->
                 <div id="wechat-content-chat" class="flex-1 overflow-y-auto p-4 space-y-1">
-                    <!-- 聊天消息 -->
-                </div>
+                    </div>
                 
-                <!-- 新增: 快捷通话按钮栏 -->
                 <div id="chat-quick-actions-bar">
                     <button id="quick-voice-message-btn" class="quick-action-btn"><i class="ri-mic-line"></i></button>
                     <button id="quick-voice-call-btn" class="quick-action-btn"><i class="ri-phone-line"></i></button>
                     <button id="quick-video-call-btn" class="quick-action-btn"><i class="ri-vidicon-line"></i></button>
                 </div>
 
-                <!-- 底部交互区 -->
                 <div id="chat-footer">
-                    <!-- 输入区域 -->
                     <div id="chat-input-bar" class="chat-input-bar flex items-center p-2">
                         <button id="add-feature-btn" class="chat-input-btn"><i class="ri-add-circle-line"></i></button>
                         <button id="emoji-btn" class="chat-input-btn"><i class="ri-emotion-happy-line"></i></button>
@@ -1313,7 +1200,6 @@
                         <button id="receive-chat-button" class="chat-input-btn"><i class="fas fa-circle-notch"></i></button>
                     </div>
 
-                    <!-- 新增: "更多功能" 面板 -->
                     <div id="more-features-panel" class="hidden">
                         <div class="features-grid">
                             <div id="send-image-btn" class="feature-item">
@@ -1333,7 +1219,6 @@
                 </div>
             </div>
             
-            <!-- NEW: 微信聊天设置页面 -->
             <div id="wechat-options-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="wechat-options-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1343,7 +1228,6 @@
                 <div class="flex-1 p-2 overflow-y-auto space-y-2">
                     <div id="pin-chat-option" class="list-item">置顶对话</div>
                     <div id="change-chat-bg-option" class="list-item">设置聊天背景</div>
-                    <!-- 更新：合并后的气泡颜色设置 -->
                     <div class="list-item flex justify-between items-center">
                         <span>气泡颜色 (我 / 对方)</span>
                         <div class="flex items-center space-x-3">
@@ -1357,7 +1241,6 @@
             </div>
 
 
-            <!-- 世界書列表頁面 -->
             <div id="world-book-list-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="wb-list-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1367,22 +1250,18 @@
                 <div id="world-book-list-container" class="flex-1 overflow-y-auto p-2 space-y-2"></div>
             </div>
 
-            <!-- 世界書編輯頁面 -->
             <div id="world-book-edit-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="wb-edit-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title">编辑世界书</h3>
-                    <!-- --- 修改开始：按钮颜色 --- -->
                     <button id="wb-save-button" class="app-header-btn text-gray-300 font-bold text-base">保存</button>
-                    <!-- --- 修改结束 --- -->
-                </div>
+                    </div>
                 <div class="p-2 space-y-4">
                     <input type="text" id="wb-title-input" placeholder="标题" class="form-input">
                     <textarea id="wb-content-input" placeholder="内容..." class="form-textarea h-64 resize-none"></textarea>
                 </div>
             </div>
 
-            <!-- 角色書列表頁面 -->
             <div id="character-book-list-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="cb-list-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1392,15 +1271,12 @@
                 <div id="character-book-list-container" class="flex-1 overflow-y-auto p-2 space-y-2"></div>
             </div>
 
-            <!-- 角色書編輯頁面 -->
             <div id="character-book-edit-screen" class="app-screen-view flex-col hidden">
                 <div class="app-header">
                     <button id="cb-edit-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title">编辑角色</h3>
-                    <!-- --- 修改开始：按钮颜色 --- -->
                     <button id="cb-save-button" class="app-header-btn text-gray-300 font-bold text-base">保存</button>
-                    <!-- --- 修改结束 --- -->
-                </div>
+                    </div>
                 <div class="flex-1 overflow-y-auto p-2 space-y-4">
                     <div class="flex items-center space-x-4 p-2">
                         <div id="character-avatar-placeholder" class="w-20 h-20 rounded-full flex-shrink-0 image-placeholder bg-cover bg-center">
@@ -1423,8 +1299,7 @@
                     <div class="p-2">
                         <label class="block text-sm font-medium mb-1">关联世界书 (可多选)</label>
                         <div id="cb-worldbook-select" class="space-y-1 max-h-24 overflow-y-auto p-2 rounded-lg border">
-                            <!-- 選項將由JS動態生成 -->
-                        </div>
+                            </div>
                     </div>
                     <div class="p-2">
                         <button id="cb-delete-button" class="w-full mt-4 px-4 py-2 bg-red-600 text-white rounded-md hidden">删除角色</button>
@@ -1432,7 +1307,6 @@
                 </div>
             </div>
             
-            <!-- 主設定頁面 -->
             <div id="main-settings-screen" class="app-screen-view main-settings-screen flex-col hidden">
                 <div class="app-header">
                     <button id="main-settings-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1478,7 +1352,6 @@
                 </div>
             </div>
 
-            <!-- 美化設定頁面 -->
             <div id="beautify-settings-screen" class="app-screen-view beautify-settings-screen flex-col hidden">
                 <div class="app-header">
                     <button id="beautify-settings-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1495,25 +1368,21 @@
                 </div>
             </div>
 
-             <!-- 更換App圖標頁面 -->
-            <div id="app-icon-settings-screen" class="app-screen-view app-icon-settings-screen flex-col hidden">
+             <div id="app-icon-settings-screen" class="app-screen-view app-icon-settings-screen flex-col hidden">
                 <div class="app-header">
                     <button id="app-icon-settings-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title flex-grow text-center">更换App图标</h3>
                 </div>
                 <div id="app-icon-list" class="settings-content flex-1 p-2 overflow-y-auto space-y-2">
-                    <!-- App图标更换选项将在这里动态生成 -->
-                </div>
+                    </div>
             </div>
 
-            <!-- 字體設定頁面 -->
             <div id="font-settings-screen" class="app-screen-view font-settings-screen flex-col hidden">
                 <div class="app-header">
                     <button id="font-settings-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title flex-grow text-center">字体设置</h3>
                 </div>
                 <div class="settings-content flex-1 p-2 overflow-y-auto space-y-4">
-                    <!-- New: Font Size Selector -->
                     <div class="p-4 rounded-lg bg-card">
                         <label class="block text-sm font-medium mb-2">文字大小</label>
                         <div id="font-size-selector" class="flex justify-between rounded-lg p-1 text-sm">
@@ -1525,27 +1394,25 @@
                     <div class="p-4 rounded-lg bg-card">
                         <label for="font-url-input" class="block text-sm font-medium mb-2">字体文件URL (支持.ttf, .otf, .woff等)</label>
                         <input type="text" id="font-url-input" class="form-input w-full" placeholder="https://example.com/font.ttf">
-                        <!-- --- 修改开始：按钮颜色 --- -->
                         <button id="font-save-button" class="w-full mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">应用字体</button>
-                        <!-- --- 修改结束 --- -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- API 設定子頁面 -->
             <div id="api-settings-screen" class="app-screen-view api-settings-screen flex-col hidden">
                 <div class="app-header">
                     <button id="api-settings-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title flex-grow text-center">API 设定</h3>
                 </div>
                 <div class="settings-content flex-1 p-2 overflow-y-auto space-y-6">
-                     <!-- Connection Section -->
-                    <div class="p-4 rounded-lg bg-card">
+                     <div class="p-4 rounded-lg bg-card">
                         <h3 class="font-bold mb-4">连接设定</h3>
                         <div class="space-y-4">
                             <div>
                                 <label for="api_url" class="block text-sm font-medium mb-1">API 地址:</label>
-                                <input type="text" id="api_url" placeholder="例如: https://generativelanguage.googleapis.com" class="api-input form-input">
+                                <!-- MODIFICATION START: Updated placeholder -->
+                                <input type="text" id="api_url" placeholder="例如: https://api.example.com/v1" class="api-input form-input">
+                                <!-- MODIFICATION END -->
                             </div>
                             <div>
                                 <label for="api_key" class="block text-sm font-medium mb-1">API 密钥:</label>
@@ -1554,26 +1421,22 @@
                         </div>
                     </div>
 
-                    <!-- Model Section -->
                     <div class="p-4 rounded-lg bg-card">
                         <h3 class="font-bold mb-4">模型选择</h3>
                         <div class="space-y-4">
                              <div>
                                 <label for="model_select" class="block text-sm font-medium mb-1">选取 API 模型:</label>
-                                <select id="model_select" class="api-input form-select">
-                                    <option value="gemini-pro">gemini-pro (text)</option>
-                                    <option value="gemini-pro-vision">gemini-pro-vision (text & image)</option>
-                                </select>
+                                <div class="flex items-center gap-2">
+                                    <select id="model_select" class="api-input form-select flex-grow">
+                                        <!-- Models will be populated by JS -->
+                                    </select>
+                                    <button id="fetch_models_btn" class="px-3 py-2 bg-gray-600 text-white rounded-md text-sm flex-shrink-0">获取模型</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Save Button -->
-                    <!-- --- 修改开始：按钮颜色 --- -->
                     <button id="save_settings_btn" class="w-full flex justify-center items-center mt-2 px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600">保存设定</button>
-                    <!-- --- 修改结束 --- -->
-                    
-                    <!-- Status Messages -->
                     <div id="api-status" class="mt-4 p-4 rounded-lg text-center font-semibold text-sm hidden"></div>
                     <div id="security-warning" class="bg-yellow-100 text-yellow-700 mt-4 p-4 rounded-lg hidden" role="alert">
                         <p class="font-bold">安全提醒</p>
@@ -1582,10 +1445,6 @@
                 </div>
             </div>
 
-            <!-- ========================================================= -->
-            <!-- 新增: 通话界面 (已修复) -->
-            <!-- ========================================================= -->
-            <!-- 语音通话界面 -->
             <div id="voice-call-screen" class="call-screen">
                 <div class="call-background" id="voice-call-bg"></div>
                 <div class="call-content">
@@ -1607,7 +1466,6 @@
                 </div>
             </div>
 
-            <!-- 视频通话界面 -->
             <div id="video-call-screen" class="call-screen">
                 <div class="call-background" id="video-call-bg"></div>
                 <div class="call-content">
@@ -1636,14 +1494,12 @@
         let songList = [];
         let worldBooks = [];
         let characters = [];
-        let chatHistories = {}; // { characterId: { history: [], pinned: false } }
-        let userAvatars = {}; // { characterId: 'dataURL' }
-        let chatBackgrounds = {}; // { characterId: 'dataURL' }
-        let chatBubbleColors = {}; // { characterId: { user: '#hex', ai: '#hex' } }
-        let userVideoImages = {}; // { characterId: 'dataURL' }
-        // --- 修改开始：为“我的视频照片”添加独立的数据存储 ---
-        let myVideoImages = {}; // { characterId: 'dataURL' }
-        // --- 修改结束 ---
+        let chatHistories = {};
+        let userAvatars = {};
+        let chatBackgrounds = {};
+        let chatBubbleColors = {};
+        let userVideoImages = {};
+        let myVideoImages = {};
         let currentChatCharacterId = null;
 
         const currentAudio = new Audio();
@@ -1653,13 +1509,11 @@
         let currentEditingWorldBookId = null;
         let currentEditingCharacterId = null;
         
-        // 新增：多选模式相关变量
         let isMultiSelectMode = false;
         let selectedMessages = new Set();
-        let activeMenu = null; // 用于追踪当前打开的菜单
+        let activeMenu = null;
 
-        // 新增：通话相关变量
-        let currentCallType = null; // 'voice' or 'video'
+        let currentCallType = null;
         let callTimerInterval = null;
 
 
@@ -1704,19 +1558,13 @@
             }
         }
 
-        // =============================================================
-        //  數據保存與加載 (核心)
-        // =============================================================
+        // 數據保存與加載
         function saveData(key, value) {
             try {
                 localStorage.setItem(key, JSON.stringify(value));
             } catch (e) {
-                if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-                    showMessageBox('存储空间已满，无法保存。请尝试清理一些图片。');
-                    console.error("本地存储已满，无法保存: ", key);
-                } else {
-                    console.error("保存数据失败:", e);
-                }
+                console.error("保存数据失败:", e);
+                showMessageBox('存储空间已满，无法保存。');
             }
         }
 
@@ -1730,13 +1578,11 @@
             }
         }
 
-        function loadAllSavedData() {
-            // 1. 加载主题
+        async function loadAllSavedData() {
             const savedTheme = loadData('theme', 'dark');
             body.className = `flex items-center justify-center min-h-screen ${savedTheme}-mode`;
             $('#theme-icon').className = `fas fa-${savedTheme === 'dark' ? 'moon' : 'sun'} text-lg`;
 
-            // 2. 加载图片
             const savedWallpaper = loadData('saved_wallpaper');
             if(savedWallpaper) homeWallpaper.style.backgroundImage = `url(${savedWallpaper})`;
 
@@ -1767,21 +1613,19 @@
                     iconEl.style.backgroundImage = `url(${savedIcon})`;
                     const i = iconEl.querySelector('i');
                     if(i) i.style.display = 'none';
+                    iconEl.style.backgroundSize = 'contain';
+                    iconEl.style.backgroundRepeat = 'no-repeat';
                 }
             });
 
-
-            // 3. 加载文字内容
             $('#mood-text').value = loadData('saved_mood_text', '');
             $('#widget-name-input').value = loadData('saved_widget_name', '');
             $('#widget-thinking-input').value = loadData('saved_widget_thinking', '');
             $('#widget-location-input').value = loadData('saved_widget_location', '');
 
-            // 4. 加载世界书 & 角色书
             worldBooks = loadData('worldBooks', []);
             characters = loadData('characters', []);
             
-            // 5. 加载聊天记录 & 用户头像 & 聊天背景 & 气泡颜色 & 视频通话头像
             chatHistories = loadData('chatHistories', {});
             Object.keys(chatHistories).forEach(key => {
                 if(Array.isArray(chatHistories[key])) {
@@ -1792,40 +1636,42 @@
             chatBackgrounds = loadData('chatBackgrounds', {});
             chatBubbleColors = loadData('chatBubbleColors', {});
             userVideoImages = loadData('userVideoImages', {});
-            // --- 修改开始：加载“我的视频照片”数据 ---
             myVideoImages = loadData('myVideoImages', {});
-            // --- 修改结束 ---
             
-            // 6. 加载播放列表 (仅名称)
             songList = loadData('songList', []);
             updateSongListUI();
             
-            // 7. 加载字体
             const savedFontUrl = loadData('saved_font_url');
             if(savedFontUrl) {
                 $('#font-url-input').value = savedFontUrl;
                 applyFont(savedFontUrl);
             }
 
-            // 8. 加载字体大小
             const savedFontSize = loadData('fontSize', 'medium');
             setFontSize(savedFontSize);
 
-            // 9. 加载并验证API设置
             const savedApiSettings = loadData('api_settings');
-            if (savedApiSettings && savedApiSettings.url && savedApiSettings.key && savedApiSettings.model) {
+            if (savedApiSettings && savedApiSettings.url && savedApiSettings.key) {
                 $('#api_url').value = savedApiSettings.url;
                 $('#api_key').value = savedApiSettings.key;
-                $('#model_select').value = savedApiSettings.model;
-                updateApiStatusUI(true);
+                
+                const modelSelect = $('#model_select');
+                if (savedApiSettings.model && !Array.from(modelSelect.options).some(opt => opt.value === savedApiSettings.model)) {
+                    const option = document.createElement('option');
+                    option.value = savedApiSettings.model;
+                    option.textContent = savedApiSettings.model.startsWith('models/') ? savedApiSettings.model.substring(7) : savedApiSettings.model;
+                    modelSelect.appendChild(option);
+                }
+                modelSelect.value = savedApiSettings.model;
+                
+                const isValid = await fetchModels(true);
+                updateApiStatusUI(isValid);
             } else {
                 updateApiStatusUI(false);
             }
         }
 
-        // =============================================================
-        //  通用功能
-        // =============================================================
+        // 通用功能
         function showMessageBox(message) {
             messageBox.textContent = message;
             messageBox.classList.add('show');
@@ -1851,6 +1697,71 @@
             }
         }
         
+        // MODIFICATION START: Corrected fetchModels function
+        async function fetchModels(isSilent = false) {
+            const apiUrl = $('#api_url').value.trim();
+            const apiKey = $('#api_key').value.trim();
+            const modelSelect = $('#model_select');
+
+            if (!apiUrl || !apiKey) {
+                if (!isSilent) showMessageBox("请输入 API 地址和密钥");
+                updateApiStatusUI(false);
+                return false;
+            }
+
+            if (!isSilent) showMessageBox("正在获取模型列表...");
+            
+            // Correctly constructs the URL as per user's request: user_input + /models
+            const finalUrl = apiUrl.replace(/\/+$/, '') + '/models';
+
+            try {
+                const response = await fetch(finalUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`连接失败: HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const models = data.data || data.models || [];
+
+                if (models.length > 0) {
+                    const currentSelectedModel = modelSelect.value;
+                    modelSelect.innerHTML = '';
+                    models.forEach(model => {
+                        const modelId = model.id || model.name;
+                        if (modelId) {
+                            const option = document.createElement('option');
+                            option.value = modelId;
+                            option.textContent = modelId.startsWith('models/') ? modelId.substring(7) : modelId;
+                            modelSelect.appendChild(option);
+                        }
+                    });
+                    
+                    if (Array.from(modelSelect.options).some(opt => opt.value === currentSelectedModel)) {
+                        modelSelect.value = currentSelectedModel;
+                    }
+
+                    if (!isSilent) showMessageBox("成功获取模型列表！");
+                    updateApiStatusUI(true);
+                    return true;
+                } else {
+                    throw new Error("API返回了空模型列表");
+                }
+            } catch (error) {
+                console.error("获取模型失败:", error);
+                if (!isSilent) showMessageBox(`获取模型失败: ${error.message}`);
+                updateApiStatusUI(false);
+                return false;
+            }
+        }
+        // MODIFICATION END
+
         function hexToRgba(hex, alpha = 1) {
             if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
                 return null;
@@ -1864,9 +1775,7 @@
         }
 
 
-        // =============================================================
-        //  頁面與組件邏輯
-        // =============================================================
+        // 頁面與組件邏輯
         function toggleTheme() {
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
@@ -1956,7 +1865,6 @@
             
             let lastSender = null;
             history.forEach((msg, index) => {
-                // 判断是否是新发送者（与前一条消息的发送者不同）
                 const isNewSender = index === 0 || history[index - 1].sender !== msg.sender;
                 appendMessage(msg.content, msg.sender, msg.type, false, msg.timestamp, isNewSender);
             });
@@ -1969,9 +1877,6 @@
             return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
         }
 
-        // =============================================================
-        //  聊天消息生成函数 (已修改支持多种类型)
-        // =============================================================
         function appendMessage(content, sender, type = 'text', shouldSave = true, timestamp = Date.now(), isNewSender = false) {
             const senderClass = sender === 'user' ? 'sent' : 'received';
 
@@ -1986,7 +1891,6 @@
 
             const character = characters.find(c => c.id === currentChatCharacterId);
             
-            // 1. 创建头像 (仅在是新发送者时显示)
             const avatar = document.createElement('div');
             avatar.className = 'chat-avatar';
             if (isNewSender) {
@@ -1996,7 +1900,7 @@
                     } else {
                         avatar.innerHTML = '<i class="fas fa-robot"></i>';
                     }
-                } else { // sender === 'user'
+                } else {
                     avatar.classList.add('user-avatar-in-chat');
                     const userAvatarForThisChat = userAvatars[currentChatCharacterId];
                     if (userAvatarForThisChat) {
@@ -2006,16 +1910,14 @@
                     }
                 }
             } else {
-                avatar.style.visibility = 'hidden'; // 占位但不显示
+                avatar.style.visibility = 'hidden';
             }
 
-            // 2. 创建内容容器 (包含气泡)
             const contentWrapper = document.createElement('div');
             contentWrapper.className = 'chat-message-content';
 
             const messageBubble = document.createElement('div');
             
-            // 根据消息类型创建内容
             if (type === 'image') {
                 messageBubble.className = `chat-message ${senderClass} image-message`;
                 const img = document.createElement('img');
@@ -2037,13 +1939,12 @@
                     voiceText.style.display = voiceText.style.display === 'block' ? 'none' : 'block';
                 });
             } else if (type === 'system') {
-                // 修复：系统消息使用独立的样式
                 messageBubble.className = 'chat-system-message';
                 messageBubble.innerHTML = `<p>${content}</p>`;
                 messageWrapper.className = 'chat-message-wrapper justify-center';
                 avatar.style.display = 'none';
             }
-            else { // 默认是 text
+            else {
                 messageBubble.className = `chat-message ${senderClass}`;
                 const formattedMessage = content.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
                 messageBubble.innerHTML = `<p>${formattedMessage}</p>`;
@@ -2067,10 +1968,8 @@
                 messageBubble.style.setProperty('--bubble-bg', bubbleColor || defaultBg);
             }
 
-
             contentWrapper.appendChild(messageBubble);
 
-            // 3. 创建元数据 (时间戳, 已读)
             const metaDiv = document.createElement('div');
             metaDiv.className = 'message-meta';
             const timeSpan = document.createElement('span');
@@ -2086,14 +1985,13 @@
                 metaDiv.appendChild(readSpan);
             }
 
-            // 4. 按顺序组装
             if (type === 'system') {
                 messageWrapper.appendChild(contentWrapper);
             } else if (senderClass === 'received') {
                 messageWrapper.appendChild(avatar);
                 messageWrapper.appendChild(contentWrapper);
                 messageWrapper.appendChild(metaDiv);
-            } else { // sent
+            } else {
                 messageWrapper.appendChild(metaDiv);
                 messageWrapper.appendChild(contentWrapper);
                 messageWrapper.appendChild(avatar);
@@ -2114,23 +2012,15 @@
             }
         }
 
-        // =============================================================
-        //  AI 响应核心函数 (已重构)
-        // =============================================================
-        
+        // MODIFICATION START: Corrected getAIResponse function
         async function getAIResponse(lastUserMessage, isRetry = false) {
             const apiSettings = loadData('api_settings');
             if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
                 return showMessageBox("请先在设置中配置 API");
             }
 
-            const modelIsVision = apiSettings.model.includes('vision') || apiSettings.model.includes('gemini');
-            if (lastUserMessage.type === 'image' && !modelIsVision) {
-                return appendMessage("我暂时还看不懂图片哦，可以和我聊聊别的话题吗？", 'ai', 'text', true, Date.now(), true);
-            }
-
             const lastReadStatus = Array.from(chatContentArea.querySelectorAll('.message-read-status')).pop();
-            if(lastReadStatus) lastReadStatus.classList.add('visible');
+            if (lastReadStatus) lastReadStatus.classList.add('visible');
 
             let thinkingMessage;
             if (!isRetry) {
@@ -2142,7 +2032,8 @@
                 const character = characters.find(c => c.id === currentChatCharacterId);
                 const linkedBooks = worldBooks.filter(wb => character.linkedWorldBookIds.includes(wb.id));
                 const worldBookContext = linkedBooks.map(wb => `[${wb.title}]\n${wb.content}`).join('\n\n');
-                const chatHistory = (chatHistories[currentChatCharacterId]?.history || []).slice(-10);
+                const chatHistory = (chatHistories[currentChatCharacterId]?.history || []);
+                const historyForApi = chatHistory.filter(msg => msg.type === 'text' || msg.type === 'image').slice(-10);
 
                 const systemPrompt = `
                     # 角色扮演指令
@@ -2163,55 +2054,81 @@
                     - 示例: "早安|||*他伸了个懒腰*|||你醒啦？" 这将会被显示为三个独立的气泡。
                 `;
 
-                // 构建请求体
-                const contents = [];
-                // 添加历史记录
-                chatHistory.slice(0, -1).forEach(msg => {
-                    if (msg.type === 'text') {
-                        contents.push({
-                            role: msg.sender === 'user' ? 'user' : 'model',
-                            parts: [{ text: msg.content }]
-                        });
-                    }
-                });
-
-                // 添加最后一条用户消息 (可能是文本或图片)
-                const lastMessageParts = [];
-                if (lastUserMessage.type === 'image') {
-                    const pureBase64 = lastUserMessage.content.split(',')[1];
-                    lastMessageParts.push({ text: "我发了一张图片，请你根据图片内容进行回应。" });
-                    lastMessageParts.push({ inlineData: { mimeType: "image/jpeg", data: pureBase64 } });
-                } else {
-                    lastMessageParts.push({ text: lastUserMessage.content });
-                }
-                contents.push({ role: 'user', parts: lastMessageParts });
+                const isGoogleApi = apiSettings.url.includes('googleapis.com');
+                let finalApiUrl;
+                let requestBody;
+                let headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiSettings.key}`
+                };
                 
-                let apiUrl = apiSettings.url;
-                if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
-                const visionApiUrl = `${apiUrl}/v1beta/models/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+                if (isGoogleApi) {
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+                    headers = { 'Content-Type': 'application/json' };
 
-                const response = await fetch(visionApiUrl, {
+                    const contents = historyForApi.map(msg => ({
+                        role: msg.sender === 'user' ? 'user' : 'model',
+                        parts: msg.type === 'image' 
+                            ? [{ text: "我发了一张图片，请你根据图片内容进行回应。" }, { inlineData: { mimeType: "image/jpeg", data: msg.content.split(',')[1] } }]
+                            : [{ text: msg.content }]
+                    }));
+                    
+                    requestBody = JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } });
+                } else { // OpenAI-Compatible
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+
+                    const messages = [{ role: "system", content: systemPrompt }];
+                    historyForApi.forEach(msg => {
+                        const role = msg.sender === 'user' ? 'user' : 'assistant';
+                        if (msg.type === 'image') {
+                            messages.push({ role: 'user', content: [
+                                { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' },
+                                { type: 'image_url', image_url: { url: msg.content } }
+                            ]});
+                        } else {
+                            messages.push({ role: role, content: msg.content });
+                        }
+                    });
+
+                    requestBody = JSON.stringify({
+                        model: apiSettings.model,
+                        messages: messages,
+                    });
+                }
+
+                const response = await fetch(finalApiUrl, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } })
+                    headers: headers,
+                    body: requestBody
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: { message: `HTTP 错误 ${response.status}` } }));
+                    const errorText = await response.text();
+                    console.error("API Error Response:", errorText);
+                    const errorData = JSON.parse(errorText || "{}");
                     throw new Error(errorData.error?.message || `HTTP 错误 ${response.status}`);
                 }
 
                 const result = await response.json();
-                const aiMessage = result.candidates[0].content.parts[0].text;
+                let aiMessage;
+
+                if (isGoogleApi) {
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts) {
+                        aiMessage = result.candidates[0].content.parts[0].text;
+                    } else {
+                        const blockReason = result.promptFeedback?.blockReason || '无内容返回';
+                        throw new Error(`响应被安全策略拦截: ${blockReason}`);
+                    }
+                } else { // OpenAI-Compatible
+                    aiMessage = result.choices[0].message.content;
+                }
 
                 if (thinkingMessage) thinkingMessage.remove();
-
-                // 检查通话指令
+                
                 const callMatch = aiMessage.match(/\[CALL:(VOICE|VIDEO)\]/);
                 if (callMatch) {
                     const callType = callMatch[1].toLowerCase();
                     triggerIncomingCall(callType);
-                    // 移除指令，只显示剩余部分
                     const remainingMessage = aiMessage.replace(callMatch[0], '').trim();
                     if (remainingMessage) {
                          processAndDisplayAIMessages(remainingMessage);
@@ -2228,6 +2145,7 @@
                 }
             }
         }
+        // MODIFICATION END
         
         function processAndDisplayAIMessages(messageText) {
             const messageParts = messageText.split('|||').map(p => p.trim()).filter(p => p);
@@ -2244,7 +2162,6 @@
             });
         }
 
-
         async function handleSendMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
             
@@ -2255,18 +2172,16 @@
                 const timestamp = Date.now();
                 appendMessage(userMessage, 'user', 'text', true, timestamp, isNewSender);
                 $('#chat-input').value = '';
-                adjustTextareaHeight(); // 发送后重置高度
+                adjustTextareaHeight();
                 await getAIResponse({ content: userMessage, type: 'text' });
             }
         }
         
-        // --- 修改开始：为接收按钮添加功能，并允许AI主动发起对话 ---
         async function handleReceiveMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
 
             const chatSession = chatHistories[currentChatCharacterId];
             
-            // 如果聊天记录为空，则让AI主动发起对话
             if (!chatSession || chatSession.history.length === 0) {
                 const initialPrompt = { content: '[用户按下了接收键，请你作为角色主动开启一段对话。]', type: 'text' };
                 await getAIResponse(initialPrompt);
@@ -2278,12 +2193,10 @@
                 return showMessageBox("AI刚刚回复过，该你啦");
             }
             
-            // 如果最后一条是用户消息，则触发AI响应
             if (lastMessage.sender === 'user') {
                 await getAIResponse(lastMessage);
             }
         }
-        // --- 修改结束 ---
         
         function startChatWithCharacter(characterId) {
             currentChatCharacterId = characterId;
@@ -2295,7 +2208,6 @@
             }
         }
 
-        // 微信會話列表
         function renderWeChatList() {
             const container = $('#wechat-list-container');
             container.innerHTML = '';
@@ -2337,7 +2249,6 @@
                 const item = document.createElement('div');
                 item.className = 'wechat-list-item';
                 if (chatSession.pinned) {
-                    const currentBgColor = window.getComputedStyle(item).backgroundColor;
                     item.style.backgroundColor = body.classList.contains('dark-mode') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
                 }
                 const avatarStyle = character.avatar ? `background-image: url(${character.avatar})` : '';
@@ -2355,7 +2266,6 @@
             });
         }
 
-        // 世界書
         function renderWorldBookList() {
             const container = $('#world-book-list-container');
             container.innerHTML = '';
@@ -2387,7 +2297,6 @@
             });
         }
         
-        // 角色書
         function renderCharacterBookList() {
             const container = $('#character-book-list-container');
             container.innerHTML = '';
@@ -2421,7 +2330,7 @@
             const avatarIcon = avatarPlaceholder.querySelector('i');
             const deleteBtn = $('#cb-delete-button');
 
-            if (character) { // Editing existing character
+            if (character) {
                 currentEditingCharacterId = character.id;
                 if (character.avatar) {
                     avatarPlaceholder.style.backgroundImage = `url(${character.avatar})`;
@@ -2434,7 +2343,7 @@
                 $('#cb-persona-input').value = character.persona;
                 $('#cb-my-persona-input').value = character.myPersona;
                 deleteBtn.classList.remove('hidden');
-            } else { // Creating new character
+            } else {
                 currentEditingCharacterId = null;
                 avatarPlaceholder.style.backgroundImage = '';
                 if (avatarIcon) avatarIcon.style.display = 'flex';
@@ -2687,14 +2596,11 @@
             modal.style.display = 'flex';
         }
 
-        // =============================================================
-        //  新增: 通话功能逻辑
-        // =============================================================
-        // --- 修改开始：增加通话AI响应逻辑 ---
+        // MODIFICATION START: Corrected getAICallResponse function
         async function getAICallResponse(callType) {
             const apiSettings = loadData('api_settings');
             if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
-                 return showMessageBox("请先在设置中配置 API");
+                return showMessageBox("请先在设置中配置 API");
             }
             const statusBox = $(`#${callType}-call-status-box`);
 
@@ -2715,28 +2621,55 @@
                     # 我们的世界观背景: ${worldBookContext}
                 `;
 
-                const contents = [{ role: 'user', parts: [{ text: initialPrompt }] }];
-                
-                let apiUrl = apiSettings.url;
-                if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
-                const visionApiUrl = `${apiUrl}/v1beta/models/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+                const isGoogleApi = apiSettings.url.includes('googleapis.com');
+                let finalApiUrl;
+                let requestBody;
+                let headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiSettings.key}`
+                };
 
-                const response = await fetch(visionApiUrl, {
+                if (isGoogleApi) {
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+                    headers = { 'Content-Type': 'application/json' };
+                    requestBody = JSON.stringify({
+                        contents: [{ role: 'user', parts: [{ text: initialPrompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    });
+                } else { // OpenAI-Compatible
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+                    requestBody = JSON.stringify({
+                        model: apiSettings.model,
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: initialPrompt }
+                        ]
+                    });
+                }
+
+                const response = await fetch(finalApiUrl, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } })
+                    headers: headers,
+                    body: requestBody
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: { message: `HTTP 错误 ${response.status}` } }));
+                    const errorText = await response.text();
+                    const errorData = JSON.parse(errorText || "{}");
                     throw new Error(errorData.error?.message || `HTTP 错误 ${response.status}`);
                 }
 
                 const result = await response.json();
-                const aiMessage = result.candidates[0].content.parts[0].text;
+                let aiMessage;
+
+                if (isGoogleApi) {
+                    aiMessage = result.candidates[0].content.parts[0].text;
+                } else {
+                    aiMessage = result.choices[0].message.content;
+                }
 
                 if (statusBox) {
-                    statusBox.innerHTML = ''; // 清空“正在连接”
+                    statusBox.innerHTML = ''; 
                     const p = document.createElement('p');
                     p.innerHTML = aiMessage.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
                     statusBox.appendChild(p);
@@ -2749,7 +2682,7 @@
                 }
             }
         }
-        // --- 修改结束 ---
+        // MODIFICATION END
 
         function startCallTimer(timerElement) {
             let seconds = 0;
@@ -2777,9 +2710,7 @@
             
             screen.classList.add('visible');
             startCallTimer($('#voice-call-timer'));
-            // --- 修改开始：请求AI开场白 ---
             getAICallResponse('voice');
-            // --- 修改结束 ---
         }
 
         function startVideoCall() {
@@ -2797,9 +2728,7 @@
             $('#video-call-status-box').innerHTML = `<p>正在连接...</p>`;
             
             screen.classList.add('visible');
-            // --- 修改开始：请求AI开场白 ---
             getAICallResponse('video');
-            // --- 修改结束 ---
         }
 
         function endCall() {
@@ -2822,8 +2751,6 @@
                 const p = document.createElement('p');
                 p.textContent = `你: ${message}`;
                 statusBox.appendChild(p);
-                // TODO: Here you could send the message to the AI with a special "in-call" context
-                // and append its response. For now, we just show user input.
                 inputBox.value = '';
                 statusBox.scrollTop = statusBox.scrollHeight;
             }
@@ -2843,17 +2770,13 @@
         }
 
 
-        // =============================================================
-        //  初始化與事件監聽器
-        // =============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. 加載所有數據
-            loadAllSavedData();
+        // 初始化與事件監聽器
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadAllSavedData();
             updateTime();
             setInterval(updateTime, 60000);
             showScreen('home-screen');
 
-            // 2. 頁面切換按鈕
             $('#theme-toggle').addEventListener('click', toggleTheme);
             $$('.app-icon').forEach(icon => {
                 icon.addEventListener('click', () => {
@@ -2873,7 +2796,6 @@
                 renderWeChatList();
                 showScreen('wechat-list-screen');
             });
-
             $('#main-settings-back-button').addEventListener('click', () => showScreen('home-screen'));
             $('#api-settings-back-button').addEventListener('click', () => showScreen('main-settings-screen'));
             $('#api-settings-link').addEventListener('click', () => showScreen('api-settings-screen'));
@@ -2891,31 +2813,22 @@
             $('#font-settings-link').addEventListener('click', () => showScreen('font-settings-screen'));
             $('#font-settings-back-button').addEventListener('click', () => showScreen('main-settings-screen'));
 
-
-            // 3. 圖片上傳
             $('#music-block').addEventListener('click', (e) => { if (e.target === e.currentTarget) $('#background-input').click(); });
             $('#background-input').addEventListener('change', (e) => handleImageUpload(e.target, $('#music-block'), 'saved_music_background'));
-            
             $('#vinyl-record').addEventListener('click', () => $('#vinyl-input').click());
             $('#vinyl-input').addEventListener('change', (e) => handleImageUpload(e.target, $('#vinyl-record'), 'saved_vinyl_cover'));
-            
             $('#photo-widget').addEventListener('click', () => $('#photo-widget-input').click());
             $('#photo-widget-input').addEventListener('change', (e) => handleImageUpload(e.target, $('#photo-widget'), 'saved_photo_widget', { hideTextElement: '#photo-widget-text' }));
-            
             $('#widget-image-placeholder').addEventListener('click', () => $('#widget-image-input').click());
             $('#widget-image-input').addEventListener('change', (e) => handleImageUpload(e.target, $('#widget-image-placeholder'), 'saved_widget_image'));
-
             $('#character-avatar-placeholder').addEventListener('click', () => $('#character-avatar-input').click());
             $('#character-avatar-input').addEventListener('change', (e) => handleImageUpload(e.target, $('#character-avatar-placeholder'), null, { compression: { maxWidth: 256, maxHeight: 256 } }));
 
-            
-            // 4. 文字輸入保存
             $('#mood-text').addEventListener('input', (e) => saveData('saved_mood_text', e.target.value));
             $('#widget-name-input').addEventListener('input', (e) => saveData('saved_widget_name', e.target.value));
             $('#widget-thinking-input').addEventListener('input', (e) => saveData('saved_widget_thinking', e.target.value));
             $('#widget-location-input').addEventListener('input', (e) => saveData('saved_widget_location', e.target.value));
 
-            // 5. 音樂播放器
             $('#music-upload-button').addEventListener('click', () => $('#music-upload-input').click());
             $('#music-upload-input').addEventListener('change', (e) => {
                 const files = e.target.files;
@@ -2949,7 +2862,6 @@
             $('#loop-button').addEventListener('click', () => { isLooping = !isLooping; $('#loop-button').classList.toggle('active', isLooping); showMessageBox(isLooping ? '列表循环已开启' : '列表循环已关闭'); });
             $('#single-loop-button').addEventListener('click', () => { isSingleLooping = !isSingleLooping; $('#single-loop-button').classList.toggle('active', isSingleLooping); showMessageBox(isSingleLooping ? '单曲循环已开启' : '单曲循环已关闭'); });
 
-            // 6. 世界書
             $('#wb-add-button').addEventListener('click', () => {
                 currentEditingWorldBookId = null;
                 $('#wb-title-input').value = '';
@@ -2977,7 +2889,6 @@
                 showScreen('world-book-list-screen');
             });
 
-            // 7. 角色書
             $('#cb-add-button').addEventListener('click', () => {
                 showCharacterEditScreen(null);
             });
@@ -2991,11 +2902,8 @@
                 }
             });
             
-            // 8. 微信
             $('#send-chat-button').addEventListener('click', handleSendMessage);
-            // --- 修改开始：为接收按钮添加事件监听 ---
             $('#receive-chat-button').addEventListener('click', handleReceiveMessage);
-            // --- 修改结束 ---
             
             $('#wechat-new-chat-button').addEventListener('click', () => {
                 const container = $('#new-chat-character-list');
@@ -3116,8 +3024,6 @@
                 e.target.value = '';
             });
 
-
-            // 9. 美化设置
             $('#change-wallpaper-link').addEventListener('click', () => $('#wallpaper-input').click());
             $('#wallpaper-input').addEventListener('change', (e) => handleImageUpload(e.target, homeWallpaper, 'saved_wallpaper'));
 
@@ -3137,22 +3043,28 @@
 
                     const previewIcon = document.createElement('div');
                     previewIcon.className = 'w-10 h-10 rounded-lg flex items-center justify-center shadow-md mr-4 bg-cover bg-center';
-                    previewIcon.style.backgroundImage = iconEl.style.backgroundImage;
                     
-                    // --- 修改开始：按钮颜色 ---
-                    if (!iconEl.style.backgroundImage) {
+                    const savedIcon = loadData(`saved_icon_${appName}`);
+                    if (savedIcon) {
+                        previewIcon.style.backgroundImage = `url(${savedIcon})`;
+                        previewIcon.style.backgroundSize = 'contain';
+                        previewIcon.style.backgroundRepeat = 'no-repeat';
+                    } else {
+                        previewIcon.style.backgroundImage = iconEl.style.backgroundImage;
+                    }
+
+                    if (!previewIcon.style.backgroundImage) {
                         if (iconEl.classList.contains('app-icon-glass')) {
                             previewIcon.className += ' app-icon-glass';
                         } else {
-                             previewIcon.style.backgroundColor = '#1f2937'; /* bg-zinc-800 */
+                             previewIcon.style.backgroundColor = '#1f2937';
                         }
                     }
-                    // --- 修改结束 ---
                     
                     const iconI = document.createElement('i');
                     const originalIcon = iconEl.querySelector('i');
                     if (originalIcon) iconI.className = originalIcon.className;
-                    iconI.style.display = iconEl.style.backgroundImage ? 'none' : 'block';
+                    iconI.style.display = savedIcon ? 'none' : (originalIcon ? originalIcon.style.display : 'block');
                     previewIcon.appendChild(iconI);
 
                     const text = document.createElement('h4');
@@ -3163,9 +3075,7 @@
                     leftPart.appendChild(text);
 
                     const button = document.createElement('button');
-                    // --- 修改开始：按钮颜色 ---
                     button.className = 'px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-sm flex-shrink-0';
-                    // --- 修改结束 ---
                     button.textContent = '更换';
 
                     innerContainer.appendChild(leftPart);
@@ -3185,6 +3095,12 @@
                                 iconEl.style.backgroundImage = `url(${compressedDataUrl})`;
                                 if (originalIcon) originalIcon.style.display = 'none';
                                 previewIcon.style.backgroundImage = `url(${compressedDataUrl})`;
+
+                                iconEl.style.backgroundSize = 'contain';
+                                iconEl.style.backgroundRepeat = 'no-repeat';
+                                previewIcon.style.backgroundSize = 'contain';
+                                previewIcon.style.backgroundRepeat = 'no-repeat';
+                                
                                 const previewIconI = previewIcon.querySelector('i');
                                 if (previewIconI) previewIconI.style.display = 'none';
                             } catch (error) {
@@ -3198,7 +3114,6 @@
                 });
             }
             
-            // 10. 字体设置
             $('#font-save-button').addEventListener('click', () => {
                 const url = $('#font-url-input').value.trim();
                 if (url) {
@@ -3222,25 +3137,34 @@
                 }
             });
             
-            // 11. API 设置
-            $('#save_settings_btn').addEventListener('click', () => {
+            $('#fetch_models_btn').addEventListener('click', () => fetchModels(false));
+
+            $('#save_settings_btn').addEventListener('click', async () => {
                 const apiUrl = $('#api_url').value.trim();
                 const apiKey = $('#api_key').value.trim();
-                const model = $('#model_select').value;
+                let model = $('#model_select').value;
 
-                if (!apiUrl || !apiKey || !model) {
-                    showMessageBox("请填写所有字段并获取模型");
-                    updateApiStatusUI(false);
+                if (!apiUrl || !apiKey) {
+                    showMessageBox("请填写 API 地址和密钥");
                     return;
                 }
                 
                 const settings = { url: apiUrl, key: apiKey, model: model };
                 saveData('api_settings', settings);
-                updateApiStatusUI(true);
-                showMessageBox("API 设定已保存");
+                showMessageBox("设定已保存，正在验证连接...");
+
+                const isValid = await fetchModels(true);
+                updateApiStatusUI(isValid);
+
+                if (isValid) {
+                    showMessageBox("API 验证成功");
+                    settings.model = $('#model_select').value;
+                    saveData('api_settings', settings);
+                } else {
+                    showMessageBox("API 验证失败，请检查地址和密钥");
+                }
             });
 
-            // 删除确认
             $('#confirm-delete-btn').addEventListener('click', () => {
                 if (deleteCallback) deleteCallback();
             });
@@ -3249,7 +3173,6 @@
                 deleteCallback = null;
             });
             
-            // 新增：微信底部导航栏交互
             $('.wechat-tab-bar').addEventListener('click', (e) => {
                 const target = e.target.closest('.wechat-tab-item');
                 if (!target) return;
@@ -3258,16 +3181,11 @@
                 target.classList.add('active');
 
                 const tab = target.dataset.tab;
-                if (tab === 'chat') {
-                    // 已经在聊天列表页，无需操作
-                } else {
+                if (tab !== 'chat') {
                     showMessageBox('此功能正在开发中...');
                 }
             });
             
-            // =============================================================
-            //  气泡菜单 & 多选逻辑 (已根据要求重构)
-            // =============================================================
             const chatScreen = $('#wechat-chat-screen');
 
             function hideBubbleMenu() {
@@ -3277,10 +3195,9 @@
                 }
             }
 
-            // Chat screen main click handler
             chatScreen.addEventListener('click', (e) => {
                 const menu = e.target.closest('.bubble-context-menu');
-                if (menu) return; // If menu itself is clicked, do nothing.
+                if (menu) return;
 
                 const wrapper = e.target.closest('.chat-message-wrapper');
                 
@@ -3292,7 +3209,6 @@
                     const bubble = e.target.closest('.chat-message');
                     if (bubble) {
                         e.stopPropagation();
-                        // Hide any previously active menu before showing a new one
                         if (activeMenu && !activeMenu.isSameNode(bubble.parentNode.querySelector('.bubble-context-menu'))) {
                            hideBubbleMenu();
                         }
@@ -3303,19 +3219,16 @@
                 }
             });
             
-            // Show and position the bubble menu
             function showBubbleMenu(bubble) {
                 const wrapper = bubble.closest('.chat-message-wrapper');
                 let menu = wrapper.querySelector('.bubble-context-menu');
 
-                // If menu doesn't exist, create it from template
                 if (!menu) {
                     const template = $('#bubble-menu-template');
                     const menuClone = template.content.cloneNode(true);
                     wrapper.appendChild(menuClone);
                     menu = wrapper.querySelector('.bubble-context-menu');
 
-                    // Add event listeners to the new menu's buttons
                     menu.addEventListener('click', (e) => {
                         const button = e.target.closest('.bubble-menu-button');
                         if (button) {
@@ -3328,31 +3241,26 @@
                 
                 const sender = wrapper.dataset.sender;
                 
-                // Set button visibility
                 menu.querySelector('[data-action="retry"]').style.display = sender === 'ai' ? 'flex' : 'none';
                 
-                // Positioning logic
                 const bubbleRect = bubble.getBoundingClientRect();
                 const screenRect = phoneScreen.getBoundingClientRect();
                 
-                menu.classList.add('visible'); // Temporarily show to get dimensions
+                menu.classList.add('visible');
                 const menuRect = menu.getBoundingClientRect();
                 
-                // Position relative to the wrapper, which is the new context
-                let top = bubble.offsetTop - menuRect.height - 8; // 8px margin above
+                let top = bubble.offsetTop - menuRect.height - 8;
                 
-                // Flip if not enough space on top
                 if (bubbleRect.top < (screenRect.top + menuRect.height + 16)) {
-                    top = bubble.offsetTop + bubble.offsetHeight + 8; // 8px margin below
+                    top = bubble.offsetTop + bubble.offsetHeight + 8;
                 }
                 
-                // Center horizontally
                 const leftOffset = (bubble.offsetWidth / 2) - (menuRect.width / 2);
                 let finalLeft = bubble.offsetLeft + leftOffset;
 
                 menu.style.top = `${top}px`;
                 menu.style.left = `${finalLeft}px`;
-                menu.style.transform = 'translateX(0)'; // Reset transform for this positioning method
+                menu.style.transform = 'translateX(0)';
 
                 activeMenu = menu;
             }
@@ -3378,8 +3286,6 @@
                  }
             }
 
-
-            // Menu action handlers
             function copyMessageHandler(timestamp) {
                 const msg = chatHistories[currentChatCharacterId]?.history.find(m => String(m.timestamp) === timestamp);
                 if (msg && msg.type === 'text') {
@@ -3439,7 +3345,6 @@
                 }
             }
             
-            // Multi-select mode functions
             function enterMultiSelectMode() {
                 isMultiSelectMode = true;
                 $('#chat-header-normal').classList.add('hidden');
@@ -3481,9 +3386,6 @@
                 }
             });
 
-            // =============================================================
-            //  新增：聊天新功能交互 (已修复)
-            // =============================================================
             const featuresPanel = $('#more-features-panel');
             const addFeatureBtn = $('#add-feature-btn');
             const chatInputBar = $('#chat-input-bar');
@@ -3534,10 +3436,8 @@
                 }
             });
 
-            // Placeholder listeners for other buttons
             $('#emoji-btn').addEventListener('click', () => showMessageBox('表情功能开发中'));
             
-            // Voice message modal
             const voiceModal = $('#voice-input-modal');
             const voiceInput = $('#voice-text-input');
             $('#quick-voice-message-btn').addEventListener('click', () => {
@@ -3558,10 +3458,6 @@
                 }
             });
 
-            // =============================================================
-            //  新增：通话功能事件监听
-            // =============================================================
-            // 修复：手动发起通话
             $('#quick-voice-call-btn').addEventListener('click', () => {
                 currentCallType = 'voice';
                 startVoiceCall();
@@ -3576,7 +3472,6 @@
             $('#voice-call-send-btn').addEventListener('click', () => handleCallInteraction('voice'));
             $('#video-call-send-btn').addEventListener('click', () => handleCallInteraction('video'));
 
-            // AI 发起通话的接听/拒绝
             $('#answer-call-btn').addEventListener('click', () => {
                 $('#incoming-call-alert').classList.remove('visible');
                 if (currentCallType === 'voice') startVoiceCall();
@@ -3588,18 +3483,14 @@
                 currentCallType = null;
             });
 
-            // --- 修改开始：分离视频照片设置逻辑 ---
-            // 点击“我的”小窗，触发“我的”照片上传
             $('#user-video-preview').addEventListener('click', () => {
                 $('#my-video-image-input').click();
             });
 
-            // 点击聊天设置中的“对方的”照片，触发“对方的”照片上传
             $('#change-user-video-image-option').addEventListener('click', () => {
                  $('#user-video-image-input').click();
             });
             
-            // “对方的”照片上传逻辑
             $('#user-video-image-input').addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file && currentChatCharacterId) {
@@ -3612,7 +3503,6 @@
                 }
             });
 
-            // “我的”照片上传逻辑
             $('#my-video-image-input').addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file && currentChatCharacterId) {
@@ -3620,7 +3510,6 @@
                     if (compressedDataUrl) {
                         myVideoImages[currentChatCharacterId] = compressedDataUrl;
                         saveData('myVideoImages', myVideoImages);
-                        // 如果正在视频通话中，立即更新小窗画面
                         if (currentCallType === 'video') {
                             $('#user-video-image').src = compressedDataUrl;
                         }
@@ -3628,10 +3517,7 @@
                     }
                 }
             });
-            // --- 修改结束 ---
-
             
-            // Add listeners to other feature items in the panel
             $$('.feature-item').forEach(item => {
                 if (!['send-image-btn'].includes(item.id)) {
                     item.addEventListener('click', () => {
@@ -3641,15 +3527,11 @@
                 }
             });
 
-            // =============================================================
-            //  新增：多行文本框自适应高度
-            // =============================================================
             let initialTextareaHeight = 0;
             let maxHeight = 0;
 
             function adjustTextareaHeight() {
                 if (!initialTextareaHeight) {
-                    // 首次计算
                     const style = window.getComputedStyle(chatInput);
                     const lineHeight = parseFloat(style.lineHeight);
                     const paddingTop = parseFloat(style.paddingTop);
@@ -3658,7 +3540,7 @@
                     maxHeight = (lineHeight * 3) + paddingTop + paddingBottom;
                 }
                 
-                chatInput.style.height = 'auto'; // 先重置高度
+                chatInput.style.height = 'auto';
                 const scrollHeight = chatInput.scrollHeight;
 
                 if (scrollHeight > maxHeight) {
