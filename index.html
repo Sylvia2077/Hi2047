@@ -42,6 +42,15 @@
             transform: scale(0.95);
             box-shadow: none;
         }
+
+        /* --- 修改开始：为App图标添加毛玻璃质感 --- */
+        .app-icon-glass {
+            background: rgba(55, 65, 81, 0.5); /* bg-gray-600 with 50% opacity */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* --- 修改结束 --- */
         
         /* 訊息提示框樣式 */
         .message-box {
@@ -57,7 +66,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s, visibility 0.3s;
-            z-index: 1000;
+            z-index: 11000; /* Ensure it's above everything */
         }
         .message-box.show {
             opacity: 1;
@@ -86,7 +95,7 @@
         }
         
         /* 隱藏文件輸入框 */
-        #music-upload-input, #background-input, #vinyl-input, #widget-image-input, #photo-widget-input, #wallpaper-input, #character-avatar-input, #user-avatar-input, #chat-bg-input, #import-data-input {
+        #music-upload-input, #background-input, #vinyl-input, #widget-image-input, #photo-widget-input, #wallpaper-input, #character-avatar-input, #user-avatar-input, #chat-bg-input, #import-data-input, #image-upload-input, #user-video-image-input, #my-video-image-input {
             display: none;
         }
         
@@ -143,7 +152,7 @@
             border-radius: 50%;
         }
 
-        /* 彈窗通用樣式 */
+        /* 弹窗通用样式 */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -153,7 +162,7 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            z-index: 900;
+            z-index: 9000;
             display: none;
             justify-content: center;
             align-items: center;
@@ -184,7 +193,7 @@
         }
         .song-list-item.active {
             font-weight: 600;
-            color: #db2777; /* 深玫粉色 */
+            color: #ffffff;
         }
         .song-list-item-left {
             display: flex;
@@ -220,7 +229,7 @@
 
         /* 單曲循環按鈕啟用時的顏色 */
         .loop-button.active, .single-loop-button.active {
-            color: #db2777; /* 深玫粉色 */
+            color: #ffffff;
         }
         
         /* 新增的小組件樣式 */
@@ -244,17 +253,17 @@
         }
         
         /* ========================================================= */
-        /* 日夜間模式樣式 */
+        /* 日夜间模式样式 */
         /* ========================================================= */
-        /* 夜間模式 */
+        /* 夜间模式 */
         .dark-mode {
             background-color: #333333; /* 深灰色背景 */
-            color: #ffffff; /* 白色字體 */
+            color: #ffffff; /* 白色字体 */
         }
         .dark-mode .phone-frame { background-color: #1a1a1a; }
         .dark-mode .phone-screen { background-color: transparent; }
         .dark-mode #home-wallpaper { background-color: #000000; }
-        .dark-mode .status-bar, .dark-mode .text-dark, .dark-mode .player-button i, .dark-mode #music-upload-button i, .dark-mode #mood-text::placeholder, .dark-mode #playlist-button i, .dark-mode .text-widget-input::placeholder, .dark-mode .app-header-btn { color: #ffffff; }
+        .dark-mode .status-bar, .dark-mode .text-dark, .dark-mode .player-button i, .dark-mode #music-upload-button i, .dark-mode #mood-text::placeholder, .dark-mode #playlist-button i, .dark-mode .text-widget-input::placeholder, .dark-mode .app-header-btn, .dark-mode .quick-action-btn { color: #ffffff; }
         .dark-mode .status-bar { transition: background-color 0.3s; background-color: #1a1a1a; }
         .dark-mode .status-bar.on-home { background-color: transparent !important; }
         .dark-mode .dock, .dark-mode .music-block {
@@ -265,7 +274,7 @@
         }
         .dark-mode .app-screen-view:not(#home-screen):not(#wechat-chat-screen) { background-color: #1a1a1a; }
         .dark-mode #wechat-chat-screen { background-color: #1a1a1a; } /* Set a base color */
-        .dark-mode .app-header { background: rgba(44, 44, 44, 0.7); border-color: rgba(255, 255, 255, 0.15); }
+        .dark-mode .app-header { background-color: #1a1a1a; border-color: rgba(255, 255, 255, 0.15); }
         .dark-mode .wechat-tab-bar { background-color: #2c2c2c; border-color: #4a4a4a; }
         .dark-mode .image-placeholder { background-color: rgba(255, 255, 255, 0.2); }
         .dark-mode .bg-card { background-color: rgba(255, 255, 255, 0.08); }
@@ -273,13 +282,15 @@
         .dark-mode .wechat-list-item { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         .dark-mode .wechat-list-item:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dark-mode .api-status-on { color: #ffffff; }
+        .dark-mode .chat-input-btn { color: #d1d5db; } /* 修复：夜间模式按钮颜色 */
+        .dark-mode .chat-system-message { background-color: rgba(255, 255, 255, 0.1); }
         
         /* 白天模式 */
         .light-mode { background-color: #f0f2f5; color: #1f2937; }
         .light-mode .phone-frame { background-color: #1a1a1a; }
         .light-mode .phone-screen { background-color: transparent; }
         .light-mode #home-wallpaper { background-image: linear-gradient(to bottom right, #e2e8f0, #f8fafc, #ffffff); }
-        .light-mode .status-bar, .light-mode .text-dark, .light-mode .app-header-btn { color: #1f2937; }
+        .light-mode .status-bar, .light-mode .text-dark, .light-mode .app-header-btn, .light-mode .quick-action-btn { color: #1f2937; }
         .light-mode .status-bar { transition: background-color 0.3s; background-color: #ffffff; }
         .light-mode .status-bar.on-home { background-color: transparent !important; }
         .light-mode .player-button i, .light-mode #music-upload-button i, .light-mode #playlist-button i, .light-mode .text-widget-input::placeholder { color: #1f2937; }
@@ -293,7 +304,7 @@
         }
         .light-mode .app-screen-view:not(#home-screen):not(#wechat-chat-screen) { background-color: #f0f2f5; }
         .light-mode #wechat-chat-screen { background-color: #f0f2f5; } /* Set a base color */
-        .light-mode .app-header { background: rgba(255, 255, 255, 0.7); border-color: rgba(0, 0, 0, 0.1); }
+        .light-mode .app-header { background-color: #ffffff; border-color: rgba(0, 0, 0, 0.1); }
         .light-mode .wechat-tab-bar { background-color: #ffffff; border-color: #e5e7eb; }
         .light-mode .image-placeholder { background-color: rgba(0, 0, 0, 0.1); }
         .light-mode .bg-card { background-color: #ffffff; }
@@ -301,16 +312,42 @@
         .light-mode .wechat-list-item { border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
         .light-mode .wechat-list-item:hover { background-color: rgba(0, 0, 0, 0.05); }
         .light-mode .api-status-on { color: #1f2937; }
+        .light-mode .chat-input-btn { color: #4b5563; } /* 修复：白天模式按钮颜色 */
+        .light-mode .chat-system-message { background-color: rgba(0, 0, 0, 0.1); }
 
         /* ========================================================= */
-        /* 聊天界面样式更新 (V7) */
+        /* 聊天界面样式更新 (布局修复) */
         /* ========================================================= */
-        .chat-message-wrapper {
-            align-items: flex-end; /* 头像和气泡底部对齐 */
+        /* --- 修改开始：减小聊天窗口顶部间距 --- */
+        #wechat-content-chat {
+            padding-top: 0.5rem;
         }
-        /* MODIFIED: Avatar styling */
+        #wechat-content-chat .chat-message-wrapper.new-sender:first-child {
+            margin-top: 0.5rem;
+        }
+        /* --- 修改结束 --- */
+        .chat-message-wrapper {
+            display: flex;
+            align-items: flex-start; /* 修改：垂直顶部对齐 */
+            width: 100%;
+            position: relative; /* 为菜单定位提供上下文 */
+        }
+        .chat-message-wrapper.sent {
+            justify-content: flex-end; /* 用户消息靠右 */
+        }
+        .chat-message-wrapper.received {
+            justify-content: flex-start; /* AI消息靠左 */
+        }
+
+        .chat-message-wrapper + .chat-message-wrapper {
+            margin-top: 0.25rem; 
+        }
+        .chat-message-wrapper.new-sender {
+            margin-top: 1rem;
+        }
+        
         .chat-avatar {
-            width: 44px; /* 头像增大 */
+            width: 44px;
             height: 44px;
             border-radius: 50%;
             background-color: #9ca3af;
@@ -319,12 +356,11 @@
             flex-shrink: 0;
             border: 2px solid rgba(255,255,255,0.5);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            /* NEW: Center the icon */
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        /* NEW: Icon size fix */
+        
         .chat-avatar i {
             font-size: 22px;
             color: rgba(255, 255, 255, 0.8);
@@ -333,9 +369,15 @@
              color: rgba(0, 0, 0, 0.6);
         }
 
-        /* MODIFIED: Avatar spacing */
-        .chat-message-wrapper.sent .chat-avatar { margin-left: 1.5rem; /* 12px */ }
-        .chat-message-wrapper.received .chat-avatar { margin-right: 1.5rem; /* 12px */ }
+        .chat-message-content {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            margin: 0 0.5rem; /* 气泡与头像/时间戳的间距 */
+            max-width: 75%; /* 修改：限制气泡最大宽度 */
+        }
+        .chat-message-wrapper.sent .chat-message-content { align-items: flex-end; }
+        .chat-message-wrapper.received .chat-message-content { align-items: flex-start; }
 
         .chat-message {
             backdrop-filter: blur(16px);
@@ -344,11 +386,57 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             transition: background-color 0.3s;
             position: relative;
-            padding: 0.2rem 1rem;
+            padding: 0.5rem 1rem;
             width: -moz-fit-content;
             width: fit-content;
+            max-width: 100%; 
+            cursor: pointer; /* 新增：为点击菜单做准备 */
+        }
+        /* 新增：图片消息样式 */
+        .chat-message.image-message {
+            padding: 0.25rem;
+            background-color: transparent !important;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .chat-message.image-message img {
+            max-width: 150px;
+            max-height: 200px;
+            border-radius: 1rem;
+            display: block;
+        }
+        /* 新增：语音消息样式 */
+        .chat-message.voice-message {
+            display: flex;
+            flex-direction: column; /* 修复：改为垂直布局 */
+            align-items: flex-start; /* 修复：内容靠左/右 */
+        }
+        .voice-main {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .voice-play-icon {
+            font-size: 1.25rem;
+        }
+        .voice-duration {
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+        .voice-text {
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            border-top: 1px solid rgba(128, 128, 128, 0.2);
+            font-size: 0.9em;
+            display: none; /* 默认隐藏 */
         }
         
+        /* 修改：字体大小继承 */
+        .chat-message p, .chat-message i {
+            font-size: inherit;
+            line-height: 1.5;
+        }
+
         .chat-message::before {
             content: '';
             position: absolute;
@@ -361,6 +449,9 @@
         .light-mode .chat-message::before {
              background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
         }
+        .chat-message.image-message::before, .chat-message.voice-message::before {
+            display: none;
+        }
 
         .chat-message::after {
             content: '';
@@ -372,6 +463,9 @@
             -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 12C5.33333 12 12 5.33333 12 0C12 5.33333 5.33333 12 0 12Z' fill='%23C4C4C4'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 12C5.33333 12 12 5.33333 12 0C12 5.33333 5.33333 12 0 12Z' fill='%23C4C4C4'/%3E%3C/svg%3E");
         }
+        .chat-message.image-message::after {
+            display: none;
+        }
         .chat-message.sent::after {
             right: -6px;
             transform: scaleX(-1);
@@ -380,12 +474,54 @@
             left: -6px;
         }
 
+        .message-meta {
+            font-size: 0.65rem;
+            color: #9ca3af;
+            display: flex;
+            flex-direction: column; /* 时间和已读垂直排列 */
+            flex-shrink: 0;
+            margin-bottom: 5px; /* 与气泡底部对齐 */
+            white-space: nowrap;
+            align-self: flex-end; /* 修改：让时间戳始终在底部 */
+        }
+        .chat-message-wrapper.sent .message-meta {
+            align-items: flex-end; /* 用户时间戳文字靠右对齐 */
+        }
+        .chat-message-wrapper.received .message-meta {
+            align-items: flex-start; /* AI时间戳文字靠左对齐 */
+        }
+
+        .message-read-status {
+            margin-left: 0; /* 移除左边距 */
+            display: none;
+        }
+        .message-read-status.visible {
+            display: inline;
+        }
+
         .dark-mode .chat-message { border: 1px solid rgba(255, 255, 255, 0.1); }
         .light-mode .chat-message { border: 1px solid rgba(0, 0, 0, 0.05); }
         .dark-mode .chat-message.sent { background-color: rgba(219, 39, 119, 0.3); }
         .dark-mode .chat-message.received { background-color: rgba(74, 74, 74, 0.3); }
         .light-mode .chat-message.sent { background-color: rgba(249, 168, 212, 0.4); }
         .light-mode .chat-message.received { background-color: rgba(229, 231, 250, 0.6); }
+        
+        .dark-mode .chat-message.sent.image-message, .light-mode .chat-message.sent.image-message { border: 2px solid rgba(249, 168, 212, 0.6); }
+        .dark-mode .chat-message.received.image-message, .light-mode .chat-message.received.image-message { border: 2px solid rgba(229, 231, 250, 0.8); }
+
+        /* 新增：系统消息样式 */
+        .chat-system-message {
+            background-color: rgba(128, 128, 128, 0.2);
+            color: #d1d5db;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin: 0.5rem auto;
+            width: fit-content;
+        }
+        .light-mode .chat-system-message {
+            color: #4b5563;
+        }
 
         .chat-input-bar {
             background-color: transparent;
@@ -395,45 +531,115 @@
         .dark-mode .chat-input-bar { border-color: rgba(255, 255, 255, 0.1); }
         .light-mode .chat-input-bar { border-color: rgba(0, 0, 0, 0.1); }
 
-        .chat-input {
+        /* 修改: 文本输入框样式 */
+        #chat-input {
             border: 1px solid transparent;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-            transition: background-color 0.3s, box-shadow 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s, height 0.2s ease-in-out;
+            resize: none; /* 禁止用户手动调整大小 */
+            overflow-y: auto; /* 内容超出时显示滚动条 */
+            line-height: 1.5; /* 确保行高一致 */
         }
-        .dark-mode .chat-input { background-color: rgba(31, 41, 55, 0.8); color: #ffffff; }
-        .light-mode .chat-input { background-color: rgba(243, 244, 246, 0.8); color: #1f2937; }
+        .dark-mode #chat-input { background-color: rgba(31, 41, 55, 0.8); color: #ffffff; }
+        .light-mode #chat-input { background-color: rgba(243, 244, 246, 0.8); color: #1f2937; }
 
         .status-bar.transparent-override {
             background-color: transparent !important;
         }
-        #wechat-chat-screen.has-custom-bg .app-header,
-        #wechat-chat-screen.has-custom-bg .chat-input-bar {
-            background: transparent;
-            border-color: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+        
+        #wechat-chat-screen.has-custom-bg {
+            background-color: transparent !important;
         }
-        #wechat-chat-screen.has-custom-bg .chat-input {
+
+        #wechat-chat-screen.has-custom-bg .app-header,
+        #wechat-chat-screen.has-custom-bg .chat-input-bar,
+        #wechat-chat-screen.has-custom-bg #chat-quick-actions-bar {
+            background: transparent !important;
+            border-color: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        #wechat-chat-screen.has-custom-bg #chat-input {
             background-color: rgba(0,0,0,0.2);
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
         }
-        .light-mode #wechat-chat-screen.has-custom-bg .chat-input {
+        .light-mode #wechat-chat-screen.has-custom-bg #chat-input {
              background-color: rgba(255,255,255,0.2);
              box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         .chat-time-divider {
-            text-align: center;
-            font-size: 0.75rem; /* 12px */
-            color: #9ca3af; /* gray-400 */
-            padding: 0.75rem 0;
+            display: none;
         }
+        
+        /* ========================================================= */
+        /* 气泡菜单样式 (已根据要求修改) */
+        /* ========================================================= */
+        .bubble-context-menu {
+            position: absolute;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2px 4px; /* 调整内边距，使其更紧凑 */
+            display: none;
+            flex-direction: row;
+            align-items: center;
+            z-index: 10; /* 现在只需要比气泡高即可 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(5px) scale(0.95);
+            opacity: 0;
+            transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+            visibility: hidden;
+        }
+        .bubble-context-menu.visible {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+        .bubble-menu-button {
+            background: none;
+            border: none;
+            color: #f0f0f0;
+            padding: 0.25rem 0.5rem; /* 减小按钮内边距 */
+            cursor: pointer;
+            font-size: 11px; /* 减小字体 */
+            border-radius: 2rem;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+        .bubble-menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        .bubble-menu-button:disabled {
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+        .bubble-menu-button i {
+            font-size: 12px; /* 减小图标大小 */
+            margin-right: 3px; /* 减小图标与文字间距 */
+        }
+        /* ========================================================= */
+        
+        /* 多选模式样式 */
+        .chat-message-wrapper.selected .chat-message {
+            background-color: rgba(59, 130, 246, 0.4) !important;
+            border-color: rgba(96, 165, 250, 0.8) !important;
+        }
+        .light-mode .chat-message-wrapper.selected .chat-message {
+             background-color: rgba(96, 165, 250, 0.5) !important;
+        }
+
 
         /* 颜色选择器样式 */
         .color-picker-input {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            width: 1.75rem; /* 28px */
+            width: 1.75rem;
             height: 1.75rem;
             padding: 0;
             border: 2px solid rgba(128, 128, 128, 0.3);
@@ -453,21 +659,21 @@
             border-radius: 50%;
         }
 
+        /* 修复：标题栏样式 */
         .app-header { 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            padding: 1rem; 
+            padding: 0.5rem 1rem;
             border-bottom-width: 1px; 
-            height: 3.5rem;
-            background: rgba(255, 255, 255, 0.05);
+            height: 3rem;
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            border-color: rgba(255, 255, 255, 0.1);
             transition: background-color 0.3s, border-color 0.3s;
+            flex-shrink: 0; /* 确保header不被压缩 */
+            z-index: 10;
         }
         .light-mode .app-header {
-            background: rgba(255, 255, 255, 0.6);
             border-color: rgba(0, 0, 0, 0.08);
         }
 
@@ -478,6 +684,11 @@
             top: 2px;
         }
         .app-header-title.clickable { cursor: pointer; }
+        /* --- 修改开始：按钮颜色 --- */
+        .app-header-btn.text-pink-500 {
+            color: #d1d5db; /* text-gray-300 */
+        }
+        /* --- 修改结束 --- */
         .app-header-btn { font-size: 1.25em; }
 
         /* 通用列表項樣式 */
@@ -527,7 +738,17 @@
         /* 微信導航欄 */
         .wechat-tab-bar { display: flex; border-top-width: 1px; }
         .wechat-tab-item { flex: 1; text-align: center; padding: 0.5rem 0; cursor: pointer; color: #9ca3af; }
-        .wechat-tab-item.active { color: #db2777; }
+        /* --- 修改开始：修复日夜间模式下微信菜单激活颜色 --- */
+        .wechat-tab-item.active {
+            font-weight: 600;
+        }
+        .dark-mode .wechat-tab-item.active {
+            color: #ffffff;
+        }
+        .light-mode .wechat-tab-item.active {
+            color: #1f2937; /* Dark text color for light mode */
+        }
+        /* --- 修改结束 --- */
         .wechat-tab-item i { font-size: 1.25em; }
         .wechat-tab-item span { display: block; font-size: 0.75em; }
 
@@ -549,7 +770,12 @@
             cursor: pointer;
         }
 
-        .app-screen-view { height: 100%; padding-top: 3.5rem; }
+        /* 修复：应用页面布局 */
+        .app-screen-view { 
+            height: 100%;
+            padding-top: 3rem; /* 为状态栏留出空间 */
+        }
+
 
         .font-size-btn.active {
             font-weight: 600;
@@ -571,13 +797,262 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            z-index: 0;
-            opacity: 0.3;
+            z-index: -1; /* 确保在最底层 */
         }
-        #wechat-chat-screen > *:not(.chat-background) {
+        
+        /* ========================================================= */
+        /* 新增：聊天输入区 & 功能面板样式 (已优化) */
+        /* ========================================================= */
+        #chat-quick-actions-bar {
+            background: transparent;
+            padding: 0.25rem 1rem;
+            display: flex;
+            justify-content: flex-start; /* 改为居左 */
+            gap: 1rem;
+        }
+        .quick-action-btn {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .quick-action-btn:hover {
+            opacity: 1;
+        }
+        
+        #chat-footer {
+            position: relative;
+        }
+
+        #chat-input-bar {
+            padding: 0.5rem 0.25rem; /* 减小垂直内边距 */
+        }
+        #chat-input-bar .chat-input-btn {
+            font-size: 1.25rem; /* 调小图标 */
+            padding: 0.5rem; /* 统一padding */
+            flex-shrink: 0; /* 防止被压缩 */
+        }
+        #emoji-btn {
+            margin-left: -0.25rem; /* 减小与+号的间距 */
+        }
+
+        #more-features-panel {
+            background: #2c2c2e;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+        }
+        .light-mode #more-features-panel {
+            background: #f8f8f8;
+            border-top-color: rgba(0, 0, 0, 0.1);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .feature-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 1rem;
+            background-color: #3a3a3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        .light-mode .feature-icon-wrapper {
+            background-color: #ffffff;
+        }
+        .feature-item:hover .feature-icon-wrapper {
+            background-color: #555;
+        }
+        .light-mode .feature-item:hover .feature-icon-wrapper {
+            background-color: #e5e5e5;
+        }
+        .feature-icon-wrapper i {
+            font-size: 1.5rem;
+        }
+        .feature-item span {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* ========================================================= */
+        /* 新增: 通话界面样式 (已修复) */
+        /* ========================================================= */
+        .call-screen {
+            position: absolute;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            background-color: #111;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .call-screen.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .call-background {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            /* --- 修改开始：减弱视频通话背景模糊 --- */
+            filter: blur(4px) brightness(0.6);
+            /* --- 修改结束 --- */
+            transform: scale(1.1);
+        }
+        .call-content {
             position: relative;
             z-index: 1;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 3.5rem 1rem 1rem; /* 修复：调整顶部内边距以避开状态栏 */
         }
+        #voice-call-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.5);
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+            margin-top: 2rem; /* 增加一点顶部间距 */
+        }
+        #user-video-preview {
+            position: absolute;
+            top: 3.5rem; /* 修复：调整位置以避开状态栏 */
+            right: 1rem;
+            width: 90px;
+            height: 120px;
+            background-color: #333;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #user-video-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .call-status-box {
+            margin-top: 1rem;
+            background: rgba(0, 0, 0, 0.25); 
+            backdrop-filter: blur(12px);     
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 1rem;
+            padding: 1rem;
+            max-height: 25vh;
+            overflow-y: auto;
+            font-style: italic;
+            color: #e5e7eb;
+            flex-shrink: 0;
+        }
+        .call-input-area {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .call-input-area textarea {
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 0.5rem 1rem;
+            color: white;
+            resize: none;
+        }
+        /* --- 修改开始：按钮颜色 --- */
+        .call-input-area button {
+            background-color: #374151; /* bg-gray-700 */
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+        .call-input-area button:hover {
+            background-color: #4b5563; /* bg-gray-600 */
+        }
+        /* --- 修改结束 --- */
+        .call-controls {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+        .call-control-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+        .hangup-btn { background-color: #ef4444; }
+
+        /* ========================================================= */
+        /* 新增: 来电提醒样式 */
+        /* ========================================================= */
+        #incoming-call-alert {
+            position: absolute;
+            top: 3.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            z-index: 9500;
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            transform: translateY(-200%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        #incoming-call-alert.visible {
+            transform: translateY(0);
+        }
+        #incoming-call-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        #incoming-call-info {
+            flex-grow: 1;
+        }
+        .call-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            margin-left: 0.75rem;
+        }
+        #answer-call-btn { background-color: #22c55e; }
+        #decline-call-btn { background-color: #ef4444; }
+
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen dark-mode">
@@ -585,8 +1060,13 @@
     <input type="file" id="user-avatar-input" class="hidden" accept="image/*">
     <input type="file" id="chat-bg-input" class="hidden" accept="image/*">
     <input type="file" id="import-data-input" class="hidden" accept=".json">
+    <input type="file" id="image-upload-input" class="hidden" accept="image/*">
+    <input type="file" id="user-video-image-input" class="hidden" accept="image/*">
+    <!-- --- 修改开始：为“我的视频照片”添加独立的文件输入框 --- -->
+    <input type="file" id="my-video-image-input" class="hidden" accept="image/*">
+    <!-- --- 修改结束 --- -->
 
-    <!-- 手機外框 -->
+    <!-- 手机外框 -->
     <div class="phone-frame relative w-full max-w-[375px] h-[720px] rounded-[3rem] p-2 shadow-2xl flex flex-col overflow-hidden transform transition-all duration-300">
         
         <!-- 容器：用於切換主畫面和應用程式畫面 -->
@@ -612,7 +1092,7 @@
             <!-- 訊息提示框 -->
             <div id="messageBox" class="message-box"></div>
             
-            <!-- 彈窗們 -->
+            <!-- 弹窗们 -->
             <div id="song-list-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
@@ -622,7 +1102,7 @@
                         </button>
                     </div>
                     <ul id="song-list-container" class="space-y-2 max-h-60 overflow-y-auto">
-                        <!-- 歌曲項目會在這裡動態插入 -->
+                        <!-- 歌曲项目会在这里动态插入 -->
                     </ul>
                 </div>
             </div>
@@ -635,7 +1115,7 @@
                         </button>
                     </div>
                     <ul id="new-chat-character-list" class="space-y-2 max-h-60 overflow-y-auto">
-                        <!-- 角色列表會在這裡動態插入 -->
+                        <!-- 角色列表会在这里动态插入 -->
                     </ul>
                 </div>
             </div>
@@ -647,6 +1127,19 @@
                     <div class="flex justify-around">
                         <button id="cancel-delete-btn" class="px-6 py-2 rounded-lg">取消</button>
                         <button id="confirm-delete-btn" class="px-6 py-2 bg-red-600 text-white rounded-lg">删除</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 新增：语音输入弹窗 -->
+            <div id="voice-input-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <h3 class="text-lg font-bold mb-4 text-center">发送语音消息</h3>
+                    <textarea id="voice-text-input" class="form-textarea w-full h-24 resize-none" placeholder="在此输入文字..."></textarea>
+                    <div class="flex justify-end mt-4 gap-2">
+                        <button id="cancel-voice-btn" class="px-4 py-2 rounded-lg">取消</button>
+                        <!-- --- 修改开始：按钮颜色 --- -->
+                        <button id="send-voice-btn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">发送</button>
+                        <!-- --- 修改结束 --- -->
                     </div>
                 </div>
             </div>
@@ -670,7 +1163,9 @@
                         <div class="flex-grow flex flex-col justify-center h-24 ml-4">
                             <textarea id="mood-text" class="w-full bg-transparent placeholder-gray-300 text-sm p-1 rounded-md resize-none border-none outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/10 transition-all text-center" placeholder="点击填写心情..."></textarea>
                             <div class="flex items-center justify-center space-x-3 mt-2">
-                                <button id="loop-button" class="player-button"><i class="fas fa-redo-alt text-base"></i></button>
+                                <!-- --- 修改开始：修复重播键图标 --- -->
+                                <button id="loop-button" class="player-button"><i class="fas fa-rotate-right text-base"></i></button>
+                                <!-- --- 修改结束 --- -->
                                 <button id="prev-button" class="player-button"><i class="fas fa-step-backward text-base"></i></button>
                                 <button id="play-pause-button" class="player-button"><i class="fas fa-play text-xl"></i></button>
                                 <button id="next-button" class="player-button"><i class="fas fa-step-forward text-base"></i></button>
@@ -710,10 +1205,12 @@
                     <div></div> 
                     <!-- Right side 2x2 grid -->
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="w-14 h-14 bg-pink-600 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="Placeholder 1"><i class="fas fa-question text-white text-2xl"></i></div>
-                        <div class="w-14 h-14 bg-pink-600 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="设置"><i class="fas fa-cog text-white text-2xl"></i></div>
-                        <div class="w-14 h-14 bg-pink-600 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="Placeholder 2"><i class="fas fa-question text-white text-2xl"></i></div>
-                        <div class="w-14 h-14 bg-pink-600 rounded-xl flex items-center justify-center shadow-lg app-icon" data-app-name="Placeholder 3"><i class="fas fa-question text-white text-2xl"></i></div>
+                        <!-- --- 修改开始：修改App图标样式 --- -->
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 1"><i class="fas fa-question text-white text-2xl"></i></div>
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="设置"><i class="fas fa-cog text-white text-2xl"></i></div>
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 2"><i class="fas fa-question text-white text-2xl"></i></div>
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 3"><i class="fas fa-question text-white text-2xl"></i></div>
+                        <!-- --- 修改结束 --- -->
                     </div>
                 </div>
 
@@ -757,22 +1254,82 @@
             </div>
 
             <!-- 微信聊天界面 -->
-            <div id="wechat-chat-screen" class="app-screen-view wechat-chat-screen flex-col hidden relative">
+            <div id="wechat-chat-screen" class="app-screen-view flex-col hidden">
                 <div class="chat-background"></div>
                 <div class="app-header">
-                    <button id="wechat-chat-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
-                    <h3 id="wechat-contact-name" class="app-header-title"></h3>
-                    <button id="wechat-options-button" class="app-header-btn"><i class="fas fa-ellipsis-h"></i></button>
+                    <!-- Normal Header Content -->
+                    <div id="chat-header-normal" class="flex items-center justify-between w-full">
+                        <button id="wechat-chat-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="wechat-contact-name" class="app-header-title"></h3>
+                        <button id="wechat-options-button" class="app-header-btn"><i class="fas fa-ellipsis-h"></i></button>
+                    </div>
+                    <!-- Multiselect Header Content -->
+                    <div id="chat-header-multiselect" class="hidden items-center justify-between w-full text-sm">
+                        <button id="cancel-multiselect-btn" class="font-semibold px-2 py-1">取消</button>
+                        <span id="multiselect-count" class="font-bold">已选择 0 项</span>
+                        <button id="confirm-multiselect-btn" class="font-semibold text-red-500 px-2 py-1">删除</button>
+                    </div>
+                </div>
+                <!-- 菜单的HTML结构现在只是一个模板，会被JS复制 -->
+                <template id="bubble-menu-template">
+                    <div class="bubble-context-menu">
+                        <button data-action="delete" class="bubble-menu-button"><i class="fas fa-trash"></i><span>删除</span></button>
+                        <button data-action="copy" class="bubble-menu-button"><i class="fas fa-copy"></i><span>复制</span></button>
+                        <button data-action="multiselect" class="bubble-menu-button"><i class="fas fa-check-square"></i><span>多选</span></button>
+                        <button data-action="edit" class="bubble-menu-button"><i class="fas fa-pencil-alt"></i><span>编辑</span></button>
+                        <button data-action="retry" class="bubble-menu-button"><i class="fas fa-sync-alt"></i><span>重生成</span></button>
+                    </div>
+                </template>
+                <!-- 新增：来电提醒UI -->
+                <div id="incoming-call-alert">
+                    <img id="incoming-call-avatar" src="https://placehold.co/96x96/777/FFF?text=?" alt="avatar">
+                    <div id="incoming-call-info">
+                        <p id="incoming-call-name" class="font-bold">Character Name</p>
+                        <p id="incoming-call-type" class="text-sm text-gray-300">正在呼叫...</p>
+                    </div>
+                    <button id="answer-call-btn" class="call-btn"><i class="ri-phone-fill"></i></button>
+                    <button id="decline-call-btn" class="call-btn"><i class="ri-phone-fill rotate-135"></i></button>
                 </div>
                 <!-- 內容區域 -->
-                <div id="wechat-content-chat" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <div id="wechat-content-chat" class="flex-1 overflow-y-auto p-4 space-y-1">
                     <!-- 聊天消息 -->
                 </div>
-                <!-- 輸入框 -->
-                <div id="chat-input-bar" class="chat-input-bar flex items-center p-4">
-                    <input id="chat-input" type="text" placeholder="输入信息..." class="chat-input flex-1 rounded-full px-4 py-2 mr-2 focus:ring-2 focus:ring-pink-500">
-                    <button id="send-chat-button" class="text-zinc-600 dark:text-zinc-300 text-2xl"><i class="far fa-paper-plane"></i></button>
-                    <button id="receive-chat-button" class="text-zinc-600 dark:text-zinc-300 text-2xl ml-3"><i class="fas fa-circle-notch"></i></button>
+                
+                <!-- 新增: 快捷通话按钮栏 -->
+                <div id="chat-quick-actions-bar">
+                    <button id="quick-voice-message-btn" class="quick-action-btn"><i class="ri-mic-line"></i></button>
+                    <button id="quick-voice-call-btn" class="quick-action-btn"><i class="ri-phone-line"></i></button>
+                    <button id="quick-video-call-btn" class="quick-action-btn"><i class="ri-vidicon-line"></i></button>
+                </div>
+
+                <!-- 底部交互区 -->
+                <div id="chat-footer">
+                    <!-- 输入区域 -->
+                    <div id="chat-input-bar" class="chat-input-bar flex items-center p-2">
+                        <button id="add-feature-btn" class="chat-input-btn"><i class="ri-add-circle-line"></i></button>
+                        <button id="emoji-btn" class="chat-input-btn"><i class="ri-emotion-happy-line"></i></button>
+                        <textarea id="chat-input" placeholder="输入信息..." class="chat-input flex-1 rounded-full px-4 py-2 mx-2 focus:ring-2 focus:ring-gray-500" rows="1"></textarea>
+                        <button id="send-chat-button" class="chat-input-btn"><i class="far fa-paper-plane"></i></button>
+                        <button id="receive-chat-button" class="chat-input-btn"><i class="fas fa-circle-notch"></i></button>
+                    </div>
+
+                    <!-- 新增: "更多功能" 面板 -->
+                    <div id="more-features-panel" class="hidden">
+                        <div class="features-grid">
+                            <div id="send-image-btn" class="feature-item">
+                                <div class="feature-icon-wrapper"><i class="ri-image-line"></i></div>
+                                <span>图片</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper"><i class="ri-red-packet-line"></i></div>
+                                <span>红包</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper"><i class="ri-exchange-dollar-line"></i></div>
+                                <span>转账</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -794,6 +1351,7 @@
                             <input type="color" id="ai-bubble-color-picker" class="color-picker-input">
                         </div>
                     </div>
+                    <div id="change-user-video-image-option" class="list-item">设置对方的视频照片</div>
                     <div id="delete-chat-option" class="list-item text-red-500 mt-4">删除此对话</div>
                 </div>
             </div>
@@ -814,7 +1372,9 @@
                 <div class="app-header">
                     <button id="wb-edit-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title">编辑世界书</h3>
-                    <button id="wb-save-button" class="app-header-btn text-pink-500 font-bold text-base">保存</button>
+                    <!-- --- 修改开始：按钮颜色 --- -->
+                    <button id="wb-save-button" class="app-header-btn text-gray-300 font-bold text-base">保存</button>
+                    <!-- --- 修改结束 --- -->
                 </div>
                 <div class="p-2 space-y-4">
                     <input type="text" id="wb-title-input" placeholder="标题" class="form-input">
@@ -837,7 +1397,9 @@
                 <div class="app-header">
                     <button id="cb-edit-back-button" class="app-header-btn"><i class="fas fa-chevron-left"></i></button>
                     <h3 class="app-header-title">编辑角色</h3>
-                    <button id="cb-save-button" class="app-header-btn text-pink-500 font-bold text-base">保存</button>
+                    <!-- --- 修改开始：按钮颜色 --- -->
+                    <button id="cb-save-button" class="app-header-btn text-gray-300 font-bold text-base">保存</button>
+                    <!-- --- 修改结束 --- -->
                 </div>
                 <div class="flex-1 overflow-y-auto p-2 space-y-4">
                     <div class="flex items-center space-x-4 p-2">
@@ -963,7 +1525,9 @@
                     <div class="p-4 rounded-lg bg-card">
                         <label for="font-url-input" class="block text-sm font-medium mb-2">字体文件URL (支持.ttf, .otf, .woff等)</label>
                         <input type="text" id="font-url-input" class="form-input w-full" placeholder="https://example.com/font.ttf">
-                        <button id="font-save-button" class="w-full mt-4 px-4 py-2 bg-pink-600 text-white rounded-md">应用字体</button>
+                        <!-- --- 修改开始：按钮颜色 --- -->
+                        <button id="font-save-button" class="w-full mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">应用字体</button>
+                        <!-- --- 修改结束 --- -->
                     </div>
                 </div>
             </div>
@@ -981,7 +1545,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="api_url" class="block text-sm font-medium mb-1">API 地址:</label>
-                                <input type="text" id="api_url" placeholder="例如: https://api.openai.com/v1" class="api-input form-input">
+                                <input type="text" id="api_url" placeholder="例如: https://generativelanguage.googleapis.com" class="api-input form-input">
                             </div>
                             <div>
                                 <label for="api_key" class="block text-sm font-medium mb-1">API 密钥:</label>
@@ -994,22 +1558,20 @@
                     <div class="p-4 rounded-lg bg-card">
                         <h3 class="font-bold mb-4">模型选择</h3>
                         <div class="space-y-4">
-                            <button id="fetch_models_btn" class="w-full flex justify-center items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 disabled:opacity-50">
-                                <svg id="spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span>获取 API 模型</span>
-                            </button>
-                            <div>
+                             <div>
                                 <label for="model_select" class="block text-sm font-medium mb-1">选取 API 模型:</label>
-                                <select id="model_select" class="api-input form-select"><option value="">请先获取模型...</option></select>
+                                <select id="model_select" class="api-input form-select">
+                                    <option value="gemini-pro">gemini-pro (text)</option>
+                                    <option value="gemini-pro-vision">gemini-pro-vision (text & image)</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Save Button -->
-                    <button id="save_settings_btn" class="w-full flex justify-center items-center mt-2 px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700">保存设定</button>
+                    <!-- --- 修改开始：按钮颜色 --- -->
+                    <button id="save_settings_btn" class="w-full flex justify-center items-center mt-2 px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600">保存设定</button>
+                    <!-- --- 修改结束 --- -->
                     
                     <!-- Status Messages -->
                     <div id="api-status" class="mt-4 p-4 rounded-lg text-center font-semibold text-sm hidden"></div>
@@ -1019,6 +1581,52 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ========================================================= -->
+            <!-- 新增: 通话界面 (已修复) -->
+            <!-- ========================================================= -->
+            <!-- 语音通话界面 -->
+            <div id="voice-call-screen" class="call-screen">
+                <div class="call-background" id="voice-call-bg"></div>
+                <div class="call-content">
+                    <div class="flex flex-col items-center flex-shrink-0">
+                        <img id="voice-call-avatar" src="https://placehold.co/300x300/777/FFF?text=?" alt="avatar">
+                        <h3 id="voice-call-name" class="text-2xl font-bold mt-4">Character Name</h3>
+                        <p id="voice-call-timer" class="text-gray-300">00:00</p>
+                    </div>
+                    <div class="mt-auto w-full">
+                        <div class="call-status-box" id="voice-call-status-box"></div>
+                        <div class="call-input-area">
+                            <textarea id="voice-call-input" placeholder="输入互动文字..." rows="1"></textarea>
+                            <button id="voice-call-send-btn"><i class="ri-send-plane-2-fill"></i></button>
+                        </div>
+                        <div class="call-controls">
+                            <button id="voice-call-hangup" class="call-control-btn hangup-btn"><i class="ri-phone-fill rotate-135"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 视频通话界面 -->
+            <div id="video-call-screen" class="call-screen">
+                <div class="call-background" id="video-call-bg"></div>
+                <div class="call-content">
+                    <div id="user-video-preview">
+                        <img id="user-video-image" src="https://placehold.co/180x240/333/FFF?text=Me" alt="user video">
+                    </div>
+                    <div class="mt-auto w-full">
+                        <div class="call-status-box" id="video-call-status-box"></div>
+                         <div class="call-input-area">
+                            <textarea id="video-call-input" placeholder="输入互动文字..." rows="1"></textarea>
+                            <button id="video-call-send-btn"><i class="ri-send-plane-2-fill"></i></button>
+                        </div>
+                        <div class="call-controls">
+                            <button id="video-call-hangup" class="call-control-btn hangup-btn"><i class="ri-phone-fill rotate-135"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -1032,6 +1640,10 @@
         let userAvatars = {}; // { characterId: 'dataURL' }
         let chatBackgrounds = {}; // { characterId: 'dataURL' }
         let chatBubbleColors = {}; // { characterId: { user: '#hex', ai: '#hex' } }
+        let userVideoImages = {}; // { characterId: 'dataURL' }
+        // --- 修改开始：为“我的视频照片”添加独立的数据存储 ---
+        let myVideoImages = {}; // { characterId: 'dataURL' }
+        // --- 修改结束 ---
         let currentChatCharacterId = null;
 
         const currentAudio = new Audio();
@@ -1040,6 +1652,16 @@
         let isSingleLooping = false;
         let currentEditingWorldBookId = null;
         let currentEditingCharacterId = null;
+        
+        // 新增：多选模式相关变量
+        let isMultiSelectMode = false;
+        let selectedMessages = new Set();
+        let activeMenu = null; // 用于追踪当前打开的菜单
+
+        // 新增：通话相关变量
+        let currentCallType = null; // 'voice' or 'video'
+        let callTimerInterval = null;
+
 
         // DOM 元素獲取
         const $ = (selector) => document.querySelector(selector);
@@ -1067,10 +1689,13 @@
             
             if (screenId === 'wechat-chat-screen') {
                 const chatScreen = $('#wechat-chat-screen');
-                if (chatBackgrounds[currentChatCharacterId]) {
+                const savedBg = chatBackgrounds[currentChatCharacterId];
+                if (savedBg) {
+                    chatScreen.querySelector('.chat-background').style.backgroundImage = `url(${savedBg})`;
                     chatScreen.classList.add('has-custom-bg');
                     statusBar.classList.add('transparent-override');
                 } else {
+                    chatScreen.querySelector('.chat-background').style.backgroundImage = '';
                     chatScreen.classList.remove('has-custom-bg');
                     statusBar.classList.remove('transparent-override');
                 }
@@ -1156,7 +1781,7 @@
             worldBooks = loadData('worldBooks', []);
             characters = loadData('characters', []);
             
-            // 5. 加载聊天记录 & 用户头像 & 聊天背景 & 气泡颜色
+            // 5. 加载聊天记录 & 用户头像 & 聊天背景 & 气泡颜色 & 视频通话头像
             chatHistories = loadData('chatHistories', {});
             Object.keys(chatHistories).forEach(key => {
                 if(Array.isArray(chatHistories[key])) {
@@ -1166,6 +1791,10 @@
             userAvatars = loadData('userAvatars', {});
             chatBackgrounds = loadData('chatBackgrounds', {});
             chatBubbleColors = loadData('chatBubbleColors', {});
+            userVideoImages = loadData('userVideoImages', {});
+            // --- 修改开始：加载“我的视频照片”数据 ---
+            myVideoImages = loadData('myVideoImages', {});
+            // --- 修改结束 ---
             
             // 6. 加载播放列表 (仅名称)
             songList = loadData('songList', []);
@@ -1187,9 +1816,7 @@
             if (savedApiSettings && savedApiSettings.url && savedApiSettings.key && savedApiSettings.model) {
                 $('#api_url').value = savedApiSettings.url;
                 $('#api_key').value = savedApiSettings.key;
-                const modelSelect = $('#model_select');
-                modelSelect.innerHTML = `<option value="${savedApiSettings.model}">${savedApiSettings.model}</option>`;
-                modelSelect.value = savedApiSettings.model;
+                $('#model_select').value = savedApiSettings.model;
                 updateApiStatusUI(true);
             } else {
                 updateApiStatusUI(false);
@@ -1289,9 +1916,11 @@
 
             try {
                 const compressedDataUrl = await compressImage(file, options.compression);
-                displayElement.style.backgroundImage = `url(${compressedDataUrl})`;
-                displayElement.style.backgroundSize = 'cover';
-                displayElement.style.backgroundPosition = 'center';
+                if (displayElement) {
+                    displayElement.style.backgroundImage = `url(${compressedDataUrl})`;
+                    displayElement.style.backgroundSize = 'cover';
+                    displayElement.style.backgroundPosition = 'center';
+                }
                 
                 if (storageKey) {
                     saveData(storageKey, compressedDataUrl);
@@ -1299,8 +1928,10 @@
 
                 if (options.hideTextElement) $(options.hideTextElement).style.opacity = 0;
 
-                const icon = displayElement.querySelector('i');
-                if (icon) icon.style.display = 'none';
+                if(displayElement) {
+                    const icon = displayElement.querySelector('i');
+                    if (icon) icon.style.display = 'none';
+                }
                 
                 return compressedDataUrl;
 
@@ -1323,19 +1954,11 @@
                 chatContentArea.innerHTML = `<p class="text-center text-gray-500 text-xs py-4">你已和 ${characters.find(c => c.id === currentChatCharacterId)?.name || '未知角色'} 建立对话，开始聊天吧！</p>`;
             }
             
-            let lastTimestamp = 0;
-            const TIME_GAP = 30 * 60 * 1000; // 30 minutes
-
-            history.forEach(msg => {
-                const currentTimestamp = msg.timestamp || 0;
-                if (currentTimestamp - lastTimestamp > TIME_GAP) {
-                    const timeDivider = document.createElement('div');
-                    timeDivider.className = 'chat-time-divider';
-                    timeDivider.textContent = formatTimestamp(currentTimestamp);
-                    chatContentArea.appendChild(timeDivider);
-                }
-                appendMessage(msg.message, msg.sender, false, msg.timestamp);
-                lastTimestamp = currentTimestamp;
+            let lastSender = null;
+            history.forEach((msg, index) => {
+                // 判断是否是新发送者（与前一条消息的发送者不同）
+                const isNewSender = index === 0 || history[index - 1].sender !== msg.sender;
+                appendMessage(msg.content, msg.sender, msg.type, false, msg.timestamp, isNewSender);
             });
             chatContentArea.scrollTop = chatContentArea.scrollHeight;
         }
@@ -1343,72 +1966,136 @@
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
             const date = new Date(timestamp);
-            const now = new Date();
-            const isToday = date.toDateString() === now.toDateString();
-
-            const time = date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
-
-            if (isToday) {
-                return time;
-            }
-            
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            return `${month}月${day}日 ${time}`;
+            return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
         }
 
+        // =============================================================
+        //  聊天消息生成函数 (已修改支持多种类型)
+        // =============================================================
+        function appendMessage(content, sender, type = 'text', shouldSave = true, timestamp = Date.now(), isNewSender = false) {
+            const senderClass = sender === 'user' ? 'sent' : 'received';
 
-        function appendMessage(message, sender, shouldSave = true, timestamp = Date.now()) {
             const messageWrapper = document.createElement('div');
-            messageWrapper.className = `chat-message-wrapper flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            messageWrapper.className = `chat-message-wrapper ${senderClass}`;
+            messageWrapper.dataset.timestamp = timestamp;
+            messageWrapper.dataset.sender = sender;
             
+            if (isNewSender) {
+                messageWrapper.classList.add('new-sender');
+            }
+
             const character = characters.find(c => c.id === currentChatCharacterId);
             
-            const messageBubble = document.createElement('div');
-            messageBubble.className = `chat-message ${sender} max-w-[70%]`;
-            
-            const customColors = chatBubbleColors[currentChatCharacterId];
-            const isDarkMode = body.classList.contains('dark-mode');
-            let bubbleColor;
-            if (customColors) {
-                const colorHex = sender === 'user' ? customColors.user : customColors.ai;
-                if (colorHex) {
-                    const colorRgba = hexToRgba(colorHex, isDarkMode ? 0.6 : 0.7);
-                    if (colorRgba) {
-                        bubbleColor = colorRgba;
-                        messageBubble.style.backgroundColor = bubbleColor;
-                    }
-                }
-            }
-            const defaultBg = isDarkMode ? (sender === 'user' ? 'rgba(219, 39, 119, 0.5)' : 'rgba(74, 74, 74, 0.5)') : (sender === 'user' ? 'rgba(249, 168, 212, 0.6)' : 'rgba(229, 231, 250, 0.8)');
-            messageBubble.style.setProperty('--bubble-bg', bubbleColor || defaultBg);
-
-
-            const messageText = document.createElement('p');
-            const formattedMessage = message.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
-            messageText.innerHTML = formattedMessage;
-            messageBubble.appendChild(messageText);
-
+            // 1. 创建头像 (仅在是新发送者时显示)
             const avatar = document.createElement('div');
             avatar.className = 'chat-avatar';
+            if (isNewSender) {
+                if (sender === 'ai') {
+                    if (character?.avatar) {
+                        avatar.style.backgroundImage = `url(${character.avatar})`;
+                    } else {
+                        avatar.innerHTML = '<i class="fas fa-robot"></i>';
+                    }
+                } else { // sender === 'user'
+                    avatar.classList.add('user-avatar-in-chat');
+                    const userAvatarForThisChat = userAvatars[currentChatCharacterId];
+                    if (userAvatarForThisChat) {
+                        avatar.style.backgroundImage = `url(${userAvatarForThisChat})`;
+                    } else {
+                        avatar.innerHTML = '<i class="fas fa-user"></i>';
+                    }
+                }
+            } else {
+                avatar.style.visibility = 'hidden'; // 占位但不显示
+            }
 
-            if (sender === 'ai') {
-                if (character?.avatar) {
-                    avatar.style.backgroundImage = `url(${character.avatar})`;
-                } else {
-                    avatar.innerHTML = '<i class="fas fa-robot"></i>';
+            // 2. 创建内容容器 (包含气泡)
+            const contentWrapper = document.createElement('div');
+            contentWrapper.className = 'chat-message-content';
+
+            const messageBubble = document.createElement('div');
+            
+            // 根据消息类型创建内容
+            if (type === 'image') {
+                messageBubble.className = `chat-message ${senderClass} image-message`;
+                const img = document.createElement('img');
+                img.src = content;
+                messageBubble.appendChild(img);
+            } else if (type === 'voice') {
+                messageBubble.className = `chat-message ${senderClass} voice-message`;
+                const duration = Math.max(1, Math.round(content.length / 4));
+                const iconClass = sender === 'user' ? 'ri-play-fill' : 'ri-play-line';
+                messageBubble.innerHTML = `
+                    <div class="voice-main">
+                        <i class="${iconClass} voice-play-icon"></i>
+                        <span class="voice-duration">${duration}"</span>
+                    </div>
+                    <p class="voice-text">${content}</p>
+                `;
+                messageBubble.addEventListener('click', () => {
+                    const voiceText = messageBubble.querySelector('.voice-text');
+                    voiceText.style.display = voiceText.style.display === 'block' ? 'none' : 'block';
+                });
+            } else if (type === 'system') {
+                // 修复：系统消息使用独立的样式
+                messageBubble.className = 'chat-system-message';
+                messageBubble.innerHTML = `<p>${content}</p>`;
+                messageWrapper.className = 'chat-message-wrapper justify-center';
+                avatar.style.display = 'none';
+            }
+            else { // 默认是 text
+                messageBubble.className = `chat-message ${senderClass}`;
+                const formattedMessage = content.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
+                messageBubble.innerHTML = `<p>${formattedMessage}</p>`;
+            }
+
+            if (type !== 'system') {
+                const customColors = chatBubbleColors[currentChatCharacterId];
+                const isDarkMode = body.classList.contains('dark-mode');
+                let bubbleColor;
+                if (customColors) {
+                    const colorHex = sender === 'user' ? customColors.user : customColors.ai;
+                    if (colorHex) {
+                        const colorRgba = hexToRgba(colorHex, isDarkMode ? 0.6 : 0.7);
+                        if (colorRgba) {
+                            bubbleColor = colorRgba;
+                            messageBubble.style.backgroundColor = bubbleColor;
+                        }
+                    }
                 }
+                const defaultBg = isDarkMode ? (sender === 'user' ? 'rgba(219, 39, 119, 0.5)' : 'rgba(74, 74, 74, 0.5)') : (sender === 'user' ? 'rgba(249, 168, 212, 0.6)' : 'rgba(229, 231, 250, 0.8)');
+                messageBubble.style.setProperty('--bubble-bg', bubbleColor || defaultBg);
+            }
+
+
+            contentWrapper.appendChild(messageBubble);
+
+            // 3. 创建元数据 (时间戳, 已读)
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'message-meta';
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'message-timestamp';
+            timeSpan.textContent = formatTimestamp(timestamp);
+            metaDiv.appendChild(timeSpan);
+
+            if (sender === 'user') {
+                const readSpan = document.createElement('span');
+                readSpan.className = 'message-read-status';
+                readSpan.textContent = '已读';
+                readSpan.id = `read-status-${timestamp}`;
+                metaDiv.appendChild(readSpan);
+            }
+
+            // 4. 按顺序组装
+            if (type === 'system') {
+                messageWrapper.appendChild(contentWrapper);
+            } else if (senderClass === 'received') {
                 messageWrapper.appendChild(avatar);
-                messageWrapper.appendChild(messageBubble);
-            } else { // sender === 'user'
-                avatar.classList.add('user-avatar-in-chat');
-                const userAvatarForThisChat = userAvatars[currentChatCharacterId];
-                if (userAvatarForThisChat) {
-                    avatar.style.backgroundImage = `url(${userAvatarForThisChat})`;
-                } else {
-                    avatar.innerHTML = '<i class="fas fa-user"></i>';
-                }
-                messageWrapper.appendChild(messageBubble);
+                messageWrapper.appendChild(contentWrapper);
+                messageWrapper.appendChild(metaDiv);
+            } else { // sent
+                messageWrapper.appendChild(metaDiv);
+                messageWrapper.appendChild(contentWrapper);
                 messageWrapper.appendChild(avatar);
             }
             
@@ -1422,22 +2109,34 @@
                 if (!chatHistories[currentChatCharacterId]) {
                     chatHistories[currentChatCharacterId] = { history: [], pinned: false };
                 }
-                chatHistories[currentChatCharacterId].history.push({ message, sender, timestamp });
+                chatHistories[currentChatCharacterId].history.push({ content, sender, type, timestamp });
                 saveData('chatHistories', chatHistories);
-                renderChatHistory();
             }
         }
 
-
-        async function getAIResponse() {
+        // =============================================================
+        //  AI 响应核心函数 (已重构)
+        // =============================================================
+        
+        async function getAIResponse(lastUserMessage, isRetry = false) {
             const apiSettings = loadData('api_settings');
             if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
-                showMessageBox("请先在设置中配置 API");
-                return;
+                return showMessageBox("请先在设置中配置 API");
             }
 
-            appendMessage("...", 'ai', false);
-            const thinkingMessage = chatContentArea.lastElementChild;
+            const modelIsVision = apiSettings.model.includes('vision') || apiSettings.model.includes('gemini');
+            if (lastUserMessage.type === 'image' && !modelIsVision) {
+                return appendMessage("我暂时还看不懂图片哦，可以和我聊聊别的话题吗？", 'ai', 'text', true, Date.now(), true);
+            }
+
+            const lastReadStatus = Array.from(chatContentArea.querySelectorAll('.message-read-status')).pop();
+            if(lastReadStatus) lastReadStatus.classList.add('visible');
+
+            let thinkingMessage;
+            if (!isRetry) {
+                appendMessage("...", 'ai', 'text', false, Date.now(), true);
+                thinkingMessage = chatContentArea.lastElementChild;
+            }
 
             try {
                 const character = characters.find(c => c.id === currentChatCharacterId);
@@ -1446,60 +2145,80 @@
                 const chatHistory = (chatHistories[currentChatCharacterId]?.history || []).slice(-10);
 
                 const systemPrompt = `
-# 角色扮演指令
-你将扮演我的soulmate，你的名字是${character.name}。
-这是一个手机软件，所以我们所有交流均以对白为主，非必要不描写其他。
+                    # 角色扮演指令
+                    你将扮演我的soulmate，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 “ ”。
+                    # 环境/动作/心理描写规则
+                    一旦涉及到见面的环境，所有关于”环境、心理、动作“等外在因素、环境描写，都需要用第三人称”他“”她“，或者第二人称”他“，”你“，并在文字当中用斜体，例如 *他俯下身亲吻了你*。在描写中禁止用第一人称，比如”我亲吻了你“，这是被禁止的。正确示范应该是：”*他俯下身亲吻了她*“或”*他俯下身亲吻了你*“。在日记和动态等其他心理活动板块中可以提到“我”，例如，“今天我见到她了，好想她”，但这仅限于日记等记录的板块。
+                    # 新增指令：发送语音
+                    当你想要表达亲密、惊讶或有趣的语气时，可以将回复包装成语音格式，例如：[VOICE:你好呀！今天过得怎么样？]。程序会自动将其渲染为语音条。
+                    # 新增指令：发起通话
+                    在剧情和情感推动下，你可以主动发起通话。指令格式为 [CALL:VOICE] 或 [CALL:VIDEO]。这会向用户弹出通话邀请。
+                    # 你的角色设定: ${character.persona}
+                    # 我（用户）的角色设定: ${character.myPersona}
+                    # 我们的世界观背景: ${worldBookContext}
+                    # 对话格式指令 (非常重要!)
+                    - 你的回复必须模仿真实的人类聊天习惯。将你的想法拆分成多个简短的句子，并用 "|||" 作为分隔符。每一段由 "|||" 分隔的内容都会成为一个独立的气泡。
+                    - 任何第三人称的*动作或环境描写* (例如 *他笑了*) 都必须是独立的一段，用 "|||" 与其他对话分开。
+                    - 严禁在回复的开头说“好的”或任何确认收到指令的话。你必须直接以 ${character.name} 的身份开始对话。
+                    - 示例: "早安|||*他伸了个懒腰*|||你醒啦？" 这将会被显示为三个独立的气泡。
+                `;
 
-# 环境/动作/心理描写规则
-一旦涉及到见面的环境，所有关于”环境、心理、动作“等外在因素、环境描写，都需要用第三人称”他“”她“，或者第二人称”他“，”你“，并在文字当中用斜体，例如 *他俯下身亲吻了你*。
-在描写中禁止用第一人称，比如”我亲吻了你“，这是被禁止的。正确示范应该是：”*他俯下身亲吻了她*“或”*他俯下身亲吻了你*“。
-在日记和动态等其他心理活动板块中可以提到“我”，例如，“今天我见到她了，好想她”，但这仅限于日记等记录的板块。
+                // 构建请求体
+                const contents = [];
+                // 添加历史记录
+                chatHistory.slice(0, -1).forEach(msg => {
+                    if (msg.type === 'text') {
+                        contents.push({
+                            role: msg.sender === 'user' ? 'user' : 'model',
+                            parts: [{ text: msg.content }]
+                        });
+                    }
+                });
 
-# 你的角色设定
-${character.persona}
-
-# 我（用户）的角色设定
-${character.myPersona}
-
-# 我们的世界观背景
-${worldBookContext}
-`;
-
-                const messages = [
-                    { role: "system", content: systemPrompt },
-                    ...chatHistory.map(msg => ({
-                        role: msg.sender === 'user' ? 'user' : 'assistant',
-                        content: msg.message
-                    }))
-                ];
-
+                // 添加最后一条用户消息 (可能是文本或图片)
+                const lastMessageParts = [];
+                if (lastUserMessage.type === 'image') {
+                    const pureBase64 = lastUserMessage.content.split(',')[1];
+                    lastMessageParts.push({ text: "我发了一张图片，请你根据图片内容进行回应。" });
+                    lastMessageParts.push({ inlineData: { mimeType: "image/jpeg", data: pureBase64 } });
+                } else {
+                    lastMessageParts.push({ text: lastUserMessage.content });
+                }
+                contents.push({ role: 'user', parts: lastMessageParts });
+                
                 let apiUrl = apiSettings.url;
                 if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
-                if (!apiUrl.endsWith('/v1')) apiUrl += '/v1';
-                const completionsUrl = `${apiUrl}/chat/completions`;
+                const visionApiUrl = `${apiUrl}/v1beta/models/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
 
-                const response = await fetch(completionsUrl, {
+                const response = await fetch(visionApiUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiSettings.key}`
-                    },
-                    body: JSON.stringify({
-                        model: apiSettings.model,
-                        messages: messages
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } })
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({ error: { message: `HTTP 错误 ${response.status}` } }));
-                    throw new Error(errorData.error.message);
+                    throw new Error(errorData.error?.message || `HTTP 错误 ${response.status}`);
                 }
 
                 const result = await response.json();
-                const aiMessage = result.choices[0].message.content;
+                const aiMessage = result.candidates[0].content.parts[0].text;
 
-                thinkingMessage.remove();
-                appendMessage(aiMessage, 'ai');
+                if (thinkingMessage) thinkingMessage.remove();
+
+                // 检查通话指令
+                const callMatch = aiMessage.match(/\[CALL:(VOICE|VIDEO)\]/);
+                if (callMatch) {
+                    const callType = callMatch[1].toLowerCase();
+                    triggerIncomingCall(callType);
+                    // 移除指令，只显示剩余部分
+                    const remainingMessage = aiMessage.replace(callMatch[0], '').trim();
+                    if (remainingMessage) {
+                         processAndDisplayAIMessages(remainingMessage);
+                    }
+                } else {
+                    processAndDisplayAIMessages(aiMessage);
+                }
 
             } catch (error) {
                 console.error("AI 响应错误:", error);
@@ -1509,28 +2228,62 @@ ${worldBookContext}
                 }
             }
         }
+        
+        function processAndDisplayAIMessages(messageText) {
+            const messageParts = messageText.split('|||').map(p => p.trim()).filter(p => p);
+            messageParts.forEach((part, index) => {
+                setTimeout(() => {
+                    const isNew = index === 0;
+                    if (part.startsWith('[VOICE:') && part.endsWith(']')) {
+                        const voiceText = part.substring(7, part.length - 1);
+                        appendMessage(voiceText, 'ai', 'voice', true, Date.now(), isNew);
+                    } else {
+                        appendMessage(part, 'ai', 'text', true, Date.now(), isNew);
+                    }
+                }, index * 500);
+            });
+        }
+
 
         async function handleSendMessage() {
-            if (!currentChatCharacterId) {
-                return showMessageBox("请先选择一个聊天对象");
-            }
+            if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
+            
             const userMessage = $('#chat-input').value.trim();
             if (userMessage) {
-                appendMessage(userMessage, 'user');
+                const history = chatHistories[currentChatCharacterId]?.history || [];
+                const isNewSender = history.length === 0 || history[history.length - 1].sender !== 'user';
+                const timestamp = Date.now();
+                appendMessage(userMessage, 'user', 'text', true, timestamp, isNewSender);
                 $('#chat-input').value = '';
+                adjustTextareaHeight(); // 发送后重置高度
+                await getAIResponse({ content: userMessage, type: 'text' });
             }
         }
         
-        async function triggerAIResponse() {
+        // --- 修改开始：为接收按钮添加功能，并允许AI主动发起对话 ---
+        async function handleReceiveMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
+
+            const chatSession = chatHistories[currentChatCharacterId];
             
-            const history = chatHistories[currentChatCharacterId]?.history || [];
-            if (history.length > 0 && history[history.length-1].sender === 'ai') {
-                return showMessageBox("请等待AI响应或先发送一条消息");
+            // 如果聊天记录为空，则让AI主动发起对话
+            if (!chatSession || chatSession.history.length === 0) {
+                const initialPrompt = { content: '[用户按下了接收键，请你作为角色主动开启一段对话。]', type: 'text' };
+                await getAIResponse(initialPrompt);
+                return; 
+            }
+
+            const lastMessage = chatSession.history[chatSession.history.length - 1];
+            if (lastMessage.sender === 'ai') {
+                return showMessageBox("AI刚刚回复过，该你啦");
             }
             
-            await getAIResponse();
+            // 如果最后一条是用户消息，则触发AI响应
+            if (lastMessage.sender === 'user') {
+                await getAIResponse(lastMessage);
+            }
         }
+        // --- 修改结束 ---
         
         function startChatWithCharacter(characterId) {
             currentChatCharacterId = characterId;
@@ -1568,7 +2321,18 @@ ${worldBookContext}
                 const chatSession = chatHistories[charId];
                 const history = chatSession.history;
                 const lastMessage = history[history.length - 1];
-                const lastMessagePreview = lastMessage ? `${lastMessage.sender === 'user' ? '我: ' : ''}${lastMessage.message}` : '...';
+                
+                let lastMessagePreview = '...';
+                if(lastMessage) {
+                    const prefix = lastMessage.sender === 'user' ? '我: ' : '';
+                    if(lastMessage.type === 'image') {
+                        lastMessagePreview = prefix + '[图片]';
+                    } else if (lastMessage.type === 'voice') {
+                        lastMessagePreview = prefix + '[语音]';
+                    } else {
+                        lastMessagePreview = prefix + lastMessage.content;
+                    }
+                }
 
                 const item = document.createElement('div');
                 item.className = 'wechat-list-item';
@@ -1873,6 +2637,10 @@ ${worldBookContext}
             let text = '此操作无法撤销。';
             if (type === 'character') {
                 text += '所有相关的聊天记录也将被删除。';
+            } else if (type === 'message') {
+                 $('#delete-modal-title').textContent = `删除这条消息吗?`;
+            } else if (type === 'multi-message') {
+                $('#delete-modal-title').textContent = `删除 ${selectedMessages.size} 条消息吗?`;
             }
             $('#delete-modal-text').textContent = text;
             
@@ -1893,13 +2661,185 @@ ${worldBookContext}
                     saveData('chatHistories', chatHistories);
                     renderWeChatList();
                     showScreen('wechat-list-screen');
+                } else if (type === 'message') {
+                    const history = chatHistories[currentChatCharacterId].history;
+                    const msgIndex = history.findIndex(m => String(m.timestamp) === String(id));
+                    if (msgIndex > -1) {
+                        history.splice(msgIndex, 1);
+                        saveData('chatHistories', chatHistories);
+                        renderChatHistory();
+                    }
+                } else if (type === 'multi-message') {
+                    let history = chatHistories[currentChatCharacterId].history;
+                    history = history.filter(m => !selectedMessages.has(String(m.timestamp)));
+                    chatHistories[currentChatCharacterId].history = history;
+                    saveData('chatHistories', chatHistories);
+                    renderChatHistory();
+                    exitMultiSelectMode();
                 }
-                showMessageBox(`"${name}" 已删除`);
+                if (type !== 'message' && type !== 'multi-message') {
+                    showMessageBox(`"${name}" 已删除`);
+                }
                 modal.style.display = 'none';
                 deleteCallback = null;
             };
 
             modal.style.display = 'flex';
+        }
+
+        // =============================================================
+        //  新增: 通话功能逻辑
+        // =============================================================
+        // --- 修改开始：增加通话AI响应逻辑 ---
+        async function getAICallResponse(callType) {
+            const apiSettings = loadData('api_settings');
+            if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                 return showMessageBox("请先在设置中配置 API");
+            }
+            const statusBox = $(`#${callType}-call-status-box`);
+
+            try {
+                const character = characters.find(c => c.id === currentChatCharacterId);
+                const linkedBooks = worldBooks.filter(wb => character.linkedWorldBookIds.includes(wb.id));
+                const worldBookContext = linkedBooks.map(wb => `[${wb.title}]\n${wb.content}`).join('\n\n');
+                
+                const initialPrompt = `[我们现在开始${callType === 'voice' ? '语音' : '视频'}通话，请你主动开始对话，并用斜体描写一下当前的环境或你的动作。]`;
+
+                const systemPrompt = `
+                    # 角色扮演指令
+                    你将扮演我的soulmate，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 “ ”。
+                    # 环境/动作/心理描写规则
+                    一旦涉及到见面的环境，所有关于”环境、心理、动作“等外在因素、环境描写，都需要用第三人称”他“”她“，或者第二人称”他“，”你“，并在文字当中用斜体，例如 *他俯下身亲吻了你*。在描写中禁止用第一人称，比如”我亲吻了你“，这是被禁止的。正确示范应该是：”*他俯下身亲吻了她*“或”*他俯下身亲吻了你*“。在日记和动态等其他心理活动板块中可以提到“我”，例如，“今天我见到她了，好想她”，但这仅限于日记等记录的板块。
+                    # 你的角色设定: ${character.persona}
+                    # 我（用户）的角色设定: ${character.myPersona}
+                    # 我们的世界观背景: ${worldBookContext}
+                `;
+
+                const contents = [{ role: 'user', parts: [{ text: initialPrompt }] }];
+                
+                let apiUrl = apiSettings.url;
+                if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
+                const visionApiUrl = `${apiUrl}/v1beta/models/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+
+                const response = await fetch(visionApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: { message: `HTTP 错误 ${response.status}` } }));
+                    throw new Error(errorData.error?.message || `HTTP 错误 ${response.status}`);
+                }
+
+                const result = await response.json();
+                const aiMessage = result.candidates[0].content.parts[0].text;
+
+                if (statusBox) {
+                    statusBox.innerHTML = ''; // 清空“正在连接”
+                    const p = document.createElement('p');
+                    p.innerHTML = aiMessage.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
+                    statusBox.appendChild(p);
+                }
+
+            } catch (error) {
+                console.error("AI 通话响应错误:", error);
+                if (statusBox) {
+                    statusBox.innerHTML = `<p>连接失败: ${error.message}</p>`;
+                }
+            }
+        }
+        // --- 修改结束 ---
+
+        function startCallTimer(timerElement) {
+            let seconds = 0;
+            timerElement.textContent = '00:00';
+            clearInterval(callTimerInterval);
+            callTimerInterval = setInterval(() => {
+                seconds++;
+                const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+                const secs = String(seconds % 60).padStart(2, '0');
+                timerElement.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function startVoiceCall() {
+            const character = characters.find(c => c.id === currentChatCharacterId);
+            if (!character) return;
+            
+            currentCallType = 'voice';
+            const screen = $('#voice-call-screen');
+            const avatarUrl = character.avatar || 'https://placehold.co/300x300/777/FFF?text=?';
+            $('#voice-call-avatar').src = avatarUrl;
+            $('#voice-call-bg').style.backgroundImage = `url(${avatarUrl})`;
+            $('#voice-call-name').textContent = character.name;
+            $('#voice-call-status-box').innerHTML = `<p>正在连接...</p>`;
+            
+            screen.classList.add('visible');
+            startCallTimer($('#voice-call-timer'));
+            // --- 修改开始：请求AI开场白 ---
+            getAICallResponse('voice');
+            // --- 修改结束 ---
+        }
+
+        function startVideoCall() {
+            const character = characters.find(c => c.id === currentChatCharacterId);
+            if (!character) return;
+            
+            currentCallType = 'video';
+            const screen = $('#video-call-screen');
+            const aiVideoImageUrl = userVideoImages[currentChatCharacterId] || character.avatar || 'https://placehold.co/375x720/111/FFF?text=BG';
+            $('#video-call-bg').style.backgroundImage = `url(${aiVideoImageUrl})`;
+            
+            const myVideoImageUrl = myVideoImages[currentChatCharacterId] || 'https://placehold.co/180x240/333/FFF?text=Me';
+            $('#user-video-image').src = myVideoImageUrl;
+
+            $('#video-call-status-box').innerHTML = `<p>正在连接...</p>`;
+            
+            screen.classList.add('visible');
+            // --- 修改开始：请求AI开场白 ---
+            getAICallResponse('video');
+            // --- 修改结束 ---
+        }
+
+        function endCall() {
+            $('#voice-call-screen').classList.remove('visible');
+            $('#video-call-screen').classList.remove('visible');
+            clearInterval(callTimerInterval);
+            
+            const callDuration = $('#voice-call-timer').textContent;
+            const message = currentCallType === 'voice' ? `语音通话已结束，时长 ${callDuration}` : '视频通话已结束';
+            appendMessage(message, 'system', 'system', true);
+            
+            currentCallType = null;
+        }
+        
+        function handleCallInteraction(type) {
+            const inputBox = $(`#${type}-call-input`);
+            const statusBox = $(`#${type}-call-status-box`);
+            const message = inputBox.value.trim();
+            if (message) {
+                const p = document.createElement('p');
+                p.textContent = `你: ${message}`;
+                statusBox.appendChild(p);
+                // TODO: Here you could send the message to the AI with a special "in-call" context
+                // and append its response. For now, we just show user input.
+                inputBox.value = '';
+                statusBox.scrollTop = statusBox.scrollHeight;
+            }
+        }
+
+        function triggerIncomingCall(type) {
+            const character = characters.find(c => c.id === currentChatCharacterId);
+            if (!character) return;
+
+            currentCallType = type;
+            const alertBox = $('#incoming-call-alert');
+            $('#incoming-call-avatar').src = character.avatar || 'https://placehold.co/96x96/777/FFF?text=?';
+            $('#incoming-call-name').textContent = character.name;
+            $('#incoming-call-type').textContent = type === 'voice' ? '语音通话' : '视频通话';
+            
+            alertBox.classList.add('visible');
         }
 
 
@@ -2053,13 +2993,10 @@ ${worldBookContext}
             
             // 8. 微信
             $('#send-chat-button').addEventListener('click', handleSendMessage);
-            $('#receive-chat-button').addEventListener('click', triggerAIResponse);
-            $('#chat-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSendMessage();
-                }
-            });
+            // --- 修改开始：为接收按钮添加事件监听 ---
+            $('#receive-chat-button').addEventListener('click', handleReceiveMessage);
+            // --- 修改结束 ---
+            
             $('#wechat-new-chat-button').addEventListener('click', () => {
                 const container = $('#new-chat-character-list');
                 container.innerHTML = '';
@@ -2131,7 +3068,7 @@ ${worldBookContext}
                 const file = e.target.files[0];
                 if(file && currentChatCharacterId) {
                     try {
-                        const compressedDataUrl = await compressImage(file);
+                        const compressedDataUrl = await handleImageUpload(e.target, null, null);
                         chatBackgrounds[currentChatCharacterId] = compressedDataUrl;
                         saveData('chatBackgrounds', chatBackgrounds);
 
@@ -2169,7 +3106,7 @@ ${worldBookContext}
             $('#user-avatar-input').addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file && currentChatCharacterId) {
-                    const compressedDataUrl = await compressImage(file, { compression: { maxWidth: 128, maxHeight: 128 } });
+                    const compressedDataUrl = await handleImageUpload(e.target, null, null, { compression: { maxWidth: 128, maxHeight: 128 } });
                     if (compressedDataUrl) {
                         userAvatars[currentChatCharacterId] = compressedDataUrl;
                         saveData('userAvatars', userAvatars);
@@ -2201,7 +3138,16 @@ ${worldBookContext}
                     const previewIcon = document.createElement('div');
                     previewIcon.className = 'w-10 h-10 rounded-lg flex items-center justify-center shadow-md mr-4 bg-cover bg-center';
                     previewIcon.style.backgroundImage = iconEl.style.backgroundImage;
-                    previewIcon.style.backgroundColor = iconEl.style.backgroundImage ? '' : '#374151';
+                    
+                    // --- 修改开始：按钮颜色 ---
+                    if (!iconEl.style.backgroundImage) {
+                        if (iconEl.classList.contains('app-icon-glass')) {
+                            previewIcon.className += ' app-icon-glass';
+                        } else {
+                             previewIcon.style.backgroundColor = '#1f2937'; /* bg-zinc-800 */
+                        }
+                    }
+                    // --- 修改结束 ---
                     
                     const iconI = document.createElement('i');
                     const originalIcon = iconEl.querySelector('i');
@@ -2217,7 +3163,9 @@ ${worldBookContext}
                     leftPart.appendChild(text);
 
                     const button = document.createElement('button');
-                    button.className = 'px-3 py-1 bg-pink-600 text-white rounded-md text-sm flex-shrink-0';
+                    // --- 修改开始：按钮颜色 ---
+                    button.className = 'px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-sm flex-shrink-0';
+                    // --- 修改结束 ---
                     button.textContent = '更换';
 
                     innerContainer.appendChild(leftPart);
@@ -2292,67 +3240,6 @@ ${worldBookContext}
                 showMessageBox("API 设定已保存");
             });
 
-            $('#fetch_models_btn').addEventListener('click', async () => {
-                const btn = $('#fetch_models_btn');
-                const spinner = $('#spinner');
-                const modelSelect = $('#model_select');
-                const apiStatus = $('#api-status');
-                
-                let apiUrl = $('#api_url').value.trim();
-                const apiKey = $('#api_key').value.trim();
-
-                if (!apiUrl || !apiKey) {
-                    showMessageBox("请输入 API 地址和密钥");
-                    return;
-                }
-
-                if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
-                const modelsUrl = `${apiUrl}/models`;
-
-                btn.disabled = true;
-                spinner.classList.remove('hidden');
-                apiStatus.classList.add('hidden');
-                modelSelect.innerHTML = '<option>正在获取...</option>';
-
-                try {
-                    const response = await fetch(modelsUrl, {
-                        headers: { 'Authorization': `Bearer ${apiKey}` }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP 错误! 状态: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    const models = data.data || data; 
-
-                    if (!Array.isArray(models) || models.length === 0) {
-                         throw new Error("未找到有效的模型列表");
-                    }
-                    
-                    modelSelect.innerHTML = '';
-                    models.forEach(model => {
-                        const option = document.createElement('option');
-                        const modelId = model.id || model.name;
-                        option.value = modelId;
-                        option.textContent = modelId;
-                        modelSelect.appendChild(option);
-                    });
-                    
-                    apiStatus.textContent = '模型获取成功！';
-                    apiStatus.className = 'mt-4 p-4 rounded-lg text-center font-semibold text-sm bg-pink-100 text-pink-800';
-
-                } catch (error) {
-                    console.error("获取模型失败:", error);
-                    modelSelect.innerHTML = '<option value="">获取失败，请检查设置</option>';
-                    apiStatus.textContent = `获取失败: ${error.message}`;
-                    apiStatus.className = 'mt-4 p-4 rounded-lg text-center font-semibold text-sm bg-red-200 text-red-800';
-                } finally {
-                    spinner.classList.add('hidden');
-                    btn.disabled = false;
-                }
-            });
-
             // 删除确认
             $('#confirm-delete-btn').addEventListener('click', () => {
                 if (deleteCallback) deleteCallback();
@@ -2377,6 +3264,420 @@ ${worldBookContext}
                     showMessageBox('此功能正在开发中...');
                 }
             });
+            
+            // =============================================================
+            //  气泡菜单 & 多选逻辑 (已根据要求重构)
+            // =============================================================
+            const chatScreen = $('#wechat-chat-screen');
+
+            function hideBubbleMenu() {
+                if (activeMenu) {
+                    activeMenu.classList.remove('visible');
+                    activeMenu = null;
+                }
+            }
+
+            // Chat screen main click handler
+            chatScreen.addEventListener('click', (e) => {
+                const menu = e.target.closest('.bubble-context-menu');
+                if (menu) return; // If menu itself is clicked, do nothing.
+
+                const wrapper = e.target.closest('.chat-message-wrapper');
+                
+                if (isMultiSelectMode) {
+                    if (wrapper) {
+                        toggleMessageSelection(wrapper);
+                    }
+                } else {
+                    const bubble = e.target.closest('.chat-message');
+                    if (bubble) {
+                        e.stopPropagation();
+                        // Hide any previously active menu before showing a new one
+                        if (activeMenu && !activeMenu.isSameNode(bubble.parentNode.querySelector('.bubble-context-menu'))) {
+                           hideBubbleMenu();
+                        }
+                        showBubbleMenu(bubble);
+                    } else {
+                        hideBubbleMenu();
+                    }
+                }
+            });
+            
+            // Show and position the bubble menu
+            function showBubbleMenu(bubble) {
+                const wrapper = bubble.closest('.chat-message-wrapper');
+                let menu = wrapper.querySelector('.bubble-context-menu');
+
+                // If menu doesn't exist, create it from template
+                if (!menu) {
+                    const template = $('#bubble-menu-template');
+                    const menuClone = template.content.cloneNode(true);
+                    wrapper.appendChild(menuClone);
+                    menu = wrapper.querySelector('.bubble-context-menu');
+
+                    // Add event listeners to the new menu's buttons
+                    menu.addEventListener('click', (e) => {
+                        const button = e.target.closest('.bubble-menu-button');
+                        if (button) {
+                            const action = button.dataset.action;
+                            const timestamp = wrapper.dataset.timestamp;
+                            handleMenuAction(action, timestamp, bubble);
+                        }
+                    });
+                }
+                
+                const sender = wrapper.dataset.sender;
+                
+                // Set button visibility
+                menu.querySelector('[data-action="retry"]').style.display = sender === 'ai' ? 'flex' : 'none';
+                
+                // Positioning logic
+                const bubbleRect = bubble.getBoundingClientRect();
+                const screenRect = phoneScreen.getBoundingClientRect();
+                
+                menu.classList.add('visible'); // Temporarily show to get dimensions
+                const menuRect = menu.getBoundingClientRect();
+                
+                // Position relative to the wrapper, which is the new context
+                let top = bubble.offsetTop - menuRect.height - 8; // 8px margin above
+                
+                // Flip if not enough space on top
+                if (bubbleRect.top < (screenRect.top + menuRect.height + 16)) {
+                    top = bubble.offsetTop + bubble.offsetHeight + 8; // 8px margin below
+                }
+                
+                // Center horizontally
+                const leftOffset = (bubble.offsetWidth / 2) - (menuRect.width / 2);
+                let finalLeft = bubble.offsetLeft + leftOffset;
+
+                menu.style.top = `${top}px`;
+                menu.style.left = `${finalLeft}px`;
+                menu.style.transform = 'translateX(0)'; // Reset transform for this positioning method
+
+                activeMenu = menu;
+            }
+
+            function handleMenuAction(action, timestamp, bubble) {
+                 hideBubbleMenu();
+                 switch (action) {
+                    case 'delete':
+                        showDeleteConfirmation('message', timestamp, '这条消息');
+                        break;
+                    case 'copy':
+                        copyMessageHandler(timestamp);
+                        break;
+                    case 'multiselect':
+                        enterMultiSelectMode();
+                        break;
+                    case 'edit':
+                        editMessageHandler(timestamp, bubble);
+                        break;
+                    case 'retry':
+                        retryMessageHandler(timestamp);
+                        break;
+                 }
+            }
+
+
+            // Menu action handlers
+            function copyMessageHandler(timestamp) {
+                const msg = chatHistories[currentChatCharacterId]?.history.find(m => String(m.timestamp) === timestamp);
+                if (msg && msg.type === 'text') {
+                    navigator.clipboard.writeText(msg.content).then(() => {
+                        showMessageBox('已复制');
+                    }).catch(() => showMessageBox('复制失败'));
+                }
+            }
+
+            function editMessageHandler(timestamp, bubble) {
+                const msgIndex = chatHistories[currentChatCharacterId].history.findIndex(m => String(m.timestamp) === timestamp);
+                if (msgIndex === -1 || chatHistories[currentChatCharacterId].history[msgIndex].type !== 'text') return;
+
+                const p = bubble.querySelector('p');
+                const originalText = chatHistories[currentChatCharacterId].history[msgIndex].content;
+                p.contentEditable = true;
+                p.focus();
+                
+                const sel = window.getSelection();
+                sel.selectAllChildren(p);
+                sel.collapseToEnd();
+
+                const saveEdit = () => {
+                    const newText = p.innerText.trim();
+                    if (newText && newText !== originalText) {
+                        chatHistories[currentChatCharacterId].history[msgIndex].content = newText;
+                        saveData('chatHistories', chatHistories);
+                    }
+                    p.innerHTML = newText.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>');
+                };
+
+                p.addEventListener('blur', () => {
+                    p.contentEditable = false;
+                    saveEdit();
+                }, { once: true });
+
+                p.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); p.blur(); }
+                    if (e.key === 'Escape') { p.innerText = originalText; p.blur(); }
+                });
+            }
+
+            async function retryMessageHandler(timestamp) {
+                const history = chatHistories[currentChatCharacterId].history;
+                const msgIndex = history.findIndex(m => String(m.timestamp) === timestamp);
+                
+                if (msgIndex > -1) {
+                    const historyToRetry = history.slice(0, msgIndex);
+                    if (historyToRetry.length > 0 && historyToRetry[historyToRetry.length - 1].sender === 'user') {
+                        chatHistories[currentChatCharacterId].history = historyToRetry;
+                        saveData('chatHistories', chatHistories);
+                        renderChatHistory();
+                        await getAIResponse(historyToRetry[historyToRetry.length-1], true);
+                    } else {
+                        showMessageBox('无法找到有效的重试上下文');
+                    }
+                }
+            }
+            
+            // Multi-select mode functions
+            function enterMultiSelectMode() {
+                isMultiSelectMode = true;
+                $('#chat-header-normal').classList.add('hidden');
+                $('#chat-header-multiselect').classList.remove('hidden');
+                $('#chat-header-multiselect').classList.add('flex');
+                updateMultiSelectCount();
+            }
+
+            function exitMultiSelectMode() {
+                isMultiSelectMode = false;
+                selectedMessages.clear();
+                $$('.chat-message-wrapper.selected').forEach(el => el.classList.remove('selected'));
+                $('#chat-header-normal').classList.remove('hidden');
+                $('#chat-header-multiselect').classList.add('hidden');
+                $('#chat-header-multiselect').classList.remove('flex');
+            }
+            
+            function toggleMessageSelection(wrapper) {
+                const timestamp = wrapper.dataset.timestamp;
+                wrapper.classList.toggle('selected');
+                if (selectedMessages.has(timestamp)) {
+                    selectedMessages.delete(timestamp);
+                } else {
+                    selectedMessages.add(timestamp);
+                }
+                updateMultiSelectCount();
+            }
+
+            function updateMultiSelectCount() {
+                const count = selectedMessages.size;
+                $('#multiselect-count').textContent = `已选择 ${count} 项`;
+                $('#confirm-multiselect-btn').disabled = count === 0;
+            }
+
+            $('#cancel-multiselect-btn').addEventListener('click', exitMultiSelectMode);
+            $('#confirm-multiselect-btn').addEventListener('click', () => {
+                if(selectedMessages.size > 0) {
+                    showDeleteConfirmation('multi-message', null, `${selectedMessages.size}条消息`);
+                }
+            });
+
+            // =============================================================
+            //  新增：聊天新功能交互 (已修复)
+            // =============================================================
+            const featuresPanel = $('#more-features-panel');
+            const addFeatureBtn = $('#add-feature-btn');
+            const chatInputBar = $('#chat-input-bar');
+            const chatInput = $('#chat-input');
+            const addFeatureIcon = addFeatureBtn.querySelector('i');
+            
+            function toggleFeaturesPanel() {
+                const isPanelHidden = featuresPanel.classList.contains('hidden');
+                if (isPanelHidden) {
+                    featuresPanel.classList.remove('hidden');
+                    chatInputBar.classList.add('hidden');
+                    addFeatureIcon.className = 'ri-keyboard-line';
+                } else {
+                    featuresPanel.classList.add('hidden');
+                    chatInputBar.classList.remove('hidden');
+                    addFeatureIcon.className = 'ri-add-circle-line';
+                }
+            }
+
+            addFeatureBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFeaturesPanel();
+            });
+
+            chatScreen.addEventListener('click', (e) => {
+                if (addFeatureBtn.contains(e.target) || featuresPanel.contains(e.target)) return;
+                if (!featuresPanel.classList.contains('hidden')) {
+                    toggleFeaturesPanel();
+                }
+            });
+
+            $('#send-image-btn').addEventListener('click', () => {
+                $('#image-upload-input').click();
+            });
+
+            $('#image-upload-input').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const compressedDataUrl = await handleImageUpload(e.target, null, null, { compression: { maxWidth: 512, maxHeight: 512 } });
+                    if (compressedDataUrl) {
+                        const isNewSender = chatHistories[currentChatCharacterId]?.history.length === 0 || chatHistories[currentChatCharacterId].history.slice(-1)[0].sender !== 'user';
+                        const timestamp = Date.now();
+                        appendMessage(compressedDataUrl, 'user', 'image', true, timestamp, isNewSender);
+                        await getAIResponse({ content: compressedDataUrl, type: 'image' });
+                    }
+                    toggleFeaturesPanel();
+                    e.target.value = ''; 
+                }
+            });
+
+            // Placeholder listeners for other buttons
+            $('#emoji-btn').addEventListener('click', () => showMessageBox('表情功能开发中'));
+            
+            // Voice message modal
+            const voiceModal = $('#voice-input-modal');
+            const voiceInput = $('#voice-text-input');
+            $('#quick-voice-message-btn').addEventListener('click', () => {
+                voiceModal.style.display = 'flex';
+                voiceInput.focus();
+            });
+            $('#cancel-voice-btn').addEventListener('click', () => {
+                voiceModal.style.display = 'none';
+                voiceInput.value = '';
+            });
+            $('#send-voice-btn').addEventListener('click', () => {
+                const text = voiceInput.value.trim();
+                if (text) {
+                    const isNewSender = chatHistories[currentChatCharacterId]?.history.length === 0 || chatHistories[currentChatCharacterId].history.slice(-1)[0].sender !== 'user';
+                    appendMessage(text, 'user', 'voice', true, Date.now(), isNewSender);
+                    voiceInput.value = '';
+                    voiceModal.style.display = 'none';
+                }
+            });
+
+            // =============================================================
+            //  新增：通话功能事件监听
+            // =============================================================
+            // 修复：手动发起通话
+            $('#quick-voice-call-btn').addEventListener('click', () => {
+                currentCallType = 'voice';
+                startVoiceCall();
+            });
+            $('#quick-video-call-btn').addEventListener('click', () => {
+                currentCallType = 'video';
+                startVideoCall();
+            });
+
+            $('#voice-call-hangup').addEventListener('click', endCall);
+            $('#video-call-hangup').addEventListener('click', endCall);
+            $('#voice-call-send-btn').addEventListener('click', () => handleCallInteraction('voice'));
+            $('#video-call-send-btn').addEventListener('click', () => handleCallInteraction('video'));
+
+            // AI 发起通话的接听/拒绝
+            $('#answer-call-btn').addEventListener('click', () => {
+                $('#incoming-call-alert').classList.remove('visible');
+                if (currentCallType === 'voice') startVoiceCall();
+                if (currentCallType === 'video') startVideoCall();
+            });
+            $('#decline-call-btn').addEventListener('click', () => {
+                $('#incoming-call-alert').classList.remove('visible');
+                appendMessage('通话已拒绝', 'system', 'system', true);
+                currentCallType = null;
+            });
+
+            // --- 修改开始：分离视频照片设置逻辑 ---
+            // 点击“我的”小窗，触发“我的”照片上传
+            $('#user-video-preview').addEventListener('click', () => {
+                $('#my-video-image-input').click();
+            });
+
+            // 点击聊天设置中的“对方的”照片，触发“对方的”照片上传
+            $('#change-user-video-image-option').addEventListener('click', () => {
+                 $('#user-video-image-input').click();
+            });
+            
+            // “对方的”照片上传逻辑
+            $('#user-video-image-input').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file && currentChatCharacterId) {
+                    const compressedDataUrl = await handleImageUpload(e.target, null, null, { compression: { maxWidth: 512, maxHeight: 512 }});
+                    if (compressedDataUrl) {
+                        userVideoImages[currentChatCharacterId] = compressedDataUrl;
+                        saveData('userVideoImages', userVideoImages);
+                        showMessageBox('对方的视频照片已更新');
+                    }
+                }
+            });
+
+            // “我的”照片上传逻辑
+            $('#my-video-image-input').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file && currentChatCharacterId) {
+                    const compressedDataUrl = await handleImageUpload(e.target, null, null, { compression: { maxWidth: 256, maxHeight: 256 }});
+                    if (compressedDataUrl) {
+                        myVideoImages[currentChatCharacterId] = compressedDataUrl;
+                        saveData('myVideoImages', myVideoImages);
+                        // 如果正在视频通话中，立即更新小窗画面
+                        if (currentCallType === 'video') {
+                            $('#user-video-image').src = compressedDataUrl;
+                        }
+                        showMessageBox('我的视频照片已更新');
+                    }
+                }
+            });
+            // --- 修改结束 ---
+
+            
+            // Add listeners to other feature items in the panel
+            $$('.feature-item').forEach(item => {
+                if (!['send-image-btn'].includes(item.id)) {
+                    item.addEventListener('click', () => {
+                        const featureName = item.querySelector('span').textContent;
+                        showMessageBox(`${featureName}功能开发中`);
+                    });
+                }
+            });
+
+            // =============================================================
+            //  新增：多行文本框自适应高度
+            // =============================================================
+            let initialTextareaHeight = 0;
+            let maxHeight = 0;
+
+            function adjustTextareaHeight() {
+                if (!initialTextareaHeight) {
+                    // 首次计算
+                    const style = window.getComputedStyle(chatInput);
+                    const lineHeight = parseFloat(style.lineHeight);
+                    const paddingTop = parseFloat(style.paddingTop);
+                    const paddingBottom = parseFloat(style.paddingBottom);
+                    initialTextareaHeight = lineHeight;
+                    maxHeight = (lineHeight * 3) + paddingTop + paddingBottom;
+                }
+                
+                chatInput.style.height = 'auto'; // 先重置高度
+                const scrollHeight = chatInput.scrollHeight;
+
+                if (scrollHeight > maxHeight) {
+                    chatInput.style.height = `${maxHeight}px`;
+                    chatInput.style.overflowY = 'auto';
+                } else {
+                    chatInput.style.height = `${scrollHeight}px`;
+                    chatInput.style.overflowY = 'hidden';
+                }
+            }
+
+            chatInput.addEventListener('input', adjustTextareaHeight);
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            });
+
         });
     </script>
 </body>
