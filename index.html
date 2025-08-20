@@ -1070,6 +1070,21 @@
             }
         }
 
+        @keyframes darkGradientShift {
+            0%, 100% { 
+                background-position: 0% 50%;
+            }
+            25% { 
+                background-position: 100% 50%;
+            }
+            50% { 
+                background-position: 100% 100%;
+            }
+            75% { 
+                background-position: 0% 100%;
+            }
+        }
+
         .tarot-card-display {
             margin-bottom: 12px;
             flex-shrink: 0;
@@ -3691,14 +3706,16 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, white, #E6F3FF);
+        background: linear-gradient(135deg, white, #FFE6F3);
         z-index: 0;
         animation: particleFloat 8s ease-in-out infinite;
     }
 
     /* 科技感背景 - 夜间模式 */
     .dark-mode #monitoring-screen::before {
-        background: linear-gradient(135deg, black, #252529);
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2d2d2d, #1a1a1a);
+        background-size: 400% 400%;
+        animation: darkGradientShift 12s ease-in-out infinite;
     }
 
     /* 夜间模式文本颜色 */
@@ -3717,6 +3734,467 @@
 
     #monitoring-status-text {
         color: #662034;
+    }
+
+    /* 科技感装饰元素 - 名片区域 */
+    #monitoring-identity-block::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        width: 6px;
+        height: 6px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+        animation: techPulse 3s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    #monitoring-identity-block::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        right: 8px;
+        width: 4px;
+        height: 4px;
+        background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(255, 107, 157, 0.6);
+        animation: techPulse 3s ease-in-out infinite 0.5s;
+        z-index: 2;
+    }
+
+    /* 科技感装饰元素 - 文本框右上角 */
+    .monitoring-card:has(#monitoring-text-container)::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+        animation: techRotate 4s linear infinite;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container)::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        right: 8px;
+        width: 6px;
+        height: 6px;
+        background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
+        box-shadow: 0 0 8px rgba(255, 107, 157, 0.6);
+        animation: techFloat 2.5s ease-in-out infinite 1s;
+        z-index: 2;
+    }
+
+    /* 额外科技感装饰元素 - 名片区域 */
+    #monitoring-identity-block .tech-dot-1 {
+        position: absolute;
+        top: 35px;
+        right: 15px;
+        width: 3px;
+        height: 3px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        border-radius: 50%;
+        box-shadow: 0 0 4px rgba(0, 212, 255, 0.5);
+        animation: techFade 2s ease-in-out infinite 1.5s;
+        z-index: 2;
+    }
+
+    #monitoring-identity-block .tech-dot-2 {
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        width: 5px;
+        height: 5px;
+        background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
+        box-shadow: 0 0 6px rgba(255, 107, 157, 0.5);
+        animation: techScale 2.5s ease-in-out infinite 0.8s;
+        z-index: 2;
+    }
+
+    #monitoring-identity-block .tech-dot-3 {
+        position: absolute;
+        top: 12px;
+        right: 25px;
+        width: 2px;
+        height: 2px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        border-radius: 50%;
+        box-shadow: 0 0 3px rgba(0, 212, 255, 0.4);
+        animation: techFade 1.8s ease-in-out infinite 2.2s;
+        z-index: 2;
+    }
+
+    /* 额外科技感装饰元素 - 文本框区域 */
+    .monitoring-card:has(#monitoring-text-container) .tech-dot-1 {
+        position: absolute;
+        top: 35px;
+        right: 15px;
+        width: 4px;
+        height: 4px;
+        background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        box-shadow: 0 0 5px rgba(255, 107, 157, 0.5);
+        animation: techRotate 3s linear infinite 1.2s;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container) .tech-dot-2 {
+        position: absolute;
+        top: 45px;
+        right: 8px;
+        width: 3px;
+        height: 3px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        border-radius: 50%;
+        box-shadow: 0 0 4px rgba(0, 212, 255, 0.4);
+        animation: techFloat 2.8s ease-in-out infinite 0.6s;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container) .tech-dot-3 {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        width: 5px;
+        height: 5px;
+        background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
+        box-shadow: 0 0 7px rgba(255, 107, 157, 0.5);
+        animation: techScale 3.2s ease-in-out infinite 1.8s;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container) .tech-dot-4 {
+        position: absolute;
+        top: 50px;
+        right: 22px;
+        width: 2px;
+        height: 2px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        border-radius: 50%;
+        box-shadow: 0 0 3px rgba(0, 212, 255, 0.4);
+        animation: techFade 2.2s ease-in-out infinite 0.3s;
+        z-index: 2;
+    }
+
+    /* 名片区域的科技感曲线装饰 */
+    .monitoring-card:has(#monitoring-avatar) .tech-curve-1 {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        border: 2px solid transparent;
+        border-top: 2px solid rgba(0, 212, 255, 0.6);
+        border-right: 2px solid rgba(0, 212, 255, 0.4);
+        border-radius: 50%;
+        transform: rotate(-45deg);
+        animation: techCurveRotate 4s linear infinite;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-avatar) .tech-curve-2 {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 25px;
+        height: 25px;
+        border: 1px solid transparent;
+        border-bottom: 1px solid rgba(255, 107, 157, 0.5);
+        border-left: 1px solid rgba(255, 107, 157, 0.3);
+        border-radius: 50%;
+        transform: rotate(45deg);
+        animation: techCurveRotate 3s linear infinite reverse;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-avatar) .tech-curve-3 {
+        position: absolute;
+        top: 35px;
+        right: 35px;
+        width: 15px;
+        height: 15px;
+        border: 1px solid transparent;
+        border-top: 1px solid rgba(0, 212, 255, 0.4);
+        border-radius: 50%;
+        transform: rotate(0deg);
+        animation: techCurvePulse 2.5s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    /* 文本框下方的科技感线性装饰 */
+    .tech-lines-container {
+        height: 20px;
+        overflow: hidden;
+    }
+
+    .tech-line-main {
+        position: absolute;
+        top: 50%;
+        left: 20%;
+        right: 20%;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 212, 255, 0.3) 20%, 
+            rgba(0, 212, 255, 0.8) 50%, 
+            rgba(255, 107, 157, 0.8) 80%, 
+            transparent 100%);
+        transform: translateY(-50%);
+        animation: techLinePulse 3s ease-in-out infinite;
+    }
+
+    .tech-line-left {
+        position: absolute;
+        top: 50%;
+        left: 15%;
+        width: 30px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 212, 255, 0.6) 100%);
+        transform: translateY(-50%);
+        animation: techLineLeft 2.5s ease-in-out infinite;
+    }
+
+    .tech-line-left-2 {
+        position: absolute;
+        top: 50%;
+        left: 12%;
+        width: 20px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 212, 255, 0.4) 100%);
+        transform: translateY(-50%);
+        animation: techLineLeft 2.5s ease-in-out infinite 0.8s;
+    }
+
+    .tech-line-right {
+        position: absolute;
+        top: 50%;
+        right: 15%;
+        width: 30px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            rgba(255, 107, 157, 0.6) 0%, 
+            transparent 100%);
+        transform: translateY(-50%);
+        animation: techLineRight 2.5s ease-in-out infinite 0.5s;
+    }
+
+    .tech-line-right-2 {
+        position: absolute;
+        top: 50%;
+        right: 12%;
+        width: 20px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            rgba(255, 107, 157, 0.4) 0%, 
+            transparent 100%);
+        transform: translateY(-50%);
+        animation: techLineRight 2.5s ease-in-out infinite 1.2s;
+    }
+
+    .tech-center-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2px;
+        height: 2px;
+        background: linear-gradient(45deg, #00d4ff, #ff6b9d);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 4px rgba(0, 212, 255, 0.6);
+        animation: techCenterPulse 2s ease-in-out infinite;
+    }
+
+    .tech-center-dot-2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        background: transparent;
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: techCenterPulse 2s ease-in-out infinite 0.5s;
+    }
+
+    /* 文本框区域的科技感曲线装饰 */
+    .monitoring-card:has(#monitoring-text-container) .tech-curve-1 {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border: 2px solid transparent;
+        border-top: 2px solid rgba(0, 212, 255, 0.7);
+        border-right: 2px solid rgba(0, 212, 255, 0.5);
+        border-radius: 50%;
+        transform: rotate(-30deg);
+        animation: techCurveRotate 5s linear infinite;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container) .tech-curve-2 {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        width: 35px;
+        height: 35px;
+        border: 1.5px solid transparent;
+        border-bottom: 1.5px solid rgba(255, 107, 157, 0.6);
+        border-left: 1.5px solid rgba(255, 107, 157, 0.4);
+        border-radius: 50%;
+        transform: rotate(60deg);
+        animation: techCurveRotate 4s linear infinite reverse;
+        z-index: 2;
+    }
+
+    .monitoring-card:has(#monitoring-text-container) .tech-curve-3 {
+        position: absolute;
+        top: 60px;
+        right: 60px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid transparent;
+        border-top: 1px solid rgba(0, 212, 255, 0.5);
+        border-radius: 50%;
+        transform: rotate(0deg);
+        animation: techCurvePulse 3s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    /* 科技感装饰元素动画 */
+    @keyframes techPulse {
+        0%, 100% { 
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% { 
+            transform: scale(1.2);
+            opacity: 1;
+        }
+    }
+
+    @keyframes techRotate {
+        0% { 
+            transform: rotate(0deg);
+        }
+        100% { 
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes techFloat {
+        0%, 100% { 
+            transform: translateY(0px);
+            opacity: 0.7;
+        }
+        50% { 
+            transform: translateY(-3px);
+            opacity: 1;
+        }
+    }
+
+    @keyframes techFade {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: scale(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    }
+
+    @keyframes techScale {
+        0%, 100% { 
+            transform: scale(1);
+            opacity: 0.6;
+        }
+        50% { 
+            transform: scale(1.3);
+            opacity: 1;
+        }
+    }
+
+    /* 线性装饰动画 */
+    @keyframes techLinePulse {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: translateY(-50%) scaleX(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: translateY(-50%) scaleX(1.1);
+        }
+    }
+
+    @keyframes techLineLeft {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: translateY(-50%) translateX(0px);
+        }
+        50% { 
+            opacity: 0.8;
+            transform: translateY(-50%) translateX(-2px);
+        }
+    }
+
+    @keyframes techLineRight {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: translateY(-50%) translateX(0px);
+        }
+        50% { 
+            opacity: 0.8;
+            transform: translateY(-50%) translateX(2px);
+        }
+    }
+
+    @keyframes techCenterPulse {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+    }
+
+    /* 科技感曲线动画 */
+    @keyframes techCurveRotate {
+        0% { 
+            transform: rotate(-45deg);
+        }
+        100% { 
+            transform: rotate(315deg);
+        }
+    }
+
+    @keyframes techCurvePulse {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: rotate(0deg) scale(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: rotate(0deg) scale(1.1);
+        }
     }
 
     /* 噪波纹理效果 */
@@ -4385,7 +4863,7 @@
                 <div class="px-4 grid grid-cols-2 gap-4 mt-4">
                     <div></div> 
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 1"><i class="fas fa-question text-white text-2xl"></i></div>
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="动态监控"><i class="ri-eye-line text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="设置"><i class="fas fa-cog text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 2"><i class="fas fa-question text-white text-2xl"></i></div>
                         <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg app-icon app-icon-glass" data-app-name="Placeholder 3"><i class="fas fa-question text-white text-2xl"></i></div>
@@ -4413,24 +4891,58 @@
                 </div>
 
                 <div class="flex-1 flex flex-col p-4 space-y-4 z-20 overflow-y-auto">
-                    <div id="monitoring-identity-block" class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 cursor-pointer">
-                        <div class="flex items-center">
-                            <div id="monitoring-avatar" class="w-12 h-12 rounded-full mr-3 bg-cover bg-center border border-blue-500 flex-shrink-0"></div>
-                            <div class="flex-1 overflow-hidden">
-                                <p id="monitoring-name" class="text-lg font-semibold text-white truncate">角色名</p>
-                                <div id="monitoring-mood" class="text-xs mt-1 flex items-center text-blue-300">
-                                    <span id="monitoring-mood-icon" class="mr-1"></span>
-                                    <span id="monitoring-mood-text" class="font-semibold">未知</span>
-                                </div>
+                                    <div id="monitoring-identity-block" class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 cursor-pointer">
+                    <div class="flex items-center">
+                        <div id="monitoring-avatar" class="w-12 h-12 rounded-full mr-3 bg-cover bg-center border border-blue-500 flex-shrink-0"></div>
+                        <div class="flex-1 overflow-hidden">
+                            <p id="monitoring-name" class="text-lg font-semibold text-white truncate">角色名</p>
+                            <div id="monitoring-mood" class="text-xs mt-1 flex items-center text-blue-300">
+                                <span id="monitoring-mood-icon" class="mr-1"></span>
+                                <span id="monitoring-mood-text" class="font-semibold">未知</span>
                             </div>
                         </div>
                     </div>
+                    <!-- 科技感装饰元素 -->
+                    <div class="tech-dot-1"></div>
+                    <div class="tech-dot-2"></div>
+                    <div class="tech-dot-3"></div>
+                    
+                    <!-- 科技感曲线装饰 -->
+                    <div class="tech-curve-1"></div>
+                    <div class="tech-curve-2"></div>
+                    <div class="tech-curve-3"></div>
+                </div>
 
                     <div class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 flex-1 overflow-hidden relative">
                         <div id="monitoring-text-container" class="h-full overflow-y-auto pr-16">
                             <p id="monitoring-status-text" class="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">正在连接信号...</p>
                         </div>
                         <p id="monitoring-timestamp" class="text-xs text-gray-700 text-right mt-2 absolute bottom-2 right-3"></p>
+                        <!-- 科技感装饰元素 -->
+                        <div class="tech-dot-1"></div>
+                        <div class="tech-dot-2"></div>
+                        <div class="tech-dot-3"></div>
+                        <div class="tech-dot-4"></div>
+                        
+                        <!-- 科技感曲线装饰 -->
+                        <div class="tech-curve-1"></div>
+                        <div class="tech-curve-2"></div>
+                        <div class="tech-curve-3"></div>
+                    </div>
+                    
+                    <!-- 文本框下方的科技感线性装饰 -->
+                    <div class="tech-lines-container mt-3 relative">
+                        <!-- 主线条 -->
+                        <div class="tech-line-main"></div>
+                        <!-- 左侧装饰线 -->
+                        <div class="tech-line-left"></div>
+                        <div class="tech-line-left-2"></div>
+                        <!-- 右侧装饰线 -->
+                        <div class="tech-line-right"></div>
+                        <div class="tech-line-right-2"></div>
+                        <!-- 中心装饰点 -->
+                        <div class="tech-center-dot"></div>
+                        <div class="tech-center-dot-2"></div>
                     </div>
 
                     <div class="flex justify-center items-center space-x-3 py-2">
@@ -12188,7 +12700,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 '悲伤': { icon: '💧', color: 'text-gray-400' }, '沮丧': { icon: '💧', color: 'text-gray-400' },
                 '愤怒': { icon: '❗', color: 'text-red-400' }, '警觉': { icon: '❗', color: 'text-red-400' },
                 '爱恋': { icon: '♥️', color: 'text-pink-400' }, '欲望': { icon: '♥️', color: 'text-pink-400' },
-                '未知': { icon: '❓', color: 'text-gray-500' }
+                '未知': { icon: '🪼', color: 'text-gray-500' }
             };
             
             const moodInfo = moodMap[mood] || moodMap['未知'];
@@ -12460,7 +12972,7 @@ ${historyForApi.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${
                     '悲伤': { icon: '💧', color: 'text-gray-400' }, '沮丧': { icon: '💧', color: 'text-gray-400' },
                     '愤怒': { icon: '❗', color: 'text-red-400' }, '警觉': { icon: '❗', color: 'text-red-400' },
                     '爱恋': { icon: '♥️', color: 'text-pink-400' }, '欲望': { icon: '♥️', color: 'text-pink-400' },
-                    '未知': { icon: '❓', color: 'text-gray-500' }
+                    '未知': { icon: '🪼', color: 'text-gray-500' }
                 };
                 
                 const moodInfo = moodMap[mood] || moodMap['未知'];
@@ -12684,10 +13196,8 @@ ${eventTypeSpecificInput}
 
                 
                 // 激活"动态监控"App
-                const monitoringAppIcon = document.querySelector('.app-icon[data-app-name="Placeholder 1"]');
+                const monitoringAppIcon = document.querySelector('.app-icon[data-app-name="动态监控"]');
                 if (monitoringAppIcon) {
-                    monitoringAppIcon.dataset.appName = "动态监控";
-                    monitoringAppIcon.innerHTML = '<i class="ri-radar-line text-white text-2xl"></i>';
                     monitoringAppIcon.addEventListener('click', () => {
                         renderCharacterSelectList();
                         showScreen('character-select-screen');
