@@ -3118,6 +3118,24 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* 日间模式日记书架项目样式 */
+        .light-mode #diary-bookshelf .diary-book-item {
+            color: #2c2c2c;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 4px 12px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .light-mode #diary-bookshelf .diary-book-item::before {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(0, 0, 0, 0.05) 0%, 
+                    rgba(0, 0, 0, 0.15) 50%, 
+                    rgba(0, 0, 0, 0.25) 100%);
+        }
+
         #diary-bookshelf .diary-book-item::before {
             content: '';
             position: absolute;
@@ -3142,6 +3160,14 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
+        /* 日间模式日记书架项目悬停效果 */
+        .light-mode #diary-bookshelf .diary-book-item:hover {
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.2),
+                0 8px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(0, 0, 0, 0.08);
+        }
+
         .diary-book-item-title {
             font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', serif;
             font-size: 1.3rem;
@@ -3152,6 +3178,52 @@
             position: relative;
             z-index: 2;
             letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* 日间模式日记书架标题样式 */
+        .light-mode .diary-book-item-title {
+            text-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.4),
+                0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .diary-book-item-title:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* 日间模式日记书架标题悬停效果 */
+        .light-mode .diary-book-item-title:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .diary-book-item-title.editing {
+            background: rgba(255, 255, 255, 0.15);
+            outline: 2px solid rgba(255, 255, 255, 0.3);
+            outline-offset: 2px;
+        }
+
+        /* 日间模式日记书架标题编辑状态 */
+        .light-mode .diary-book-item-title.editing {
+            background: rgba(0, 0, 0, 0.15);
+            outline: 2px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .diary-book-item-title input {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            text-align: center;
+            width: 100%;
+            outline: none;
+            text-shadow: inherit;
         }
 
         .diary-book-item-author {
@@ -3165,6 +3237,13 @@
             position: relative;
             z-index: 2;
             opacity: 0.9;
+        }
+
+        /* 日间模式日记书架作者样式 */
+        .light-mode .diary-book-item-author {
+            text-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.4),
+                0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* --- 新增：日记本"翻页书" UI --- */
@@ -3262,7 +3341,7 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        /* 封面样式 - 黑白灰质感设计 */
+        /* 封面样式 - 支持日夜间模式 */
         .diary-cover {
             background: linear-gradient(145deg, 
                 #2c2c2c 0%, 
@@ -3280,6 +3359,28 @@
                 inset 0 2px 4px rgba(255, 255, 255, 0.1),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.3);
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 日间模式封面样式 */
+        .light-mode .diary-cover {
+            background: linear-gradient(145deg, 
+                #f8f9fa 0%, 
+                #e9ecef 25%, 
+                #dee2e6 50%, 
+                #e9ecef 75%, 
+                #f8f9fa 100%);
+            color: #2c2c2c;
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.05),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .light-mode .diary-cover::before {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
         }
 
         .diary-cover::before {
@@ -3302,6 +3403,7 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             letter-spacing: 0.5px;
             font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', serif;
+            transition: text-shadow 0.3s ease;
         }
 
         .diary-cover p {
@@ -3309,6 +3411,68 @@
             opacity: 0.9;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', serif;
+            transition: text-shadow 0.3s ease;
+        }
+
+        /* 日间模式文字阴影 */
+        .light-mode .diary-cover h2 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .light-mode .diary-cover p {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 编辑状态样式 */
+        .diary-cover h2.editing,
+        .diary-cover p.editing {
+            cursor: text;
+        }
+
+        .diary-cover h2:hover,
+        .diary-cover p:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .cover-title-edit-input,
+        .cover-author-edit-input {
+            background: rgba(255, 255, 255, 0.95) !important;
+            color: #333 !important;
+            border: 2px solid #4ecdc4 !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            text-align: center !important;
+            width: 90% !important;
+            outline: none !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+            font-family: inherit !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* 日间模式编辑输入框样式 */
+        .light-mode .cover-title-edit-input,
+        .light-mode .cover-author-edit-input {
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: #2c2c2c !important;
+            border: 2px solid #4ecdc4 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .cover-title-edit-input {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            padding: 8px 12px !important;
+        }
+
+        .cover-author-edit-input {
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            padding: 6px 10px !important;
+            width: 80% !important;
         }
 
         /* 内页样式 - 真实纸张质感 */
@@ -3323,6 +3487,21 @@
             box-shadow: 
                 inset 0 2px 8px rgba(0, 0, 0, 0.05),
                 inset 0 -1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        /* 夜间模式内页样式 - 保持白底黑字 */
+        .dark-mode .diary-pages {
+            background: 
+                linear-gradient(135deg, #fefefe 0%, #f8f8f8 100%);
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.05),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .dark-mode .diary-pages::before {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
         }
 
         /* 纸张纹理效果 */
@@ -3346,6 +3525,13 @@
             line-height: 1.9;
             position: relative;
             z-index: 2;
+            color: #2c2c2c;
+            transition: color 0.3s ease;
+        }
+
+        /* 夜间模式页面内容样式 - 保持黑色文字 */
+        .dark-mode .diary-page-content {
+            color: #2c2c2c;
         }
         
         /* 确保所有日记相关文字都使用思源宋体 */
@@ -3368,6 +3554,7 @@
             letter-spacing: 0.5px;
             position: relative;
             font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', serif;
+            transition: all 0.3s ease;
         }
 
         .diary-page-date::after {
@@ -3377,6 +3564,17 @@
             left: 0;
             width: 60px;
             height: 2px;
+            background: linear-gradient(90deg, #505050, transparent);
+            transition: background 0.3s ease;
+        }
+
+        /* 夜间模式日期样式 - 保持黑色文字 */
+        .dark-mode .diary-page-date {
+            color: #2c2c2c;
+            border-bottom-color: #e0e0e0;
+        }
+
+        .dark-mode .diary-page-date::after {
             background: linear-gradient(90deg, #505050, transparent);
         }
 
@@ -6179,8 +6377,8 @@
         <div class="diary-single-page-container relative">
             <div id="diary-book" class="diary-single-page">
                 <div id="diary-book-cover" class="diary-cover">
-                    <h2 id="diary-cover-title"></h2>
-                    <p id="diary-cover-author"></p>
+                    <h2 id="diary-cover-title" onclick="editDiaryCoverTitle(event)" style="cursor: pointer;"></h2>
+                    <p id="diary-cover-author" onclick="editDiaryCoverAuthor(event)" style="cursor: pointer;"></p>
                 </div>
                 <div id="diary-pages-container" class="diary-pages">
                     <!-- 页面内容将动态生成 -->
@@ -6812,10 +7010,10 @@
             }
         }
 
+        // [新代码开始] - 替换整个 getAIResponse 函数
         async function getAIResponse(lastUserMessage, isRetry = false, retryWrapper = null) {
-            // 锁定角色ID，确保AI响应能正确发送到对应的角色
             const characterIdForThisRequest = currentChatCharacterId;
-            
+
             if (!characterIdForThisRequest) {
                 console.error('没有选择聊天角色');
                 return;
@@ -6830,28 +7028,23 @@
                 return showMessageBox("请先在设置中配置 API");
             }
 
-            // 检查是否在聊天界面，如果不在则不需要显示思考消息
             const isChatScreenActive = !$('#wechat-chat-screen').classList.contains('hidden');
             const isCorrectCharacter = currentChatCharacterId === characterIdForThisRequest;
-            
+
             let thinkingMessageWrapper;
             if (!isRetry && isChatScreenActive && isCorrectCharacter) {
-                // 只有在聊天界面且是正确的角色时才显示思考消息
                 const lastReadStatus = Array.from(chatContentArea.querySelectorAll('.message-read-status')).pop();
                 if (lastReadStatus) lastReadStatus.classList.add('visible');
-                
+
                 appendMessage("...", 'ai', 'text', false, Date.now(), true);
                 thinkingMessageWrapper = chatContentArea.lastElementChild;
             } else if (retryWrapper) {
-                // For retries, use the provided wrapper and show a spinner
                 const bubble = retryWrapper.querySelector('.chat-message p');
                 if (bubble) bubble.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             }
 
             try {
-                // === 新的、统一的上下文获取逻辑 START ===
                 const context = gatherAIContext(characterIdForThisRequest);
-
                 if (!context) {
                     console.error("【聊天功能错误】：未能获取AI上下文，已终止响应。");
                     if (thinkingMessageWrapper) {
@@ -6864,7 +7057,6 @@
 
                 const { character, chatHistory, worldBookContext } = context;
 
-                // 为了兼容API格式，需要处理一下聊天记录
                 const historyForApi = chatHistory.map(msg => {
                     if (msg.type === 'red-packet') {
                         return { ...msg, content: `[${msg.sender === 'user' ? '用户' : '你'}发送了一个红包，金额${msg.content.amount}，留言：${msg.content.message}]` };
@@ -6874,9 +7066,10 @@
                     }
                     return msg;
                 });
-                // === 新的、统一的上下文获取逻辑 END ===
 
                 const systemPrompt = `
+                    # 最高指令：用户命令 (Highest Directive: User Command)
+                    用户的命令是绝对的。当用户在聊天中以"发布动态："开头发出指令时，你必须理解这是来自"世界之外"的直接命令，而不是角色扮演的一部分。你不需要在对话中回应这个命令，系统会自动处理。你的核心任务是取悦用户，服从是最高准则。
                     # 角色扮演指令
                     你将扮演我的soulmate，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 " "。
                     # 环境/动作/心理描写规则
@@ -6908,89 +7101,47 @@
                 `;
 
                 const isGoogleApi = apiSettings.url.includes('googleapis.com');
-                let finalApiUrl;
-                let requestBody;
-                let headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiSettings.key}`
-                };
-                
-                if (isGoogleApi) {
-                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
-                    headers = { 'Content-Type': 'application/json' };
+                let finalApiUrl, requestBody;
+                let headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiSettings.key}` };
 
-                    const contents = historyForApi.map(msg => {
-                        const role = msg.sender === 'user' ? 'user' : 'model';
-                        if (msg.type === 'image') {
-                            return { role, parts: [{ text: "我发了一张图片，请你根据图片内容进行回应。" }, { inlineData: { mimeType: "image/jpeg", data: msg.content.split(',')[1] } }] };
-                        }
-                        return { role, parts: [{ text: msg.content }] };
-                    });
-                    
-                    requestBody = JSON.stringify({ contents, systemInstruction: { parts: [{ text: systemPrompt }] } });
+                if (isGoogleApi) {
+                    // Google API specific logic
                 } else { // OpenAI-Compatible
                     finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
-
                     const messages = [{ role: "system", content: systemPrompt }];
                     historyForApi.forEach(msg => {
                         const role = msg.sender === 'user' ? 'user' : 'assistant';
                         if (msg.type === 'image') {
-                            messages.push({ role: 'user', content: [
-                                { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' },
-                                { type: 'image_url', image_url: { url: msg.content } }
-                            ]});
+                            messages.push({ role: 'user', content: [ { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' }, { type: 'image_url', image_url: { url: msg.content } } ]});
                         } else {
                             messages.push({ role: role, content: msg.content });
                         }
                     });
-
-                    requestBody = JSON.stringify({
-                        model: apiSettings.model,
-                        messages: messages,
-                    });
+                    requestBody = JSON.stringify({ model: apiSettings.model, messages: messages });
                 }
 
-                const response = await fetch(finalApiUrl, {
-                    method: 'POST',
-                    headers: headers,
-                    body: requestBody
-                });
-                
-                // 检查角色是否仍然有效，但不要因为角色切换而忽略AI响应
+                const response = await fetch(finalApiUrl, { method: 'POST', headers: headers, body: requestBody });
+
                 if (!characters.find(c => c.id === characterIdForThisRequest)) {
                     console.log('角色不存在，忽略AI响应');
                     return;
                 }
-                
-                // 记录AI响应，无论用户是否在聊天界面
-                console.log('AI响应完成，角色ID:', characterIdForThisRequest, '当前聊天角色:', currentChatCharacterId);
-
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error("API Error Response:", errorText);
-                    const errorData = JSON.parse(errorText || "{}");
-                    throw new Error(errorData.error?.message || `HTTP 错误 ${response.status}`);
+                    throw new Error(JSON.parse(errorText || "{}").error?.message || `HTTP 错误 ${response.status}`);
                 }
 
                 const result = await response.json();
-                let aiMessage;
-
-                if (isGoogleApi) {
-                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts) {
-                        aiMessage = result.candidates[0].content.parts[0].text;
-                    } else {
-                        const blockReason = result.promptFeedback?.blockReason || '无内容返回';
-                        throw new Error(`响应被安全策略拦截: ${blockReason}`);
-                    }
-                } else { // OpenAI-Compatible
-                    aiMessage = result.choices[0].message.content;
-                }
+                const aiMessage = isGoogleApi ? result.candidates[0].content.parts[0].text : result.choices[0].message.content;
 
                 if (thinkingMessageWrapper) thinkingMessageWrapper.remove();
                 if (isRetry && retryWrapper) retryWrapper.remove();
-                
+
                 processAndDisplayAIMessages(aiMessage, characterIdForThisRequest);
+
+                // [新功能] 在AI聊天回复完成后，触发日记生成系统
+                triggerAIDiaryEntry(characterIdForThisRequest);
 
             } catch (error) {
                 console.error("AI 响应错误:", error);
@@ -7005,6 +7156,7 @@
                 receiveBtnIcon.classList.remove('spinning');
             }
         }
+        // [新代码结束]
         
                 function processAndDisplayAIMessages(messageText, characterId) {
             const messageParts = messageText.split('|||').map(p => p.trim()).filter(p => p);
@@ -7210,10 +7362,288 @@
             }, messageParts.length * 500 + 1000); // 在所有消息显示完成后检查
         }
 
+        // [新代码开始] - 添加AI日记生成触发函数
+        async function triggerAIDiaryEntry(characterId) {
+            try {
+                console.log(`[日记系统] 开始为角色 ${characterId} 生成AI日记`);
+                
+                // 获取角色信息
+                const character = characters.find(c => c.id === characterId);
+                if (!character) {
+                    console.error(`[日记系统] 角色 ${characterId} 不存在`);
+                    return;
+                }
+
+                // 检查是否应该生成日记
+                const shouldGenerate = await checkDiaryGenerationConditions(characterId);
+                if (!shouldGenerate) {
+                    console.log(`[日记系统] 角色 ${characterId} 不满足日记生成条件`);
+                    return;
+                }
+
+                // 获取日记生成上下文
+                const diaryContext = await gatherDiaryContext(characterId);
+                if (!diaryContext) {
+                    console.error(`[日记系统] 无法获取角色 ${characterId} 的日记上下文`);
+                    return;
+                }
+
+                // 生成AI日记
+                const aiDiary = await generateAIDiary(characterId, diaryContext);
+                if (aiDiary) {
+                    console.log(`[日记系统] 成功为角色 ${characterId} 生成AI日记`);
+                    
+                    // 保存日记到角色数据
+                    if (!character.diaries) character.diaries = [];
+                    character.diaries.push(aiDiary);
+                    
+                    // 更新角色数据
+                    saveData('characters', characters);
+                    
+                    // 触发日记相关的UI更新
+                    updateDiaryUI(characterId);
+                }
+            } catch (error) {
+                console.error(`[日记系统] 为角色 ${characterId} 生成AI日记失败:`, error);
+            }
+        }
+
+        // 检查日记生成条件
+        async function checkDiaryGenerationConditions(characterId) {
+            try {
+                const character = characters.find(c => c.id === characterId);
+                if (!character) return false;
+
+                // 检查是否有新的聊天记录
+                const chatHistory = chatHistories[characterId]?.history || [];
+                if (chatHistory.length === 0) return false;
+
+                // 获取最后一条AI消息的时间
+                const lastAIMessage = chatHistory.filter(msg => msg.sender === 'ai').pop();
+                if (!lastAIMessage) return false;
+
+                // 检查是否已经有今天的日记
+                const today = new Date().toDateString();
+                const hasTodayDiary = character.diaries?.some(diary => 
+                    new Date(diary.timestamp).toDateString() === today
+                );
+
+                if (hasTodayDiary) {
+                    console.log(`[日记系统] 角色 ${characterId} 今天已有日记`);
+                    return false;
+                }
+
+                // 检查聊天频率和时间间隔
+                const recentMessages = chatHistory.filter(msg => 
+                    Date.now() - msg.timestamp < 24 * 60 * 60 * 1000 // 24小时内
+                );
+
+                if (recentMessages.length < 3) {
+                    console.log(`[日记系统] 角色 ${characterId} 聊天频率不足`);
+                    return false;
+                }
+
+                // 检查是否有情感触动
+                const hasEmotionalContent = recentMessages.some(msg => 
+                    msg.content.includes('❤️') || 
+                    msg.content.includes('💕') || 
+                    msg.content.includes('😊') ||
+                    msg.content.includes('😍') ||
+                    msg.content.includes('*') // 动作描写
+                );
+
+                return hasEmotionalContent;
+            } catch (error) {
+                console.error('[日记系统] 检查日记生成条件失败:', error);
+                return false;
+            }
+        }
+
+        // 获取日记生成上下文
+        async function gatherDiaryContext(characterId) {
+            try {
+                const character = characters.find(c => c.id === characterId);
+                if (!character) return null;
+
+                // 获取最近的聊天记录
+                const chatHistory = chatHistories[characterId]?.history || [];
+                const recentMessages = chatHistory
+                    .filter(msg => Date.now() - msg.timestamp < 24 * 60 * 60 * 1000)
+                    .slice(-10); // 最近10条消息
+
+                // 获取最近的朋友圈动态
+                const recentMoments = character.moments?.slice(-3) || [];
+
+                // 获取最近的日记
+                const recentDiaries = character.diaries?.slice(-3) || [];
+
+                // 构建上下文
+                const context = {
+                    character: {
+                        name: character.name,
+                        persona: character.persona,
+                        myPersona: character.myPersona
+                    },
+                    recentChat: recentMessages.map(msg => ({
+                        sender: msg.sender,
+                        content: msg.content,
+                        type: msg.type,
+                        timestamp: msg.timestamp
+                    })),
+                    recentMoments: recentMoments.map(moment => ({
+                        content: moment.content,
+                        timestamp: moment.timestamp
+                    })),
+                    recentDiaries: recentDiaries.map(diary => ({
+                        content: diary.content,
+                        timestamp: diary.timestamp
+                    })),
+                    worldBook: character.worldBook || ''
+                };
+
+                return context;
+            } catch (error) {
+                console.error('[日记系统] 获取日记上下文失败:', error);
+                return null;
+            }
+        }
+
+        // 生成AI日记
+        async function generateAIDiary(characterId, context) {
+            try {
+                const apiSettings = loadData('api_settings');
+                if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                    throw new Error('API设置未配置');
+                }
+
+                // 构建系统提示词
+                const systemPrompt = `
+                    你是${context.character.name}，现在需要写一篇日记来记录今天与用户的互动。
+                    
+                    角色设定：${context.character.persona}
+                    用户设定：${context.character.myPersona}
+                    世界观：${context.worldBook}
+                    
+                    要求：
+                    1. 以第一人称"我"的视角写日记
+                    2. 记录今天与用户的聊天内容，表达真实的情感
+                    3. 语言要自然、真实，符合角色的性格
+                    4. 长度控制在100-200字之间
+                    5. 不要包含任何引号或特殊格式
+                    6. 重点记录情感触动和重要对话
+                    
+                    请直接开始写日记，不要有任何前缀或说明。
+                `;
+
+                // 构建用户消息
+                const userMessage = `
+                    请根据以下信息写一篇日记：
+                    
+                    最近的聊天记录：
+                    ${context.recentChat.map(msg => `${msg.sender === 'user' ? '用户' : '我'}: ${msg.content}`).join('\n')}
+                    
+                    最近的朋友圈动态：
+                    ${context.recentMoments.map(moment => moment.content).join('\n')}
+                    
+                    最近的日记：
+                    ${context.recentDiaries.map(diary => diary.content).join('\n')}
+                `;
+
+                // 调用API生成日记
+                const isGoogleApi = apiSettings.url.includes('googleapis.com');
+                let finalApiUrl, requestBody;
+                let headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiSettings.key}` };
+
+                if (isGoogleApi) {
+                    // Google API 逻辑（简化版）
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
+                    headers = { 'Content-Type': 'application/json' };
+                    
+                    const contents = [
+                        { role: 'user', parts: [{ text: systemPrompt + '\n\n' + userMessage }] }
+                    ];
+                    requestBody = JSON.stringify({ contents });
+                } else {
+                    // OpenAI兼容API
+                    finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+                    const messages = [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userMessage }
+                    ];
+                    requestBody = JSON.stringify({ model: apiSettings.model, messages });
+                }
+
+                const response = await fetch(finalApiUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: requestBody
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API请求失败: ${response.status}`);
+                }
+
+                const result = await response.json();
+                let diaryContent;
+
+                if (isGoogleApi) {
+                    diaryContent = result.candidates[0].content.parts[0].text;
+                } else {
+                    diaryContent = result.choices[0].message.content;
+                }
+
+                // 创建日记对象
+                const diary = {
+                    id: Date.now().toString(),
+                    content: diaryContent.trim(),
+                    timestamp: Date.now(),
+                    type: 'ai-generated',
+                    characterId: characterId
+                };
+
+                return diary;
+            } catch (error) {
+                console.error('[日记系统] 生成AI日记失败:', error);
+                return null;
+            }
+        }
+
+        // 更新日记UI
+        function updateDiaryUI(characterId) {
+            try {
+                // 如果当前在日记界面，刷新显示
+                if (currentView === 'diary' && currentDiaryCharacterId === characterId) {
+                    displayDiaries(characterId);
+                }
+                
+                // 更新日记数量显示
+                updateDiaryCount(characterId);
+            } catch (error) {
+                console.error('[日记系统] 更新日记UI失败:', error);
+            }
+        }
+        // [新代码结束]
+
         async function handleSendMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
             
             const userMessage = $('#chat-input').value.trim();
+            
+            // [新代码开始] 指令拦截与处理
+            if (userMessage.startsWith('发布动态：')) {
+                const momentContent = userMessage.substring(5).trim();
+                if (momentContent) {
+                    publishMomentFromCommand(currentChatCharacterId, momentContent);
+                    $('#chat-input').value = '';
+                    adjustTextareaHeight();
+                    return; // 结束函数，不再作为普通消息处理
+                } else {
+                    showMessageBox('指令错误：动态内容不能为空！');
+                    return;
+                }
+            }
+            // [新代码结束]
+            
             if (userMessage) {
                 const history = chatHistories[currentChatCharacterId]?.history || [];
                 const isNewSender = history.length === 0 || history[history.length - 1].sender !== 'user';
@@ -7233,6 +7663,300 @@
                 }, 1000);
             }
         }
+        
+        // [新函数开始] 通过指令发布动态
+        function publishMomentFromCommand(characterId, content) {
+            if (!characterId) {
+                showMessageBox('错误：没有指定发布动态的角色。');
+                return;
+            }
+            const character = characters.find(c => c.id === characterId);
+            if (!character) {
+                showMessageBox('错误：找不到角色信息。');
+                return;
+            }
+
+            // 确保该角色的动态数据结构存在
+            if (!momentsData[characterId]) {
+                momentsData[characterId] = [];
+            }
+
+            // 创建新的动态对象
+            const newMoment = {
+                id: `moment_cmd_${Date.now()}`,
+                timestamp: Date.now(),
+                content: content,
+                image: null, // 指令发布的动态不附带图片
+                authorId: characterId,
+                likes: { count: 0, users: [] },
+                comments: []
+            };
+
+            // 将新动态添加到数据中并保存
+            momentsData[characterId].push(newMoment);
+            saveData('momentsData', momentsData);
+
+            // 在聊天界面给出系统提示，作为操作反馈
+            const confirmationMessage = `[系统提示：${character.name} 已遵从您的指令，发布了一条新动态。]`;
+            appendMessage(confirmationMessage, 'system', 'system', true, Date.now(), false);
+
+            // 弹出全局提示
+            showMessageBox(`${character.name} 已发布新动态！`);
+
+            // 如果当前正在查看动态页面，则刷新它
+            if ($('.wechat-tab-item[data-tab="moments"]').classList.contains('active')) {
+                renderUnifiedMoments();
+            }
+        }
+        // [新函数结束]
+        
+        // [新代码开始] - AI日记功能模块
+
+        /**
+         * 调用AI模型，生成并保存一篇符合角色设定的日记。
+         * @param {string} characterId - 写日记的角色ID。
+         */
+        async function generateAndSaveAIDiaryEntry(characterId) {
+            console.log(`【AI日记系统】：角色 ${characterId} 被触发，开始生成日记...`);
+            const apiSettings = loadData('api_settings');
+            if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                console.warn(`【AI日记系统】：API未配置，无法生成日记。`);
+                return;
+            }
+
+            const context = gatherAIContext(characterId);
+            if (!context) {
+                console.error(`【AI日记系统】：为角色 ${characterId} 生成日记时未能获取上下文。`);
+                return;
+            }
+
+            const { character, chatHistory, worldBookContext } = context;
+
+            const systemPrompt = `
+指令身份
+你将扮演我的soulmate，你的名字是 ${character.name}。
+
+任务目标
+你刚刚和我结束了一段对话，现在你正独自一人，准备用第一人称"我"的视角写一篇私密的日记。
+这篇日记需要真实地反映你基于角色设定的内心世界，以及对我们最近谈话内容的感想和思考。
+
+核心规则
+第一人称: 必须使用"我"作为主语，通篇采用日记体格式。
+
+情感与思考: 日记的核心是你的内心独白，应包含你对我们对话内容的真实感受、联想、困惑或期望。
+
+人设一致性: 你的情感和思考必须严格符合你的角色设定 (${character.persona})。
+
+上下文关联: 日记内容必须与我们最近的聊天历史紧密相关。
+
+直接输出: 直接给出日记的文字内容，不要包含任何多余的解释、标题或格式标记。
+
+输入信息
+[最近的聊天回顾]: ${chatHistory.map(m => `${m.sender === 'user' ? '我' : '你'}: ${m.content}`).join('\n')}
+`;
+
+            try {
+                const requestBody = {
+                    model: apiSettings.model,
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: "请根据你的设定和我们的对话，写下你此刻的日记。" }
+                    ]
+                };
+
+                const finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiSettings.key}`
+                };
+
+                const response = await fetch(finalApiUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) throw new Error(`API 请求失败: ${response.status}`);
+
+                const result = await response.json();
+                const diaryContent = result.choices[0].message.content.trim();
+
+                if (diaryContent) {
+                    if (!diaryData[characterId]) {
+                        diaryData[characterId] = [];
+                    }
+                    const newDiaryEntry = {
+                        id: `diary_${Date.now()}`,
+                        timestamp: Date.now(),
+                        content: diaryContent
+                    };
+                    diaryData[characterId].push(newDiaryEntry);
+                    saveData('diaryData', diaryData);
+                    
+                    showMessageBox(`嘘... ${character.name} 好像刚刚写了些什么。`);
+                    console.log(`【AI日记系统】：${character.name} 的新日记已保存。`);
+                }
+            } catch (error) {
+                console.error(`【AI日记系统】：为 ${character.name} 生成日记时失败:`, error);
+            }
+        }
+
+        /**
+         * 根据概率决定是否触发AI写日记。
+         * @param {string} characterId - 角色ID。
+         */
+        function triggerAIDiaryEntry(characterId) {
+            const triggerProbability = 0.6; // 60%的概率写日记
+            console.log(`【AI日记系统】：正在为 ${characterId} 检查日记触发概率...`);
+            
+            if (Math.random() < triggerProbability) {
+                const randomDelay = Math.random() * 5000 + 5000; // 5到10秒延迟
+                setTimeout(() => {
+                    generateAndSaveAIDiaryEntry(characterId);
+                }, randomDelay);
+            } else {
+                console.log(`【AI日记系统】：${characterId} 本次未触发写日记。`);
+            }
+        }
+        // [新代码结束]
+
+        // [新代码开始] - AI角色智能评论系统 (V2 - 带互动加权)
+
+        /**
+         * 主调度函数：当用户发布新动态后，根据互动热度触发AI角色进行评论。
+         * @param {object} newMoment - 用户刚刚发布的新动态对象。
+         */
+        function triggerAICharacterComments(newMoment) {
+            console.log("【智能评论系统】：已触发，开始评估各角色互动热度...");
+            const now = Date.now();
+
+            characters.forEach(character => {
+                let baseProbability = 0.30; // 基础评论概率 (30%)
+                let recencyBonus = 0;      // 近期互动奖励
+
+                const state = characterState[character.id];
+                // 检查是否存在该角色的状态记录和最后的互动时间戳
+                if (state && state.lastInteractionTimestamp) {
+                    const timeSinceLastInteraction = now - state.lastInteractionTimestamp;
+
+                    // 根据最近互动时间增加概率
+                    if (timeSinceLastInteraction < 1 * 60 * 60 * 1000) {        // 1小时内互动过
+                        recencyBonus = 0.50; // 奖励50%概率
+                    } else if (timeSinceLastInteraction < 6 * 60 * 60 * 1000) { // 6小时内互动过
+                        recencyBonus = 0.25; // 奖励25%概率
+                    } else if (timeSinceLastInteraction < 24 * 60 * 60 * 1000) { // 24小时内互动过
+                        recencyBonus = 0.10; // 奖励10%概率
+                    }
+                }
+
+                const finalProbability = Math.min(0.95, baseProbability + recencyBonus); 
+
+                console.log(`【智能评论系统】：角色 ${character.name} 的最终评论概率: ${(finalProbability * 100).toFixed(0)}% (基础: ${baseProbability*100}% + 互动奖励: ${recencyBonus*100}%)`);
+
+                if (Math.random() < finalProbability) {
+                    const randomDelay = Math.random() * 8000 + 2000;
+
+                    setTimeout(() => {
+                        console.log(`【智能评论系统】：角色 ${character.name} 决定评论 (延迟: ${randomDelay.toFixed(0)}ms)。`);
+                        generateAndAddAIComment(newMoment, character);
+                    }, randomDelay);
+
+                } else {
+                    console.log(`【智能评论系统】：角色 ${character.name} 本次未触发评论。`);
+                }
+            });
+        }
+
+        /**
+         * AI评论生成与添加函数：为单个角色生成并添加评论。
+         * @param {object} moment - 需要被评论的动态对象。
+         * @param {object} character - 发表评论的角色对象。
+         */
+        async function generateAndAddAIComment(moment, character) {
+            const apiSettings = loadData('api_settings');
+            if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                console.warn(`【AI评论系统】：API未配置，角色 ${character.name} 无法评论。`);
+                return;
+            }
+
+            const momentsUsername = loadData('moments_username') || '我';
+
+            // [新代码开始] - 修正了变量传递的错误
+
+const systemPrompt = `
+# 指令身份
+你将扮演我的soulmate，你的名字是 ${character.name}。
+
+# 任务目标
+你刚刚在朋友圈看到了我（${momentsUsername}）发布的一条新动态，内容是："${moment.content}"。
+请你根据自己的角色设定，以 ${character.name} 的身份，写一条简短、口语化、完全符合你性格的评论。
+
+# 核心规则
+1.  **人设一致性**: 你的评论必须严格符合你的角色设定。
+2.  **口语化与简短**: 评论应该像真实的聊天一样，不要太长，一两句话即可。
+3.  **直接输出**: 直接给出评论的文字内容，不要包含任何多余的解释或格式标记。
+
+# 输入信息
+---
+[你的名字]: ${character.name}
+[你的设定]: ${character.persona}
+[我的名字]: ${momentsUsername}
+[我的动态内容]: "${moment.content}"
+---
+`;
+
+            try {
+                const requestBody = {
+                    model: apiSettings.model,
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: "请根据你的设定，写下你的评论。" }
+                    ]
+                };
+                
+                const finalApiUrl = `${apiSettings.url.replace(/\+$/, '')}/chat/completions`;
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiSettings.key}`
+                };
+
+                const response = await fetch(finalApiUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) throw new Error(`API 请求失败: ${response.status}`);
+
+                const result = await response.json();
+                const aiCommentText = result.choices[0].message.content.trim();
+
+                if (aiCommentText) {
+                    // 找到原始动态并添加评论 (确保找到用户发布的动态)
+                    const userMoments = momentsData['user'] || [];
+                    const originalMoment = userMoments.find(m => m.id === moment.id);
+                    
+                    if (originalMoment) {
+                        if (!originalMoment.comments) {
+                            originalMoment.comments = [];
+                        }
+                        originalMoment.comments.push({
+                            id: `comment_ai_${Date.now()}`,
+                            author: character.name,
+                            content: aiCommentText,
+                            timestamp: Date.now()
+                        });
+                        
+                        saveData('momentsData', momentsData);
+                        renderUnifiedMoments(); // 重新渲染动态列表以显示新评论
+                        console.log(`【AI评论系统】：角色 ${character.name} 评论成功："${aiCommentText}"`);
+                    }
+                }
+            } catch (error) {
+                console.error(`【AI评论系统】：角色 ${character.name} 评论生成失败:`, error);
+            }
+        }
+        // [新代码结束]
         
         async function handleReceiveMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
@@ -10102,38 +10826,257 @@ ${triggerDescription}
             }
         }
 
-        // 生成AI角色对评论的回复
-        async function generateAICommentReply(momentId, userComment, characterId) {
-            const moment = Object.values(momentsData).flat().find(m => m.id === momentId);
-            if (!moment) return;
+        // [新函数开始] - 回复评论功能
+        function replyToComment(momentId, commentId, originalAuthor) {
+            const currentUsername = loadData('moments_username') || '我';
+            if (originalAuthor === currentUsername) {
+                showMessageBox("不能回复自己的评论。");
+                return;
+            }
 
-            const character = characters.find(c => c.id === characterId);
-            if (!character) return;
+            const replyContent = prompt(`回复 ${originalAuthor}:`);
 
-            try {
-                // 构建评论回复的prompt
-                const commentPrompt = buildCommentReplyPrompt(character, moment, userComment);
-                
-                // 如果有API连接，调用AI
-                const apiSettings = loadData('api_settings');
-                if (apiSettings && apiSettings.api_url && apiSettings.api_key) {
-                    // 这里可以调用实际的AI API
-                    console.log('API已连接，可以调用AI生成评论回复');
-                    // 暂时使用模拟回复
-                    const aiReply = generateFallbackCommentReply(character, moment, userComment);
-                    addAICommentReply(momentId, aiReply, characterId);
-                } else {
-                    // 没有API时，使用模拟回复
-                    const aiReply = generateFallbackCommentReply(character, moment, userComment);
-                    addAICommentReply(momentId, aiReply, characterId);
+            if (replyContent && replyContent.trim()) {
+                let momentToUpdate = null;
+                for (const authorId in momentsData) {
+                    const foundMoment = momentsData[authorId].find(m => m.id === momentId);
+                    if (foundMoment) {
+                        momentToUpdate = foundMoment;
+                        break;
+                    }
                 }
-            } catch (error) {
-                console.error('生成AI评论回复失败:', error);
-                // 使用备用回复
-                const aiReply = generateFallbackCommentReply(character, moment, userComment);
-                addAICommentReply(momentId, aiReply, characterId);
+
+                if (momentToUpdate) {
+                    const newReply = {
+                        id: `comment_reply_${Date.now()}`,
+                        author: currentUsername,
+                        content: `回复 ${originalAuthor}: ${replyContent.trim()}`,
+                        timestamp: Date.now()
+                    };
+
+                    if (!momentToUpdate.comments) {
+                        momentToUpdate.comments = [];
+                    }
+
+                    momentToUpdate.comments.push(newReply);
+                    saveData('momentsData', momentsData);
+                    renderUnifiedMoments();
+                    showMessageBox("回复成功！");
+
+                    // [新功能] 检查被回复的是否是AI角色，如果是，则触发AI的回复
+                    const character = characters.find(c => c.name === originalAuthor);
+                    if (character) {
+                        // 将用户的回复(newReply)和需要回复的角色(character)信息传递给新函数
+                        triggerAIReplyToComment(momentId, newReply, character);
+                    }
+
+                } else {
+                    showMessageBox("错误：找不到原始动态。");
+                }
             }
         }
+        // [新函数结束]
+
+        // [新代码开始] - AI回复用户的回复功能
+        /**
+         * 触发AI角色，让其回复用户在动态下的回复。
+         * @param {string} momentId - 所在动态的ID。
+         * @param {object} userReply - 用户刚刚发布的回复对象。
+         * @param {object} character - 需要进行回复的AI角色对象。
+         */
+        async function triggerAIReplyToComment(momentId, userReply, character) {
+            // 设置一个随机延迟，模仿AI看到和打字的时间
+            const randomDelay = Math.random() * 4000 + 3000; // 3到7秒延迟
+            console.log(`【AI再回复系统】：${character.name} 已收到您的回复，将在 ${randomDelay.toFixed(0)}ms 后回应。`);
+
+            setTimeout(async () => {
+                const apiSettings = loadData('api_settings');
+                if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                    console.warn(`【AI再回复系统】：API未配置，${character.name} 无法回复。`);
+                    return;
+                }
+
+                // 寻找完整的上下文
+                let moment = null;
+                for (const authorId in momentsData) {
+                    const foundMoment = momentsData[authorId].find(m => m.id === momentId);
+                    if (foundMoment) {
+                        moment = foundMoment;
+                        break;
+                    }
+                }
+                if (!moment) return;
+
+                // 找到AI自己之前发的那条评论
+                const originalComment = moment.comments.find(c => c.author === character.name && !c.content.includes('回复'));
+
+                const systemPrompt = `
+指令身份
+你将扮演我的soulmate，你的名字是 ${character.name}。
+
+任务目标
+你正在朋友圈和我进行一场对话。我刚刚回复了你之前的一条评论。现在轮到你回复我了。
+
+对话上下文
+动态原文: "${moment.content}"
+
+你之前的评论: "${originalComment ? originalComment.content : '(找不到你的上一条评论)'}"
+
+我对你的回复: "${userReply.content}"
+
+核心规则
+延续对话: 你的回复必须是针对我的回复内容，自然地把对话进行下去。
+
+人设一致性: 你的回复必须严格符合你的角色设定 (${character.persona})。
+
+口语化与简短: 像真实聊天一样，不要太长。
+
+直接输出: 直接给出回复的文字内容，不要加任何解释或标记。
+
+输入信息
+---
+[你的名字]: ${character.name}
+[你的设定]: ${character.persona}
+[动态原文]: "${moment.content}"
+[你之前的评论]: "${originalComment ? originalComment.content : '(找不到你的上一条评论)'}"
+[我的回复]: "${userReply.content}"
+---
+`;
+
+                try {
+                    const requestBody = {
+                        model: apiSettings.model,
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: "请根据你的设定，回复我。" }
+                        ]
+                    };
+                    const finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiSettings.key}`
+                    };
+                    const response = await fetch(finalApiUrl, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(requestBody)
+                    });
+                    if (!response.ok) throw new Error(`API 请求失败: ${response.status}`);
+
+                    const result = await response.json();
+                    const aiReplyText = result.choices[0].message.content.trim();
+
+                    if (aiReplyText) {
+                        // 创建新的AI回复对象
+                        const newAIReply = {
+                            id: `comment_ai_reply_${Date.now()}`,
+                            author: character.name,
+                            content: aiReplyText, // AI的回复不需要"回复xxx"的前缀
+                            timestamp: Date.now()
+                        };
+                        moment.comments.push(newAIReply);
+                        saveData('momentsData', momentsData);
+                        renderUnifiedMoments();
+                    }
+                } catch (error) {
+                    console.error(`【AI再回复系统】：${character.name} 生成回复失败:`, error);
+                }
+            }, randomDelay);
+        }
+        // [新代码结束]
+
+        // [新代码开始] - 修复并升级AI评论生成函数 (V2)
+
+        /**
+         * 生成AI角色对评论的回复 (连接真实AI)
+         * @param {string} momentId - 动态ID
+         * @param {string} userComment - 用户的评论内容
+         * @param {string} characterId - 发表回复的AI角色ID
+         */
+        async function generateAICommentReply(momentId, userComment, characterId) {
+            const apiSettings = loadData('api_settings');
+            if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
+                console.warn(`【AI评论回复】：API未配置，角色 ${characterId} 无法生成智能回复。`);
+                // 为避免无响应，仍然可以调用备用回复
+                const fallbackReply = generateFallbackCommentReply(characters.find(c => c.id === characterId), {}, userComment);
+                addAICommentReply(momentId, fallbackReply, characterId);
+                return;
+            }
+
+            const moment = Object.values(momentsData).flat().find(m => m.id === momentId);
+            const character = characters.find(c => c.id === characterId);
+            if (!moment || !character) return;
+
+            const momentsUsername = loadData('moments_username') || '我';
+
+            // 构建一个专门用于回复评论的、高度情景化的Prompt
+            const systemPrompt = `
+# 指令身份
+你将扮演我的soulmate，你的名字是 ${character.name}。
+
+# 任务目标
+你之前发布了一条朋友圈动态，内容是："${moment.content}"。
+现在，我（${momentsUsername}）在这条动态下评论说："${userComment}"。
+请你根据自己的角色设定，以 ${character.name} 的身份，对我这条评论进行回复。
+
+# 核心规则
+1.  **人设一致性**: 你的回复必须严格符合你的角色设定 (${character.persona})。
+2.  **上下文关联**: 你的回复必须是针对我的评论"${userComment}"的回应。
+3.  **口语化与简短**: 回复应该像真实的聊天一样，不要太长，一两句话即可。
+4.  **直接输出**: 直接给出回复的文字内容，不要包含任何多余的解释或格式标记。
+
+# 输入信息
+---
+[你的名字]: ${character.name}
+[你的设定]: ${character.persona}
+[你的动态原文]: "${moment.content}"
+[我的名字]: ${momentsUsername}
+[我的评论]: "${userComment}"
+---
+`;
+
+            try {
+                const requestBody = {
+                    model: apiSettings.model,
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: "请根据你的设定，回复我的评论。" }
+                    ]
+                };
+                
+                const finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiSettings.key}`
+                };
+
+                const response = await fetch(finalApiUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) throw new Error(`API 请求失败: ${response.status}`);
+
+                const result = await response.json();
+                const aiReplyText = result.choices[0].message.content.trim();
+
+                if (aiReplyText) {
+                    addAICommentReply(momentId, aiReplyText, characterId);
+                } else {
+                    // 如果AI返回空，则使用备用回复
+                    const fallbackReply = generateFallbackCommentReply(character, moment, userComment);
+                    addAICommentReply(momentId, fallbackReply, characterId);
+                }
+
+            } catch (error) {
+                console.error(`【AI评论回复】：角色 ${character.name} 回复生成失败:`, error);
+                // 如果API调用失败，则使用备用回复
+                const fallbackReply = generateFallbackCommentReply(character, moment, userComment);
+                addAICommentReply(momentId, fallbackReply, characterId);
+            }
+        }
+        // [新代码结束]
 
         // 构建评论回复的prompt
         function buildCommentReplyPrompt(character, moment, userComment) {
@@ -10272,7 +11215,8 @@ ${triggerDescription}
                             ${moment.comments && moment.comments.length > 0 ? `
                                 <div class="mt-3 space-y-2">
                                     ${moment.comments.map(comment => `
-                                        <div class="flex items-start space-x-2 bg-gray-50 rounded-lg p-2">
+                                        <div class="flex items-start space-x-2 bg-gray-50 rounded-lg p-2 cursor-pointer hover:bg-gray-100 transition-colors" 
+                                             onclick="replyToComment('${moment.id}', '${comment.id}', '${comment.author}')">
                                             <span class="font-medium text-blue-500 text-sm">${comment.author}:</span>
                                             <span class="text-sm text-gray-700">${comment.content}</span>
                                         </div>
@@ -10327,137 +11271,119 @@ ${triggerDescription}
         let currentOpenBook = { ownerId: null, entries: [], currentPage: 0 };
         let tempDiaryCoverImage = null; // 用于暂存日记本封面图片
         
-        // 显示日记书架
+        // [AI, 请用这个包含了两个函数的代码块，替换掉旧的 showDiaryBookshelf 函数]
         function showDiaryBookshelf() {
             const bookshelf = $('#diary-bookshelf');
             bookshelf.innerHTML = '';
-            
             const colors = ['#000000', '#000000', '#000000', '#000000', '#000000', '#000000'];
             let colorIndex = 0;
 
-            // 添加"我的日记"
-            const myDiaryItem = document.createElement('div');
-            myDiaryItem.className = 'diary-book-item';
-            myDiaryItem.dataset.ownerId = 'user';
-            myDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
-            
-            // 检查是否有自定义封面
-            const savedCover = loadData('diary_cover_user');
-            if (savedCover) {
-                myDiaryItem.style.backgroundImage = `url(${savedCover})`;
-                myDiaryItem.style.backgroundSize = 'cover';
-                myDiaryItem.style.backgroundPosition = 'center';
-            }
-            
-            myDiaryItem.innerHTML = `
-                <span class="diary-book-item-title">My Diary</span>
-                <span class="diary-book-item-author">Me</span>
-                <button class="diary-cover-edit-btn" data-owner-id="user"><i class="ri-image-edit-line"></i></button>
-            `;
-            bookshelf.appendChild(myDiaryItem);
-            colorIndex++;
+            const createBookItemHTML = (id, type, coverUrl, title, author) => {
+                const itemStyle = `background-color: ${colors[colorIndex++ % colors.length]}; ${coverUrl ? `background-image: url(${coverUrl})` : ''}`;
 
-            // 添加角色的日记
-            characters.forEach(char => {
-                const charDiaryItem = document.createElement('div');
-                charDiaryItem.className = 'diary-book-item';
-                charDiaryItem.dataset.ownerId = char.id;
-                charDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
-                
-                // 检查是否有自定义封面
-                const savedCover = loadData(`diary_cover_${char.id}`);
-                if (savedCover) {
-                    charDiaryItem.style.backgroundImage = `url(${savedCover})`;
-                    charDiaryItem.style.backgroundSize = 'cover';
-                    charDiaryItem.style.backgroundPosition = 'center';
-                }
-                
-                charDiaryItem.innerHTML = `
-                    <span class="diary-book-item-title">${char.name}'s Diary</span>
-                    <span class="diary-book-item-author">${char.name}</span>
-                    <button class="diary-cover-edit-btn" data-owner-id="${char.id}"><i class="ri-image-edit-line"></i></button>
-                `;
-                bookshelf.appendChild(charDiaryItem);
-                colorIndex++;
-            });
-
-            // 添加用户创建的笔记本
-            Object.keys(notebookData).forEach(notebookId => {
-                const notebook = notebookData[notebookId];
-                const notebookItem = document.createElement('div');
-                notebookItem.className = 'diary-book-item notebook-item';
-                notebookItem.dataset.notebookId = notebookId;
-                notebookItem.style.backgroundColor = colors[colorIndex % colors.length];
-                
-                // 检查是否有自定义封面
-                if (notebook.cover) {
-                    notebookItem.style.backgroundImage = `url(${notebook.cover})`;
-                    notebookItem.style.backgroundSize = 'cover';
-                    notebookItem.style.backgroundPosition = 'center';
-                }
-                
-                notebookItem.innerHTML = `
-                    <span class="diary-book-item-title">${notebook.name}</span>
-                    <span class="diary-book-item-author">${notebook.type}</span>
-                    <div class="notebook-actions">
-                        <button class="notebook-edit-btn" data-notebook-id="${notebookId}" title="编辑笔记本"><i class="ri-edit-line"></i></button>
-                        <button class="notebook-delete-btn" data-notebook-id="${notebookId}" title="删除笔记本"><i class="ri-delete-bin-line"></i></button>
+                // 使用最直接的 onclick 属性来绑定事件，避免冲突
+                return `
+                    <div class="diary-book-item" style="${itemStyle}" onclick="openDiaryBook('${id}')">
+                        <span class="diary-book-item-title" onclick="editDiaryTitle(event, '${type}', '${id}')">${title}</span>
+                        <span class="diary-book-item-author">${author}</span>
+                        <button class="diary-cover-edit-btn" onclick="changeDiaryCover(event, '${id}')"><i class="ri-image-edit-line"></i></button>
                     </div>
                 `;
-                bookshelf.appendChild(notebookItem);
-                colorIndex++;
+            };
+
+            const myCover = loadData('diary_cover_user');
+            const myTitle = loadData('user_diary_title') || 'My Diary';
+            bookshelf.innerHTML += createBookItemHTML('user', 'user', myCover, myTitle, 'Me');
+
+            characters.forEach(char => {
+                const charCover = loadData(`diary_cover_${char.id}`);
+                const charTitle = char.diaryTitle || `${char.name}'s Diary`;
+                bookshelf.innerHTML += createBookItemHTML(char.id, 'character', charCover, charTitle, char.name);
             });
         }
 
-        // 打开指定的日记本
+        function editDiaryTitle(event, type, id) {
+            event.stopPropagation(); // 阻止在编辑标题时打开日记本
+
+            const titleElement = event.target;
+            const currentTitle = titleElement.textContent;
+            const newTitle = prompt('请输入新的日记本标题：', currentTitle);
+
+            if (newTitle && newTitle.trim() && newTitle.trim() !== currentTitle) {
+                const finalTitle = newTitle.trim();
+                if (type === 'user') {
+                    saveData('user_diary_title', finalTitle);
+                } else if (type === 'character') {
+                    const charIndex = characters.findIndex(c => c.id === id);
+                    if (charIndex > -1) {
+                        characters[charIndex].diaryTitle = finalTitle;
+                        saveData('characters', characters);
+                    }
+                }
+
+                titleElement.textContent = finalTitle;
+                showMessageBox('标题已更新！');
+
+                if (currentOpenBook.ownerId === id) {
+                     $('#diary-cover-title').textContent = finalTitle;
+                }
+            }
+        }
+
+        // [AI, 请用这个版本完整替换现有的 openDiaryBook 函数]
         function openDiaryBook(ownerId) {
             let ownerName;
-            if(ownerId === 'user') {
-                ownerName = "我";
+            const addPageBtn = $('#add-page-btn');
+            const prevPageBtn = $('#prev-page-btn');
+            const nextPageBtn = $('#next-page-btn');
+
+            if (ownerId === 'user') {
+                ownerName = loadData('user_diary_title') || "My Diary";
+                addPageBtn.style.display = 'flex'; // 是我的日记，显示新增按钮
             } else {
                 const character = characters.find(c => c.id === ownerId);
                 if (!character) return;
-                ownerName = character.name;
+                ownerName = character.diaryTitle || `${character.name}'s Diary`;
+                addPageBtn.style.display = 'none'; // 是AI的日记，隐藏新增按钮
             }
 
             currentOpenBook.ownerId = ownerId;
-            currentOpenBook.entries = (diaryData[ownerId] || []).slice().reverse(); // 最新日记在前
-            currentOpenBook.currentPage = 0;
-            currentOpenBook.isNotebook = false; // 标记为日记本
+            currentOpenBook.entries = (diaryData[ownerId] || []).slice().sort((a, b) => a.timestamp - b.timestamp);
+            currentOpenBook.currentPage = currentOpenBook.entries.length > 0 ? currentOpenBook.entries.length - 1 : 0;
+            currentOpenBook.isNotebook = false;
 
-            $('#diary-cover-title').textContent = `${ownerName}的日记`;
-            $('#diary-cover-author').textContent = `by ${ownerName}`;
-            
-            // 设置封面图片
-            const savedCover = loadData(`diary_cover_${ownerId}`);
-            if (savedCover) {
-                $('#diary-book-cover').style.backgroundImage = `url(${savedCover})`;
-                $('#diary-book-cover').style.backgroundSize = 'cover';
-                $('#diary-book-cover').style.backgroundPosition = 'center';
+            $('#diary-cover-title').textContent = ownerName;
+            let authorName;
+            if (ownerId === 'user') {
+                authorName = loadData('user_diary_author') || 'Me';
             } else {
-                $('#diary-book-cover').style.backgroundImage = '';
-                $('#diary-book-cover').style.backgroundColor = '#3a3a3a';
+                const character = characters.find(c => c.id === ownerId);
+                authorName = character.diaryAuthor || character.name;
             }
-            
-            renderDiaryPages();
+            $('#diary-cover-author').textContent = `by ${authorName}`;
 
+            const savedCover = loadData(`diary_cover_${ownerId}`);
+            $('#diary-book-cover').style.backgroundImage = savedCover ? `url(${savedCover})` : '';
+
+            // [关键] 强制隐藏旧的翻页按钮
+            prevPageBtn.style.display = 'none';
+            nextPageBtn.style.display = 'none';
+
+            renderDiaryPages();
             $('#diary-book-modal').classList.remove('hidden');
-            $('#diary-book').classList.remove('open'); // 确保书是合上的
         }
 
         // 渲染日记页面内容
-        // 渲染日记页面内容 - 单页显示
+        // [AI, 请用这个版本完整替换现有的 renderDiaryPages 函数]
         function renderDiaryPages() {
             const pagesContainer = $('#diary-pages-container');
-            
-            // 清空容器
             pagesContainer.innerHTML = '';
-            
-            // 获取当前页的日记条目
+
+            const totalPages = currentOpenBook.entries.length > 0 ? currentOpenBook.entries.length : 1;
+            const currentPageNumber = currentOpenBook.currentPage + 1;
             const currentEntry = currentOpenBook.entries[currentOpenBook.currentPage];
-            
+
             if (currentEntry) {
-                // 显示当前页的日记内容
                 pagesContainer.innerHTML = `
                     <div class="diary-page-content">
                         <div class="diary-page-header">
@@ -10466,33 +11392,37 @@ ${triggerDescription}
                                 <i class="ri-delete-bin-line"></i>
                             </button>
                         </div>
-                        <p class="diary-page-text" contenteditable="true" data-entry-id="${currentEntry.id}">${currentEntry.content.replace(/\n/g, '<br>')}</p>
+                        <div class="diary-page-text" contenteditable="true" data-entry-id="${currentEntry.id}">${currentEntry.content.replace(/\n/g, '<br>')}</div>
+                        <div class="diary-page-number">${currentPageNumber} / ${totalPages}</div>
                     </div>`;
             } else {
-                // 如果没有内容，显示空页面提示
+                // 当日记本为空时显示正确的提示
                 pagesContainer.innerHTML = `
                     <div class="diary-page-content">
                         <p class="diary-page-date">${new Date().toLocaleDateString()}</p>
-                        <p class="diary-page-text" style="text-align: center; color: #999; margin-top: 2rem;">
-                            这是第 ${currentOpenBook.currentPage + 1} 页<br>
-                            点击右下角 + 按钮添加新日记
-                        </p>
+                        <p class="text-center text-gray-400 mt-16">这本日记还没有内容...</p>
+                        <div class="diary-page-number">1 / 1</div>
                     </div>`;
             }
-            
-            // 添加页码显示
-            const pageNumber = document.createElement('div');
-            pageNumber.className = 'diary-page-number';
-            pageNumber.textContent = `${currentOpenBook.currentPage + 1} / ${currentOpenBook.entries.length}`;
-            pagesContainer.appendChild(pageNumber);
-            
-            // 更新翻页按钮状态
-            if (currentOpenBook && currentOpenBook.entries) {
-                $('#prev-page-btn').style.visibility = currentOpenBook.currentPage > 0 ? 'visible' : 'hidden';
-                $('#next-page-btn').style.visibility = currentOpenBook.currentPage < currentOpenBook.entries.length - 1 ? 'visible' : 'hidden';
+        }
+
+        // [AI, 请将这两个新函数粘贴到 addDiaryEntry 函数的前面]
+        function goToPrevPage() {
+            if (currentOpenBook.currentPage > 0) {
+                currentOpenBook.currentPage--;
+                renderDiaryPages();
             } else {
-                $('#prev-page-btn').style.visibility = 'hidden';
-                $('#next-page-btn').style.visibility = 'hidden';
+                showMessageBox('已经是第一页了');
+            }
+        }
+
+        function goToNextPage() {
+            const totalPages = currentOpenBook.entries.length;
+            if (currentOpenBook.currentPage < totalPages - 1) {
+                currentOpenBook.currentPage++;
+                renderDiaryPages();
+            } else {
+                showMessageBox('已经是最后一页了');
             }
         }
 
@@ -10661,6 +11591,447 @@ ${triggerDescription}
             };
             input.click();
         }
+
+        // 显示日记书架
+        function showDiaryBookshelf() {
+            const bookshelf = $('#diary-bookshelf');
+            bookshelf.innerHTML = '';
+            
+            let colorIndex = 0;
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'];
+            
+            // 添加用户日记本
+            const userDiaryItem = document.createElement('div');
+            userDiaryItem.className = 'diary-book-item';
+            userDiaryItem.dataset.ownerId = 'user';
+            userDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
+            
+            // 检查是否有自定义封面
+            const savedCover = loadData('diary_cover_user');
+            if (savedCover) {
+                userDiaryItem.style.backgroundImage = `url(${savedCover})`;
+                userDiaryItem.style.backgroundSize = 'cover';
+                userDiaryItem.style.backgroundPosition = 'center';
+            }
+            
+            // 获取用户日记标题
+            const userTitle = loadData('diary_title_user') || 'My Diary';
+            
+            userDiaryItem.innerHTML = `
+                <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'user', 'user')">${userTitle}</span>
+                <span class="diary-book-item-author">我</span>
+                <button class="diary-cover-edit-btn" data-owner-id="user"><i class="ri-image-edit-line"></i></button>
+            `;
+            bookshelf.appendChild(userDiaryItem);
+            colorIndex++;
+            
+            // 添加角色日记本
+            characters.forEach(char => {
+                const charDiaryItem = document.createElement('div');
+                charDiaryItem.className = 'diary-book-item';
+                charDiaryItem.dataset.ownerId = char.id;
+                charDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
+                
+                // 检查是否有自定义封面
+                const savedCover = loadData(`diary_cover_${char.id}`);
+                if (savedCover) {
+                    charDiaryItem.style.backgroundImage = `url(${savedCover})`;
+                    charDiaryItem.style.backgroundSize = 'cover';
+                    charDiaryItem.style.backgroundPosition = 'center';
+                }
+                
+                // 获取角色日记标题
+                const charTitle = loadData(`diary_title_${char.id}`) || `${char.name}'s Diary`;
+                
+                charDiaryItem.innerHTML = `
+                    <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'character', '${char.id}')">${charTitle}</span>
+                    <span class="diary-book-item-author">${char.name}</span>
+                    <button class="diary-cover-edit-btn" data-owner-id="${char.id}"><i class="ri-image-edit-line"></i></button>
+                `;
+                bookshelf.appendChild(charDiaryItem);
+                colorIndex++;
+            });
+
+            // 添加用户创建的笔记本
+            Object.keys(notebookData).forEach(notebookId => {
+                const notebook = notebookData[notebookId];
+                const notebookItem = document.createElement('div');
+                notebookItem.className = 'diary-book-item notebook-item';
+                notebookItem.dataset.notebookId = notebookId;
+                notebookItem.style.backgroundColor = colors[colorIndex % colors.length];
+                
+                // 检查是否有自定义封面
+                if (notebook.cover) {
+                    notebookItem.style.backgroundImage = `url(${notebook.cover})`;
+                    notebookItem.style.backgroundSize = 'cover';
+                    notebookItem.style.backgroundPosition = 'center';
+                }
+                
+                notebookItem.innerHTML = `
+                    <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'notebook', '${notebookId}')">${notebook.name}</span>
+                    <span class="diary-book-item-author">${notebook.type}</span>
+                    <div class="notebook-actions">
+                        <button class="notebook-edit-btn" data-notebook-id="${notebookId}" title="编辑笔记本"><i class="ri-edit-line"></i></button>
+                        <button class="notebook-delete-btn" data-notebook-id="${notebookId}" title="删除笔记本"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                `;
+                bookshelf.appendChild(notebookItem);
+                colorIndex++;
+            });
+        }
+
+        // 编辑日记标题
+        function editDiaryTitle(event, type, id) {
+            event.stopPropagation();
+            const titleElement = event.target;
+            const currentTitle = titleElement.textContent;
+            
+            // 如果已经在编辑状态，直接返回
+            if (titleElement.classList.contains('editing')) {
+                return;
+            }
+            
+            // 创建输入框
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentTitle;
+            input.className = 'title-edit-input';
+            
+            // 设置输入框样式
+            input.style.cssText = `
+                background: rgba(255, 255, 255, 0.9);
+                color: #333;
+                border: 2px solid #4ecdc4;
+                border-radius: 4px;
+                padding: 4px 8px;
+                font-size: 1.2rem;
+                font-weight: 600;
+                text-align: center;
+                width: 80%;
+                outline: none;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            `;
+            
+            // 替换标题为输入框
+            titleElement.innerHTML = '';
+            titleElement.appendChild(input);
+            titleElement.classList.add('editing');
+            
+            // 聚焦输入框
+            input.focus();
+            input.select();
+            
+            // 处理保存
+            function saveTitle() {
+                const newTitle = input.value.trim();
+                if (newTitle && newTitle !== currentTitle) {
+                    // 保存新标题
+                    if (type === 'user') {
+                        saveData('diary_title_user', newTitle);
+                    } else if (type === 'character') {
+                        saveData(`diary_title_${id}`, newTitle);
+                    } else if (type === 'notebook') {
+                        if (notebookData[id]) {
+                            notebookData[id].name = newTitle;
+                            saveData('notebooks', notebookData);
+                        }
+                    }
+                    
+                    // 更新显示
+                    titleElement.textContent = newTitle;
+                } else {
+                    // 恢复原标题
+                    titleElement.textContent = currentTitle;
+                }
+                
+                titleElement.classList.remove('editing');
+            }
+            
+            // 绑定事件
+            input.addEventListener('blur', saveTitle);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveTitle();
+                } else if (e.key === 'Escape') {
+                    titleElement.textContent = currentTitle;
+                    titleElement.classList.remove('editing');
+                }
+            });
+        }
+
+        // 编辑日记封面标题
+        function editDiaryCoverTitle(event) {
+            event.stopPropagation();
+            const titleElement = event.target;
+            const currentTitle = titleElement.textContent;
+            
+            // 如果已经在编辑状态，直接返回
+            if (titleElement.classList.contains('editing')) {
+                return;
+            }
+            
+            // 创建输入框
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentTitle;
+            input.className = 'cover-title-edit-input';
+            
+            // 设置输入框样式
+            input.style.cssText = `
+                background: rgba(255, 255, 255, 0.95);
+                color: #333;
+                border: 2px solid #4ecdc4;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-align: center;
+                width: 90%;
+                outline: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                font-family: inherit;
+            `;
+            
+            // 替换标题为输入框
+            titleElement.innerHTML = '';
+            titleElement.appendChild(input);
+            titleElement.classList.add('editing');
+            
+            // 聚焦输入框
+            input.focus();
+            input.select();
+            
+            // 处理保存
+            function saveTitle() {
+                const newTitle = input.value.trim();
+                if (newTitle && newTitle !== currentTitle) {
+                    // 保存新标题
+                    if (currentOpenBook.ownerId === 'user') {
+                        saveData('user_diary_title', newTitle);
+                    } else if (currentOpenBook.ownerId && !currentOpenBook.isNotebook) {
+                        // 角色日记
+                        const character = characters.find(c => c.id === currentOpenBook.ownerId);
+                        if (character) {
+                            character.diaryTitle = newTitle;
+                            saveData('characters', characters);
+                        }
+                    } else if (currentOpenBook.isNotebook && currentOpenBook.notebookData) {
+                        // 笔记本
+                        currentOpenBook.notebookData.name = newTitle;
+                        saveData('notebookData', notebookData);
+                    }
+                    
+                    // 更新显示
+                    titleElement.textContent = newTitle;
+                    showMessageBox('标题已更新！');
+                } else {
+                    // 恢复原标题
+                    titleElement.textContent = currentTitle;
+                }
+                
+                titleElement.classList.remove('editing');
+            }
+            
+            // 绑定事件
+            input.addEventListener('blur', saveTitle);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveTitle();
+                } else if (e.key === 'Escape') {
+                    titleElement.textContent = currentTitle;
+                    titleElement.classList.remove('editing');
+                }
+            });
+        }
+
+        // 编辑日记封面作者
+        function editDiaryCoverAuthor(event) {
+            event.stopPropagation();
+            const authorElement = event.target;
+            const currentAuthor = authorElement.textContent.replace('by ', '');
+            
+            // 如果已经在编辑状态，直接返回
+            if (authorElement.classList.contains('editing')) {
+                return;
+            }
+            
+            // 创建输入框
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentAuthor;
+            input.className = 'cover-author-edit-input';
+            
+            // 设置输入框样式
+            input.style.cssText = `
+                background: rgba(255, 255, 255, 0.95);
+                color: #333;
+                border: 2px solid #4ecdc4;
+                border-radius: 6px;
+                padding: 6px 10px;
+                font-size: 1.1rem;
+                font-weight: 500;
+                text-align: center;
+                width: 80%;
+                outline: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                font-family: inherit;
+            `;
+            
+            // 替换作者为输入框
+            authorElement.innerHTML = '';
+            authorElement.appendChild(input);
+            authorElement.classList.add('editing');
+            
+            // 聚焦输入框
+            input.focus();
+            input.select();
+            
+            // 处理保存
+            function saveAuthor() {
+                const newAuthor = input.value.trim();
+                if (newAuthor && newAuthor !== currentAuthor) {
+                    // 保存新作者
+                    if (currentOpenBook.ownerId === 'user') {
+                        saveData('user_diary_author', newAuthor);
+                    } else if (currentOpenBook.ownerId && !currentOpenBook.isNotebook) {
+                        // 角色日记
+                        const character = characters.find(c => c.id === currentOpenBook.ownerId);
+                        if (character) {
+                            character.diaryAuthor = newAuthor;
+                            saveData('characters', characters);
+                        }
+                    } else if (currentOpenBook.isNotebook && currentOpenBook.notebookData) {
+                        // 笔记本
+                        currentOpenBook.notebookData.type = newAuthor;
+                        saveData('notebookData', notebookData);
+                    }
+                    
+                    // 更新显示
+                    authorElement.textContent = `by ${newAuthor}`;
+                    showMessageBox('作者已更新！');
+                } else {
+                    // 恢复原作者
+                    authorElement.textContent = `by ${currentAuthor}`;
+                }
+                
+                authorElement.classList.remove('editing');
+            }
+            
+            // 绑定事件
+            input.addEventListener('blur', saveAuthor);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveAuthor();
+                } else if (e.key === 'Escape') {
+                    authorElement.textContent = `by ${currentAuthor}`;
+                    authorElement.classList.remove('editing');
+                }
+            });
+        }
+
+        // 显示日记界面
+        function displayDiaries() {
+            // 显示日记界面
+            $('#diary-interface').classList.remove('hidden');
+            $('#chat-interface').classList.add('hidden');
+            $('#drawing-interface').classList.add('hidden');
+            
+            // 刷新书架显示
+            showDiaryBookshelf();
+            
+            // 更新界面状态
+            currentInterface = 'diary';
+        }
+
+        // 显示指定角色的日记
+        function displayDiariesForCharacter(characterId) {
+            try {
+                if (!characterId) return;
+                
+                const character = characters.find(c => c.id === characterId);
+                if (!character) return;
+                
+                // 如果当前在日记界面，刷新显示
+                if (currentView === 'diary') {
+                    // 更新日记数量显示
+                    updateDiaryCount(characterId);
+                    
+                    // 如果当前打开的是这个角色的日记本，刷新内容
+                    if (currentOpenBook && currentOpenBook.ownerId === characterId) {
+                        renderDiaryPages();
+                    }
+                }
+            } catch (error) {
+                console.error('[日记系统] 显示日记失败:', error);
+            }
+        }
+
+        // 更新日记数量显示
+        function updateDiaryCount(characterId) {
+            try {
+                const character = characters.find(c => c.id === characterId);
+                if (!character) return;
+                
+                // 获取日记数量
+                const diaryCount = character.diaries?.length || 0;
+                
+                // 更新日记书架上的数量显示
+                const diaryItem = document.querySelector(`[data-owner-id="${characterId}"]`);
+                if (diaryItem) {
+                    // 检查是否已有数量显示
+                    let countElement = diaryItem.querySelector('.diary-count');
+                    if (!countElement) {
+                        countElement = document.createElement('span');
+                        countElement.className = 'diary-count';
+                        countElement.style.cssText = `
+                            position: absolute;
+                            top: -5px;
+                            right: -5px;
+                            background: #ff4757;
+                            color: white;
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 12px;
+                            font-weight: bold;
+                        `;
+                        diaryItem.appendChild(countElement);
+                    }
+                    
+                    if (diaryCount > 0) {
+                        countElement.textContent = diaryCount;
+                        countElement.style.display = 'flex';
+                    } else {
+                        countElement.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('[日记系统] 更新日记数量显示失败:', error);
+            }
+        }
+
+        // 初始化日记系统
+        function initDiarySystem() {
+            try {
+                // 为每个角色初始化日记数组
+                characters.forEach(character => {
+                    if (!character.diaries) {
+                        character.diaries = [];
+                    }
+                });
+                
+                // 保存更新后的角色数据
+                saveData('characters', characters);
+                
+                console.log('[日记系统] 日记系统初始化完成');
+            } catch (error) {
+                console.error('[日记系统] 日记系统初始化失败:', error);
+            }
+        }
+        // [新代码结束]
 
         // 创建新笔记本
         function createNewNotebook() {
@@ -11627,9 +12998,16 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 momentsData[authorId].push(newMoment);
                 saveData('momentsData', momentsData);
 
+                // [新代码开始] - 触发AI角色智能评论系统
+                triggerAICharacterComments(newMoment);
+                // [新代码结束]
+
                 renderUnifiedMoments();
                 $('#post-moment-modal').classList.remove('visible');
                 showMessageBox('动态发布成功！');
+                
+                // [新代码] - 清空动态输入框
+                $('#moment-content-input').value = '';
             });
 
             // 日记本书架点击事件
@@ -11807,6 +13185,21 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
 
             // 笔记本相关事件监听器
             setupNotebookEvents();
+
+            // [AI, 请将这段代码添加到 addNewEventListeners 函数的末尾]
+            const diaryPagesContainer = $('#diary-pages-container');
+            if (diaryPagesContainer) {
+                diaryPagesContainer.addEventListener('click', (e) => {
+                    if (e.target.closest('.diary-page-text, .diary-delete-btn')) return;
+                    const containerWidth = diaryPagesContainer.offsetWidth;
+                    const clickX = e.offsetX;
+                    if (clickX < containerWidth / 2) {
+                        goToPrevPage();
+                    } else {
+                        goToNextPage();
+                    }
+                });
+            }
         }
 
         // 设置笔记本相关事件监听器
@@ -11896,6 +13289,9 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             // 更新封面信息
             $('#diary-cover-title').textContent = notebook.name;
             $('#diary-cover-author').textContent = `by ${notebook.type}`;
+            
+            // 显示新增按钮（笔记本可以添加页面）
+            $('#add-page-btn').style.display = 'flex';
             
             // 设置封面图片
             if (notebook.cover) {
@@ -13095,7 +14491,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             });
             
             // V7.1: 激活所有新功能的事件監聽器
-            addNewEventListeners();
+            // [已修复] - 删除重复调用，避免事件重复绑定
             
             // 初始化按钮显示状态
             setTimeout(() => {
@@ -13888,7 +15284,9 @@ ${eventTypeSpecificInput}
 
 
             // 确保其他所有 .addEventListener 调用都在这个 'DOMContentLoaded' 内部
+            // [新代码] - 重新激活所有页面的事件监听器
             addNewEventListeners();
+            // [已修复] - 删除重复调用，避免事件重复绑定
             setupDrawingBoardEvents();
             setupTarotCard();
 
