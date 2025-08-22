@@ -4441,7 +4441,8 @@
     #monitoring-screen {
         color: #662034;
         position: relative;
-        overflow: hidden;
+        /* 移除 overflow: hidden，允许内容滚动 */
+        /* overflow: hidden; */
         /* 设置合适的宽度，让内容能够居中 */
         max-width: 100%;
         width: 100%;
@@ -5615,6 +5616,16 @@
         /* 设置合适的左右边距 */
         padding-left: 2rem;
         padding-right: 2rem;
+        /* 触摸优化 */
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        /* 确保在手机上可以正常滚动 */
+        overflow-y: auto;
+        /* 防止文本选择干扰触摸 */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     /* 滚动提示指示器 */
@@ -8027,6 +8038,7 @@
             let isDragging = false;
             let startX, startY, startLeft, startTop;
             
+            // 鼠标拖拽事件
             cropBox.addEventListener('mousedown', function(e) {
                 isDragging = true;
                 startX = e.clientX;
@@ -8037,32 +8049,71 @@
                 e.preventDefault();
             });
             
+            // 触摸拖拽事件
+            cropBox.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startLeft = parseInt(cropBox.style.left);
+                startTop = parseInt(cropBox.style.top);
+                cropBox.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+            
+            // 鼠标移动拖拽
             document.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
                 
                 const deltaX = e.clientX - startX;
                 const deltaY = e.clientY - startY;
                 
-                let newLeft = startLeft + deltaX;
-                let newTop = startTop + deltaY;
-                
-                            // 限制裁剪框不超出图片边界
-            const maxLeft = imgRect.left - containerRect.left + imgRect.width - cropWidth;
-            const maxTop = imgRect.top - containerRect.top + imgRect.height - cropHeight;
-            const minLeft = imgRect.left - containerRect.left;
-            const minTop = imgRect.top - containerRect.top;
-            
-            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-            newTop = Math.max(minTop, Math.min(newTop, maxTop));
-                
-                cropBox.style.left = newLeft + 'px';
-                cropBox.style.top = newTop + 'px';
+                handleDrag(deltaX, deltaY);
             });
             
+            // 触摸移动拖拽
+            document.addEventListener('touchmove', function(e) {
+                if (isResizing || isDragging) {
+                    e.preventDefault(); // 防止页面滚动
+                    if (isResizing) {
+                        const deltaX = e.touches[0].clientX - startResizeX;
+                        const deltaY = e.touches[0].clientY - startResizeY;
+                        handleResize(deltaX, deltaY);
+                    } else if (isDragging) {
+                        const deltaX = e.touches[0].clientX - startX;
+                        const deltaY = e.touches[0].clientY - startY;
+                        handleDrag(deltaX, deltaY);
+                    }
+                }
+            });
+            
+            // 鼠标和触摸拖拽结束
             document.addEventListener('mouseup', function() {
                 isDragging = false;
                 cropBox.style.cursor = 'move';
             });
+            
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+                cropBox.style.cursor = 'move';
+            });
+            
+            // 统一的拖拽处理函数
+            function handleDrag(deltaX, deltaY) {
+                let newLeft = startLeft + deltaX;
+                let newTop = startTop + deltaY;
+                
+                // 限制裁剪框不超出图片边界
+                const maxLeft = imgRect.left - containerRect.left + imgRect.width - cropWidth;
+                const maxTop = imgRect.top - containerRect.top + imgRect.height - cropHeight;
+                const minLeft = imgRect.left - containerRect.left;
+                const minTop = imgRect.top - containerRect.top;
+                
+                newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+                newTop = Math.max(minTop, Math.min(newTop, maxTop));
+                    
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+            }
             
             // 添加调整大小功能 - 支持等比缩放
             // 右下角手柄
@@ -8137,6 +8188,21 @@
                 startResizeY = e.clientY;
                 startResizeWidth = parseInt(cropBox.style.width);
                 startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            // 触摸事件支持 - 右下角
+            resizeHandleSE.addEventListener('touchstart', function(e) {
+                isResizing = true;
+                resizeDirection = 'se';
+                startResizeX = e.touches[0].clientX;
+                startResizeY = e.touches[0].clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
                 e.preventDefault();
             });
             
@@ -8146,6 +8212,19 @@
                 resizeDirection = 'ne';
                 startResizeX = e.clientX;
                 startResizeY = e.clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            // 触摸事件支持 - 右上角
+            resizeHandleNE.addEventListener('touchstart', function(e) {
+                isResizing = true;
+                resizeDirection = 'ne';
+                startResizeX = e.touches[0].clientX;
+                startResizeY = e.touches[0].clientY;
                 startResizeWidth = parseInt(cropBox.style.width);
                 startResizeHeight = parseInt(cropBox.style.height);
                 startResizeLeft = parseInt(cropBox.style.left);
@@ -8166,6 +8245,19 @@
                 e.preventDefault();
             });
             
+            // 触摸事件支持 - 左下角
+            resizeHandleSW.addEventListener('touchstart', function(e) {
+                isResizing = true;
+                resizeDirection = 'sw';
+                startResizeX = e.touches[0].clientX;
+                startResizeY = e.touches[0].clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
             // 左上角手柄事件
             resizeHandleNW.addEventListener('mousedown', function(e) {
                 isResizing = true;
@@ -8179,12 +8271,53 @@
                 e.preventDefault();
             });
             
+            // 触摸事件支持 - 左上角
+            resizeHandleNW.addEventListener('touchstart', function(e) {
+                isResizing = true;
+                resizeDirection = 'nw';
+                startResizeX = e.touches[0].clientX;
+                startResizeY = e.touches[0].clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            // 鼠标移动事件
             document.addEventListener('mousemove', function(e) {
-                if (!isResizing) return;
-                
-                const deltaX = e.clientX - startResizeX;
-                const deltaY = e.clientY - startResizeY;
-                
+                if (isResizing) {
+                    const deltaX = e.clientX - startResizeX;
+                    const deltaY = e.clientY - startResizeY;
+                    handleResize(deltaX, deltaY);
+                }
+            });
+            
+            // 触摸移动事件
+            document.addEventListener('touchmove', function(e) {
+                if (isResizing) {
+                    e.preventDefault(); // 防止页面滚动
+                    const deltaX = e.touches[0].clientX - startResizeX;
+                    const deltaY = e.touches[0].clientY - startResizeY;
+                    handleResize(deltaX, deltaY);
+                }
+            });
+            
+
+            
+            // 鼠标和触摸结束事件
+            document.addEventListener('mouseup', function() {
+                isResizing = false;
+                resizeDirection = '';
+            });
+            
+            document.addEventListener('touchend', function() {
+                isResizing = false;
+                resizeDirection = '';
+            });
+            
+            // 统一的调整大小处理函数
+            function handleResize(deltaX, deltaY) {
                 let newWidth, newHeight, newLeft, newTop;
                 
                 // 根据拖拽方向计算新的尺寸和位置
@@ -8192,14 +8325,14 @@
                     case 'se': // 右下角 - 只改变宽度和高度
                         newWidth = startResizeWidth + deltaX;
                         newHeight = newWidth / aspectRatio;
-                        newLeft = parseInt(cropBox.style.left);
-                        newTop = parseInt(cropBox.style.top);
+                        newLeft = startResizeLeft;
+                        newTop = startResizeTop;
                         break;
                         
                     case 'ne': // 右上角 - 改变宽度、高度和顶部位置
                         newWidth = startResizeWidth + deltaX;
                         newHeight = newWidth / aspectRatio;
-                        newLeft = parseInt(cropBox.style.left);
+                        newLeft = startResizeLeft;
                         newTop = startResizeTop - (newHeight - startResizeHeight);
                         break;
                         
@@ -8207,7 +8340,7 @@
                         newWidth = startResizeWidth - deltaX;
                         newHeight = newWidth / aspectRatio;
                         newLeft = startResizeLeft + (startResizeWidth - newWidth);
-                        newTop = parseInt(cropBox.style.top);
+                        newTop = startResizeTop;
                         break;
                         
                     case 'nw': // 左上角 - 改变宽度、高度、左侧和顶部位置
@@ -8256,7 +8389,7 @@
                 
                 // 更新裁剪信息
                 updateCropInfo();
-            });
+            }
             
             document.addEventListener('mouseup', function() {
                 isResizing = false;
@@ -15553,7 +15686,9 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             });
             
             $('#send-chat-button').addEventListener('click', handleSendMessage);
+            $('#send-chat-button').addEventListener('touchend', handleSendMessage);
             $('#receive-chat-button').addEventListener('click', handleReceiveMessage);
+            $('#receive-chat-button').addEventListener('touchend', handleReceiveMessage);
             
             $('#wechat-new-chat-button').addEventListener('click', () => {
                 const container = $('#new-chat-character-list');
@@ -17164,6 +17299,10 @@ ${eventTypeSpecificInput}
                 const textContainer = document.getElementById('monitoring-text-container');
                 if (!textContainer) return;
 
+                // 确保文本框可以滚动
+                textContainer.style.overflowY = 'auto';
+                textContainer.style.webkitOverflowScrolling = 'touch'; // iOS 优化
+
                 let isScrollingText = false;
                 let scrollTimeout;
 
@@ -17210,22 +17349,95 @@ ${eventTypeSpecificInput}
 
                 // 触摸设备支持
                 let touchStartY = 0;
+                let touchStartScrollTop = 0;
+                let isTouchScrolling = false;
+                
                 textContainer.addEventListener('touchstart', (e) => {
                     touchStartY = e.touches[0].clientY;
+                    touchStartScrollTop = textContainer.scrollTop;
+                    isScrollingText = true;
+                    isTouchScrolling = false;
                 });
 
                 textContainer.addEventListener('touchmove', (e) => {
                     const touchY = e.touches[0].clientY;
                     const deltaY = touchStartY - touchY;
                     
-                    if (Math.abs(deltaY) > 10) {
-                        isScrollingText = true;
+                    // 检查是否在文本框内触摸
+                    const rect = textContainer.getBoundingClientRect();
+                    const touchX = e.touches[0].clientX;
+                    const isInsideTextContainer = (
+                        touchX >= rect.left && 
+                        touchX <= rect.right && 
+                        touchY >= rect.top && 
+                        touchY <= rect.bottom
+                    );
+                    
+                    if (isInsideTextContainer && Math.abs(deltaY) > 5) {
+                        // 阻止页面滚动，处理文本框滚动
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        isTouchScrolling = true;
+                        
+                        // 计算新的滚动位置（添加惯性效果）
+                        const newScrollTop = touchStartScrollTop + deltaY * 1.2;
+                        const maxScrollTop = textContainer.scrollHeight - textContainer.clientHeight;
+                        
+                        // 限制滚动范围
+                        if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
+                            textContainer.scrollTop = newScrollTop;
+                        } else if (newScrollTop < 0) {
+                            textContainer.scrollTop = 0;
+                        } else if (newScrollTop > maxScrollTop) {
+                            textContainer.scrollTop = maxScrollTop;
+                        }
+                        
                         clearTimeout(scrollTimeout);
                         scrollTimeout = setTimeout(() => {
                             isScrollingText = false;
                         }, 300);
                     }
+                }, { passive: false });
+
+                textContainer.addEventListener('touchend', (e) => {
+                    if (isTouchScrolling) {
+                        // 如果进行了触摸滚动，阻止默认行为
+                        e.preventDefault();
+                    }
+                    
+                    // 触摸结束后重置状态
+                    setTimeout(() => {
+                        isScrollingText = false;
+                        isTouchScrolling = false;
+                    }, 100);
                 });
+
+                // 防止触摸事件冒泡到父元素
+                textContainer.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: false });
+                textContainer.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
+                textContainer.addEventListener('touchend', (e) => e.stopPropagation(), { passive: false });
+
+                // 添加触摸调试信息（开发时使用，生产环境可以删除）
+                console.log('触摸滚动事件已绑定到文本框:', textContainer);
+                console.log('文本框滚动高度:', textContainer.scrollHeight);
+                console.log('文本框可视高度:', textContainer.clientHeight);
+                
+                // 添加触摸滚动测试提示
+                const testMessage = document.createElement('div');
+                testMessage.innerHTML = '<p style="color: #BE3255; font-size: 12px; text-align: center; margin: 10px 0; padding: 8px; background: rgba(190, 50, 85, 0.1); border-radius: 8px;">📱 触摸滚动测试：在文本框内上下滑动手指</p>';
+                testMessage.id = 'touch-scroll-test';
+                textContainer.insertBefore(testMessage, textContainer.firstChild);
+                
+                // 5秒后自动隐藏测试提示
+                setTimeout(() => {
+                    const testMsg = document.getElementById('touch-scroll-test');
+                    if (testMsg) {
+                        testMsg.style.opacity = '0';
+                        testMsg.style.transition = 'opacity 0.5s ease';
+                        setTimeout(() => testMsg.remove(), 500);
+                    }
+                }, 5000);
             }
 
             // 1. 首先执行加载数据和基础设置
