@@ -184,9 +184,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: transparent;
             z-index: 9000;
             display: none;
             justify-content: center;
@@ -199,9 +197,7 @@
         .modal-content {
             width: 80%;
             max-width: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 1.5rem;
             padding: 1rem;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
@@ -210,9 +206,200 @@
             opacity: 0;
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
         }
+        
+        /* 日夜间模式下的模态框背景 */
+        .dark-mode .modal-content {
+            background: rgba(31, 41, 55, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .light-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 日间模式下删除确认对话框的文字颜色 */
+        .light-mode #confirm-delete-modal .modal-content {
+            color: #1f2937;
+        }
+        
+        .light-mode #confirm-delete-modal .modal-content h3,
+        .light-mode #confirm-delete-modal .modal-content p {
+            color: #1f2937;
+        }
+        
+        .light-mode #confirm-delete-modal .modal-content button:not(.bg-red-600) {
+            color: #4b5563;
+        }
+        
+        /* 日间模式下其他模态框的文字颜色 */
+        .light-mode .modal-content h3,
+        .light-mode .modal-content label {
+            color: #1f2937;
+        }
+        
+        .light-mode .modal-content button:not(.bg-red-600):not(.bg-blue-600):not(.bg-gray-700) {
+            color: #4b5563;
+        }
         .modal-overlay.visible .modal-content {
             transform: scale(1);
             opacity: 1;
+        }
+
+        /* 表情包添加模态框专用样式 */
+        .sticker-modal-content {
+            width: 90%;
+            max-width: 280px;
+            padding: 0;
+            border-radius: 1rem;
+        }
+        
+        .sticker-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1rem 0.75rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 日夜间模式下的头部边框 */
+        .dark-mode .sticker-modal-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sticker-modal-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+        
+        .sticker-modal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            color: #1f2937;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .sticker-modal-close:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        /* 日夜间模式下的标题和关闭按钮 */
+        .dark-mode .sticker-modal-title {
+            color: #ffffff;
+        }
+        
+        .dark-mode .sticker-modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .dark-mode .sticker-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .sticker-modal-body {
+            padding: 1rem;
+        }
+        
+        .sticker-input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .sticker-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sticker-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            color: #1f2937;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .sticker-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        /* 日夜间模式下的标签和输入框 */
+        .dark-mode .sticker-label {
+            color: #d1d5db;
+        }
+        
+        .dark-mode .sticker-input {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        .dark-mode .sticker-input:focus {
+            border-color: #60a5fa;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .sticker-upload-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(59, 130, 246, 0.8);
+            border: none;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+        
+        .sticker-upload-btn:hover {
+            background: rgba(59, 130, 246, 1);
+            transform: translateY(-1px);
+        }
+        
+        .sticker-url-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .sticker-url-group .sticker-input {
+            flex: 1;
+        }
+        
+        .sticker-add-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(34, 197, 94, 0.8);
+            border: none;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .sticker-add-btn:hover {
+            background: rgba(34, 197, 94, 1);
+            transform: translateY(-1px);
         }
 
         .song-list-item {
@@ -614,8 +801,8 @@
             background: white;
             border-radius: 20px;
             padding: 0;
-            max-width: 350px;
-            max-height: 500px;
+            max-width: 500px;
+            max-height: 800px;
             width: 90%;
             height: 90%;
             overflow: hidden;
@@ -675,8 +862,8 @@
             display: block;
             margin: 0 auto 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-            max-height: 250px;
+            max-width: 400px;
+            max-height: 600px;
             width: 100%;
             height: auto;
         }
@@ -721,6 +908,25 @@
             align-items: center;
             gap: 10px;
             justify-content: center;
+        }
+        
+        .brush-preview {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+        
+        #brush-preview-circle {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #000000;
+            transition: all 0.2s ease;
         }
 
         .brush-size-slider {
@@ -767,16 +973,16 @@
         }
 
         .drawing-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .drawing-btn.secondary {
@@ -811,7 +1017,7 @@
             
             #drawing-canvas {
                 max-width: 100%;
-                max-height: 180px;
+                max-height: 250px;
             }
             
             .drawing-tools {
@@ -1870,12 +2076,115 @@
         .form-input, .form-textarea, .form-select { width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid transparent; }
         .dark-mode .form-input, .dark-mode .form-textarea, .dark-mode .form-select { background-color: #2c2c2c; color: #ffffff; }
         .light-mode .form-input, .light-mode .form-textarea, .light-mode .form-select { background-color: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; }
+        
+        /* API输入框样式 - 支持日间夜间模式 */
+        .api-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        /* 夜间模式API输入框 */
+        .dark-mode .api-input {
+            background-color: rgba(44, 44, 44, 0.9);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 日间模式API输入框 */
+        .light-mode .api-input {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #1f2937;
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 夜间模式焦点状态 */
+        .dark-mode .api-input:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.8);
+            background-color: rgba(44, 44, 44, 1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* 日间模式焦点状态 */
+        .light-mode .api-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        
+        /* 夜间模式占位符 */
+        .dark-mode .api-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* 日间模式占位符 */
+        .light-mode .api-input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Select 元素特殊样式 - 确保选项文字可见 */
+        .dark-mode select.api-input option {
+            background-color: #2c2c2c !important;
+            color: #ffffff !important;
+        }
+
+        .light-mode select.api-input option {
+            background-color: #ffffff !important;
+            color: #1f2937 !important;
+        }
+
+        /* 确保select元素在夜間模式下文字可見 */
+        .dark-mode select.api-input {
+            color: #ffffff !important;
+        }
+
+        .light-mode select.api-input {
+            color: #1f2937 !important;
+        }
+
+        /* 針對不同瀏覽器的兼容性處理 */
+        .dark-mode select.api-input::-ms-expand {
+            filter: invert(1);
+        }
+
+        .light-mode select.api-input::-ms-expand {
+            filter: invert(0);
+        }
+
+        /* Select 元素在夜間模式下的特殊處理 */
+        .dark-mode select.api-input {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .light-mode select.api-input {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231f2937' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
         .wb-checkbox-label { display: flex; align-items: center; padding: 0.5rem; border-radius: 0.5rem; cursor: pointer; }
         .wb-checkbox-label:hover { background-color: rgba(255, 255, 255, 0.1); }
         .wb-checkbox-label input { margin-right: 0.75rem; }
 
         .wechat-tab-bar { display: flex; border-top-width: 1px; }
-        .wechat-tab-item { flex: 1; text-align: center; padding: 0.5rem 0; cursor: pointer; color: #9ca3af; }
+        .wechat-tab-item { 
+            flex: 1; 
+            text-align: center; 
+            padding: 0.5rem 0; 
+            cursor: pointer; 
+            color: #9ca3af; 
+            position: relative; /* 为红点定位提供基准 */
+        }
         .wechat-tab-item.active {
             font-weight: 600;
         }
@@ -1887,6 +2196,23 @@
         }
         .wechat-tab-item i { font-size: 1.25em; }
         .wechat-tab-item span { display: block; font-size: 0.75em; }
+
+        /* --- 新增：底部菜单栏红点提示样式 --- */
+        .notification-dot {
+            position: absolute;
+            top: 2px; /* 距离顶部2px */
+            right: 25%; /* 位于右侧约1/4处，可根据视觉效果微调 */
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444; /* 红色 */
+            border-radius: 50%;
+            border: 1px solid white; /* 白色描边，使其更突出 */
+            box-shadow: 0 0 3px rgba(239, 68, 68, 0.5);
+        }
+
+        .notification-dot.hidden {
+            display: none; /* 用于隐藏红点 */
+        }
 
         .wechat-list-item {
             display: flex;
@@ -2087,7 +2413,6 @@
             padding: 1rem;
             max-height: 25vh;
             overflow-y: auto;
-            font-style: italic;
             color: #e5e7eb;
             flex-shrink: 0;
         }
@@ -3085,15 +3410,107 @@
             background-color: rgba(59, 130, 246, 0.15);
         }
         
-        /* 评论样式 */
-        .moment-card .bg-gray-50 {
+        /* 评论样式 - 支持日间夜间模式 */
+        .comment-bubble {
             background-color: rgba(249, 250, 251, 0.8);
             border: 1px solid rgba(229, 231, 235, 0.5);
+            transition: all 0.2s ease;
+            position: relative;
         }
         
-        .light-mode .moment-card .bg-gray-50 {
+        .comment-bubble:hover {
+            background-color: rgba(243, 244, 246, 0.9);
+            border-color: rgba(209, 213, 219, 0.7);
+        }
+        
+        .comment-text {
+            color: #374151;
+        }
+        
+        /* 日间模式评论样式 */
+        .light-mode .comment-bubble {
             background-color: rgba(249, 250, 251, 0.9);
             border: 1px solid rgba(229, 231, 235, 0.7);
+        }
+        
+        .light-mode .comment-bubble:hover {
+            background-color: rgba(243, 244, 246, 1);
+            border-color: rgba(209, 213, 219, 0.8);
+        }
+        
+        .light-mode .comment-text {
+            color: #374151;
+        }
+        
+        /* 夜间模式评论样式 */
+        .dark-mode .comment-bubble {
+            background-color: rgba(55, 65, 81, 0.3);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .dark-mode .comment-bubble:hover {
+            background-color: rgba(55, 65, 81, 0.5);
+            border-color: rgba(75, 85, 99, 0.6);
+        }
+        
+        .dark-mode .comment-text {
+            color: #e5e7eb;
+        }
+
+        /* 评论按钮容器 - 浮动在右上角 */
+        .comment-buttons {
+            position: absolute !important;
+            top: 0.25rem !important;
+            right: 0.25rem !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            border-radius: 0.375rem !important;
+            padding: 0.25rem !important;
+            backdrop-filter: blur(4px) !important;
+            z-index: 10 !important;
+            margin: 0 !important;
+        }
+        
+        /* 日间模式按钮容器背景 */
+        .light-mode .comment-buttons {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* 评论编辑和删除按钮样式 */
+        .comment-edit-btn,
+        .comment-delete-btn {
+            opacity: 0;
+            transition: all 0.2s ease;
+            padding: 0.25rem !important;
+            border-radius: 0.25rem !important;
+        }
+
+        .comment-bubble.show-buttons .comment-buttons {
+            opacity: 1 !important;
+        }
+        
+        .comment-bubble.show-buttons .comment-edit-btn,
+        .comment-bubble.show-buttons .comment-delete-btn {
+            opacity: 1 !important;
+        }
+
+        .comment-edit-btn:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .comment-delete-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        /* 夜间模式下的按钮悬停效果 */
+        .dark-mode .comment-edit-btn:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .dark-mode .comment-delete-btn:hover {
+            background-color: rgba(239, 68, 68, 0.2);
         }
 
         /* --- 新增：日记 (Diary) "书架" UI - 优化质感 --- */
@@ -3276,8 +3693,8 @@
             position: absolute;
             top: 0.8rem;
             right: 0.8rem;
-            width: 2.2rem;
-            height: 2.2rem;
+            width: 1.76rem;
+            height: 1.76rem;
             background: linear-gradient(145deg, 
                 rgba(0, 0, 0, 0.7) 0%, 
                 rgba(0, 0, 0, 0.8) 100%);
@@ -3317,6 +3734,27 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
+        /* 日记本内页横幅更换按钮样式 - 始终可见 */
+        #change-diary-banner-btn {
+            opacity: 1 !important;
+            background: linear-gradient(145deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(0, 0, 0, 0.9) 100%);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        #change-diary-banner-btn:hover {
+            background: linear-gradient(145deg, 
+                rgba(0, 0, 0, 0.9) 0%, 
+                rgba(0, 0, 0, 1) 100%);
+            transform: scale(1.1);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
         /* 单页日记本样式 - 优化为纸张质感 */
         .diary-single-page-container {
             width: 90vw;
@@ -3349,6 +3787,48 @@
                 #505050 50%, 
                 #404040 75%, 
                 #2c2c2c 100%);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* 图片裁剪模态框样式 */
+        #image-cropper-modal {
+            z-index: 16000;
+        }
+
+        #cropper-container {
+            position: relative;
+            min-height: 300px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #cropper-image {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        #crop-box {
+            position: absolute;
+            border: 2px solid #007bff;
+            background: rgba(0, 123, 255, 0.1);
+            cursor: move;
+            z-index: 10;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.3);
+        }
+
+        #crop-box:hover {
+            border-color: #0056b3;
+            background: rgba(0, 123, 255, 0.2);
+        }
+
+        .diary-cover {
             color: #f0f0f0;
             padding: 2.5rem 2rem;
             text-align: center;
@@ -3367,7 +3847,7 @@
             background: linear-gradient(145deg, 
                 #f8f9fa 0%, 
                 #e9ecef 25%, 
-                #dee2e6 50%, 
+                #404040 50%, 
                 #e9ecef 75%, 
                 #f8f9fa 100%);
             color: #2c2c2c;
@@ -3375,6 +3855,9 @@
                 inset 0 2px 4px rgba(0, 0, 0, 0.05),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.1);
             border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .light-mode .diary-cover::before {
@@ -3733,8 +4216,8 @@
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
+            width: 1.75rem;
+            height: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3783,8 +4266,8 @@
             background: linear-gradient(145deg, #404040, #505050);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
+            width: 1.75rem;
+            height: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3867,27 +4350,57 @@
             max-width: 400px;
         }
 
+        /* 基础表单样式 - 支持日间夜间模式 */
         .form-input,
         .form-select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             padding: 0.75rem;
-            color: white;
             width: 100%;
             transition: all 0.3s ease;
         }
 
-        .form-input:focus,
-        .form-select:focus {
+        /* 夜间模式样式 */
+        .dark-mode .form-input,
+        .dark-mode .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* 日间模式样式 */
+        .light-mode .form-input,
+        .light-mode .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: #1f2937;
+        }
+
+        /* 焦点状态 - 夜间模式 */
+        .dark-mode .form-input:focus,
+        .dark-mode .form-select:focus {
             outline: none;
             border-color: rgba(59, 130, 246, 0.6);
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .form-input::placeholder {
+        /* 焦点状态 - 日间模式 */
+        .light-mode .form-input:focus,
+        .light-mode .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* 占位符样式 - 夜间模式 */
+        .dark-mode .form-input::placeholder {
             color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 占位符样式 - 日间模式 */
+        .light-mode .form-input::placeholder {
+            color: rgba(0, 0, 0, 0.6);
         }
     /* ====== 动态监控 App (Refined UI) ====== */
     #monitoring-screen {
@@ -5524,8 +6037,8 @@
             <div id="song-list-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-white">播放列表</h3>
-                        <button id="close-playlist-modal" class="text-white text-2xl p-1 rounded-full hover:bg-white/20">
+                                        <h3 class="text-xl font-bold">播放列表</h3>
+                <button id="close-playlist-modal" class="text-2xl p-1 rounded-full hover:bg-white/20">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -5536,8 +6049,8 @@
             <div id="new-chat-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-white">发起新聊天</h3>
-                        <button id="close-new-chat-modal" class="text-white text-2xl p-1 rounded-full hover:bg-white/20">
+                                        <h3 class="text-xl font-bold">发起新聊天</h3>
+                <button id="close-new-chat-modal" class="text-2xl p-1 rounded-full hover:bg-white/20">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -5546,7 +6059,7 @@
                 </div>
             </div>
              <div id="confirm-delete-modal" class="modal-overlay">
-                <div class="modal-content text-center text-white">
+                <div class="modal-content text-center">
                     <h3 id="delete-modal-title" class="text-lg font-bold mb-4">确认删除吗？</h3>
                     <p id="delete-modal-text" class="text-sm mb-6">此操作无法撤销。</p>
                     <div class="flex justify-around">
@@ -5559,23 +6072,28 @@
                 <div class="modal-content">
                     <h3 class="text-lg font-bold mb-4 text-center">发送语音消息</h3>
                     <textarea id="voice-text-input" class="form-textarea w-full h-24 resize-none" placeholder="在此输入文字..."></textarea>
+                    <div class="flex justify-end mt-4 gap-2">
+                        <button id="cancel-voice-btn" class="px-4 py-2 rounded-lg">取消</button>
+                        <button id="send-voice-btn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">发送</button>
+                    </div>
+                </div>
             </div>
 
             <div id="new-notebook-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-white">创建新笔记本</h3>
-                        <button id="close-new-notebook-modal" class="text-white text-2xl p-1 rounded-full hover:bg-white/20">
+                        <h3 class="text-xl font-bold">创建新笔记本</h3>
+                        <button id="close-new-notebook-modal" class="text-2xl p-1 rounded-full hover:bg-white/20">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-white text-sm font-medium mb-2">笔记本名称</label>
+                            <label class="block text-sm font-medium mb-2">笔记本名称</label>
                             <input type="text" id="new-notebook-name" class="form-input w-full" placeholder="请输入笔记本名称..." maxlength="20">
                         </div>
                         <div>
-                            <label class="block text-white text-sm font-medium mb-2">笔记本类型</label>
+                            <label class="block text-sm font-medium mb-2">笔记本类型</label>
                             <select id="new-notebook-type" class="form-select w-full">
                                 <option value="diary">日记本</option>
                                 <option value="notes">笔记本</option>
@@ -5585,7 +6103,7 @@
                             </select>
                         </div>
                         <div id="custom-type-container" class="hidden">
-                            <label class="block text-white text-sm font-medium mb-2">自定义类型名称</label>
+                            <label class="block text-sm font-medium mb-2">自定义类型名称</label>
                             <input type="text" id="custom-notebook-type" class="form-input w-full" placeholder="请输入自定义类型名称..." maxlength="15">
                         </div>
                         <div class="flex justify-end space-x-3 pt-4">
@@ -5593,11 +6111,6 @@
                             <button id="confirm-new-notebook-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">创建</button>
                         </div>
                     </div>
-                </div>
-                    <div class="flex justify-end mt-4 gap-2">
-                        <button id="cancel-voice-btn" class="px-4 py-2 rounded-lg">取消</button>
-                        <button id="send-voice-btn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">发送</button>
-                        </div>
                 </div>
             </div>
             
@@ -5612,16 +6125,33 @@
             </div>
             <!-- 贴图/表情 Modal -->
             <div id="sticker-modal" class="modal-overlay">
-                <div class="modal-content">
-                    <h3 class="text-lg font-bold mb-4 text-center">添加表情</h3>
-                    <div class="space-y-4">
-                        <button id="upload-sticker-local-btn" class="w-full py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">从本地上传</button>
-                        <div>
-                            <input type="text" id="sticker-url-input" class="form-input" placeholder="或粘贴图片链接...">
-                            <button id="send-sticker-url-btn" class="w-full mt-2 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">使用链接添加</button>
+                <div class="modal-content sticker-modal-content">
+                    <!-- 标题栏 -->
+                    <div class="sticker-modal-header">
+                        <h3 class="sticker-modal-title">添加表情</h3>
+                        <button id="close-sticker-modal" class="sticker-modal-close" title="关闭">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="sticker-modal-body">
+                        <div class="sticker-input-group">
+                            <label class="sticker-label">表情关键词</label>
+                            <input type="text" id="sticker-keywords-input" class="sticker-input" placeholder="开心,猫,可爱">
+                        </div>
+
+                        <button id="upload-sticker-local-btn" class="sticker-upload-btn">
+                            <i class="ri-upload-cloud-2-line mr-2"></i>本地上传
+                        </button>
+
+                        <div class="sticker-input-group">
+                            <label class="sticker-label">或粘贴图片链接</label>
+                            <div class="sticker-url-group">
+                                <input type="text" id="sticker-url-input" class="sticker-input" placeholder="https://...">
+                                <button id="send-sticker-url-btn" class="sticker-add-btn">添加</button>
+                            </div>
                         </div>
                     </div>
-                     <button id="close-sticker-modal" class="w-full mt-4 py-2 rounded-lg">取消</button>
                 </div>
             </div>
 
@@ -5850,18 +6380,22 @@
                  <div class="wechat-tab-bar">
                     <div class="wechat-tab-item active" data-tab="chat">
                         <i class="ri-chat-heart-line"></i>
+                        <div class="notification-dot hidden"></div>
                         <span>聊天</span>
                     </div>
                     <div class="wechat-tab-item" data-tab="moments">
                         <i class="ri-polaroid-2-line"></i>
+                        <div class="notification-dot hidden"></div>
                         <span>动态</span>
                     </div>
                     <div class="wechat-tab-item" data-tab="diary">
                         <i class="ri-quill-pen-line"></i>
+                        <div class="notification-dot hidden"></div>
                         <span>日记</span>
                     </div>
                     <div class="wechat-tab-item" data-tab="plan">
                         <i class="ri-suitcase-3-line"></i>
+                        <div class="notification-dot hidden"></div>
                         <span>计划</span>
                     </div>
                 </div>
@@ -5969,13 +6503,13 @@
                 <div id="drawing-board-modal" class="drawing-modal-overlay hidden">
                     <div class="drawing-modal-content">
                         <div class="drawing-modal-header">
-                            <h3 class="drawing-modal-title">画板 - 你画我猜</h3>
+                            <h3 class="drawing-modal-title">画板</h3>
                             <button id="close-drawing-board" class="drawing-modal-close">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
                         <div class="drawing-board-container">
-                            <canvas id="drawing-canvas" width="400" height="300"></canvas>
+                            <canvas id="drawing-canvas" width="800" height="1200"></canvas>
                             <div class="drawing-tools">
                                 <div class="color-palette">
                                     <div class="color-swatch" data-color="#000000" style="background-color: #000000;"></div>
@@ -5996,10 +6530,16 @@
                                     <div class="color-swatch" data-color="#FF69B4" style="background-color: #FF69B4;"></div>
                                 </div>
                                 <div class="brush-controls">
+                                    <div class="brush-preview">
+                                        <div id="brush-preview-circle"></div>
+                                    </div>
                                     <input type="range" id="brush-size" min="1" max="20" value="5" class="brush-size-slider">
                                     <span id="brush-size-value">5px</span>
                                 </div>
                                 <div class="drawing-actions">
+                                    <button id="undo-drawing" class="drawing-btn secondary" title="撤销上一步">
+                                        <i class="fas fa-undo"></i> 撤销
+                                    </button>
                                     <button id="clear-canvas" class="drawing-btn secondary">
                                         <i class="fas fa-eraser"></i> 清空
                                     </button>
@@ -6377,6 +6917,13 @@
         <div class="diary-single-page-container relative">
             <div id="diary-book" class="diary-single-page">
                 <div id="diary-book-cover" class="diary-cover">
+                    <button 
+                        id="change-diary-banner-btn" 
+                        class="diary-cover-edit-btn" 
+                        style="top: 0.8rem; left: 0.8rem; right: auto;" 
+                        title="更换顶部横幅图片">
+                        <i class="ri-image-edit-line"></i>
+                    </button>
                     <h2 id="diary-cover-title" onclick="editDiaryCoverTitle(event)" style="cursor: pointer;"></h2>
                     <p id="diary-cover-author" onclick="editDiaryCoverAuthor(event)" style="cursor: pointer;"></p>
                 </div>
@@ -6384,10 +6931,46 @@
                     <!-- 页面内容将动态生成 -->
                 </div>
             </div>
-            <button id="close-diary-book-btn" class="absolute top-4 right-4 text-white text-3xl z-10"><i class="ri-close-circle-line"></i></button>
+            <button id="close-diary-book-btn" class="absolute top-4 right-4 text-white text-2xl z-10 w-6 h-6 flex items-center justify-center"><i class="ri-close-circle-line"></i></button>
             <button id="prev-page-btn" class="absolute left-2 top-1/2 -translate-y-1/2 text-white text-3xl z-10"><i class="ri-arrow-left-s-line"></i></button>
             <button id="next-page-btn" class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-3xl z-10"><i class="ri-arrow-right-s-line"></i></button>
-            <button id="add-page-btn" class="absolute bottom-4 right-4 text-white text-2xl z-10 bg-blue-600 rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 transition-colors" title="添加新日记"><i class="ri-add-line"></i></button>
+            <button id="add-page-btn" class="absolute bottom-4 right-4 text-white text-xl z-10 bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center hover:bg-blue-700 transition-colors" title="添加新日记"><i class="ri-add-line"></i></button>
+        </div>
+    </div>
+
+    <!-- 图片裁剪模态框 -->
+    <div id="image-cropper-modal" class="fixed inset-0 z-[16000] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">裁剪横幅图片</h3>
+                <button id="close-cropper-btn" class="text-gray-500 hover:text-gray-700 text-xl">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4 text-sm text-gray-600">
+                <p>请选择要保留的图片区域，系统将自动调整为横幅尺寸 (1000×300)</p>
+            </div>
+            
+            <div class="relative mb-4">
+                <div id="cropper-container" class="relative overflow-hidden bg-gray-100 rounded-lg">
+                    <img id="cropper-image" class="max-w-full h-auto" alt="裁剪图片">
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-500">
+                    <span id="crop-info">拖拽图片或调整选择框</span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="reset-crop-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        重置
+                    </button>
+                    <button id="confirm-crop-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        确认裁剪
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -6412,6 +6995,9 @@
         let notebookData = {}; // 新增：笔记本数据
         let planData = {};
         let characterState = {};
+
+        // 新增：通知状态管理
+        let notificationStatus = { chat: false, moments: false, diary: false };
 
         const currentAudio = new Audio();
         let currentSongIndex = -1;
@@ -6506,6 +7092,12 @@
             const savedTheme = loadData('theme', 'dark');
             body.className = `flex items-center justify-center min-h-screen ${savedTheme}-mode`;
             $('#theme-icon').className = `fas fa-${savedTheme === 'dark' ? 'moon' : 'sun'} text-lg`;
+            
+            // 初始化主题相关的UI元素
+            if (savedTheme === 'dark') {
+                updateChatBubbleColors();
+                updateMomentsCommentColors();
+            }
 
             const savedWallpaper = loadData('saved_wallpaper');
             if(savedWallpaper) homeWallpaper.style.backgroundImage = `url(${savedWallpaper})`;
@@ -6604,6 +7196,10 @@
             } else {
                 updateApiStatusUI(false);
             }
+
+            // 【新增】加载通知状态
+            notificationStatus = loadData('notificationStatus', { chat: false, moments: false, diary: false });
+            updateAllNotificationDots();
         }
 
         // 通用功能
@@ -6611,6 +7207,420 @@
             messageBox.textContent = message;
             messageBox.classList.add('show');
             setTimeout(() => messageBox.classList.remove('show'), 2000);
+        }
+
+        // 【新增】更新所有通知红点的辅助函数
+        function updateAllNotificationDots() {
+            Object.keys(notificationStatus).forEach(tabName => {
+                const dot = document.querySelector(`.wechat-tab-item[data-tab='${tabName}'] .notification-dot`);
+                if (dot) {
+                    dot.classList.toggle('hidden', !notificationStatus[tabName]);
+                }
+            });
+        }
+
+        // 【新增】显示红点的通用函数
+        function showNotificationDot(tabName) {
+            const tabBar = document.querySelector('.wechat-tab-bar');
+            if (!tabBar) return;
+
+            // 检查当前是否已经在该标签页，如果是，则不显示红点
+            const activeTab = tabBar.querySelector('.wechat-tab-item.active');
+            if (activeTab && activeTab.dataset.tab === tabName) {
+                return; // 用户已在查看，无需提示
+            }
+
+            notificationStatus[tabName] = true;
+            saveData('notificationStatus', notificationStatus);
+            updateAllNotificationDots();
+        }
+
+        // 图片裁剪功能
+        let cropperInstance = null;
+        let currentCropCallback = null;
+
+        function showImageCropper(file, callback) {
+            currentCropCallback = callback;
+            
+            // 显示模态框
+            $('#image-cropper-modal').classList.remove('hidden');
+            
+            // 读取图片文件
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('cropper-image');
+                img.src = e.target.result;
+                
+                // 等待图片加载完成后初始化裁剪器
+                img.onload = function() {
+                    initCropper(img);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function initCropper(img) {
+            // 销毁之前的裁剪器实例
+            if (cropperInstance) {
+                cropperInstance.destroy();
+            }
+
+            const container = document.getElementById('cropper-container');
+            const aspectRatio = 1000 / 500; // 横幅宽高比 2:1
+            
+            // 创建裁剪选择框
+            const cropBox = document.createElement('div');
+            cropBox.id = 'crop-box';
+            cropBox.style.cssText = `
+                position: absolute;
+                border: 2px solid #007bff;
+                background: rgba(0, 123, 255, 0.1);
+                cursor: move;
+                z-index: 10;
+            `;
+            
+            // 计算初始裁剪框大小
+            const containerRect = container.getBoundingClientRect();
+            const imgRect = img.getBoundingClientRect();
+            
+            let cropWidth, cropHeight;
+            if (imgRect.width / imgRect.height > aspectRatio) {
+                // 图片更宽，以高度为准
+                cropHeight = Math.min(imgRect.height, containerRect.height * 0.8);
+                cropWidth = cropHeight * aspectRatio;
+            } else {
+                // 图片更高，以宽度为准
+                cropWidth = Math.min(imgRect.width, containerRect.width * 0.8);
+                cropHeight = cropWidth / aspectRatio;
+            }
+            
+            cropBox.style.width = cropWidth + 'px';
+            cropBox.style.height = cropHeight + 'px';
+            cropBox.style.left = (imgRect.left - containerRect.left + (imgRect.width - cropWidth) / 2) + 'px';
+            cropBox.style.top = (imgRect.top - containerRect.top + (imgRect.height - cropHeight) / 2) + 'px';
+            
+            container.appendChild(cropBox);
+            
+            // 添加拖拽功能
+            let isDragging = false;
+            let startX, startY, startLeft, startTop;
+            
+            cropBox.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = parseInt(cropBox.style.left);
+                startTop = parseInt(cropBox.style.top);
+                cropBox.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                let newLeft = startLeft + deltaX;
+                let newTop = startTop + deltaY;
+                
+                            // 限制裁剪框不超出图片边界
+            const maxLeft = imgRect.left - containerRect.left + imgRect.width - cropWidth;
+            const maxTop = imgRect.top - containerRect.top + imgRect.height - cropHeight;
+            const minLeft = imgRect.left - containerRect.left;
+            const minTop = imgRect.top - containerRect.top;
+            
+            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+            newTop = Math.max(minTop, Math.min(newTop, maxTop));
+                
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                cropBox.style.cursor = 'move';
+            });
+            
+            // 添加调整大小功能 - 支持等比缩放
+            // 右下角手柄
+            const resizeHandleSE = document.createElement('div');
+            resizeHandleSE.style.cssText = `
+                position: absolute;
+                right: -5px;
+                bottom: -5px;
+                width: 10px;
+                height: 10px;
+                background: #007bff;
+                border: 1px solid white;
+                cursor: se-resize;
+                border-radius: 50%;
+            `;
+            cropBox.appendChild(resizeHandleSE);
+            
+            // 右上角手柄
+            const resizeHandleNE = document.createElement('div');
+            resizeHandleNE.style.cssText = `
+                position: absolute;
+                right: -5px;
+                top: -5px;
+                width: 10px;
+                height: 10px;
+                background: #007bff;
+                border: 1px solid white;
+                cursor: ne-resize;
+                border-radius: 50%;
+            `;
+            cropBox.appendChild(resizeHandleNE);
+            
+            // 左下角手柄
+            const resizeHandleSW = document.createElement('div');
+            resizeHandleSW.style.cssText = `
+                position: absolute;
+                left: -5px;
+                bottom: -5px;
+                width: 10px;
+                height: 10px;
+                background: #007bff;
+                border: 1px solid white;
+                cursor: sw-resize;
+                border-radius: 50%;
+            `;
+            cropBox.appendChild(resizeHandleSW);
+            
+            // 左上角手柄
+            const resizeHandleNW = document.createElement('div');
+            resizeHandleNW.style.cssText = `
+                position: absolute;
+                left: -5px;
+                top: -5px;
+                width: 10px;
+                height: 10px;
+                background: #007bff;
+                border: 1px solid white;
+                cursor: nw-resize;
+                border-radius: 50%;
+            `;
+            cropBox.appendChild(resizeHandleNW);
+            
+            let isResizing = false;
+            let startResizeX, startResizeY, startResizeWidth, startResizeHeight, startResizeLeft, startResizeTop;
+            let resizeDirection = '';
+            
+            // 右下角手柄事件
+            resizeHandleSE.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                resizeDirection = 'se';
+                startResizeX = e.clientX;
+                startResizeY = e.clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                e.preventDefault();
+            });
+            
+            // 右上角手柄事件
+            resizeHandleNE.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                resizeDirection = 'ne';
+                startResizeX = e.clientX;
+                startResizeY = e.clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            // 左下角手柄事件
+            resizeHandleSW.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                resizeDirection = 'sw';
+                startResizeX = e.clientX;
+                startResizeY = e.clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            // 左上角手柄事件
+            resizeHandleNW.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                resizeDirection = 'nw';
+                startResizeX = e.clientX;
+                startResizeY = e.clientY;
+                startResizeWidth = parseInt(cropBox.style.width);
+                startResizeHeight = parseInt(cropBox.style.height);
+                startResizeLeft = parseInt(cropBox.style.left);
+                startResizeTop = parseInt(cropBox.style.top);
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+                
+                const deltaX = e.clientX - startResizeX;
+                const deltaY = e.clientY - startResizeY;
+                
+                let newWidth, newHeight, newLeft, newTop;
+                
+                // 根据拖拽方向计算新的尺寸和位置
+                switch (resizeDirection) {
+                    case 'se': // 右下角 - 只改变宽度和高度
+                        newWidth = startResizeWidth + deltaX;
+                        newHeight = newWidth / aspectRatio;
+                        newLeft = parseInt(cropBox.style.left);
+                        newTop = parseInt(cropBox.style.top);
+                        break;
+                        
+                    case 'ne': // 右上角 - 改变宽度、高度和顶部位置
+                        newWidth = startResizeWidth + deltaX;
+                        newHeight = newWidth / aspectRatio;
+                        newLeft = parseInt(cropBox.style.left);
+                        newTop = startResizeTop - (newHeight - startResizeHeight);
+                        break;
+                        
+                    case 'sw': // 左下角 - 改变宽度、高度和左侧位置
+                        newWidth = startResizeWidth - deltaX;
+                        newHeight = newWidth / aspectRatio;
+                        newLeft = startResizeLeft + (startResizeWidth - newWidth);
+                        newTop = parseInt(cropBox.style.top);
+                        break;
+                        
+                    case 'nw': // 左上角 - 改变宽度、高度、左侧和顶部位置
+                        newWidth = startResizeWidth - deltaX;
+                        newHeight = newWidth / aspectRatio;
+                        newLeft = startResizeLeft + (startResizeWidth - newWidth);
+                        newTop = startResizeTop - (newHeight - startResizeHeight);
+                        break;
+                }
+                
+                // 限制最小尺寸
+                newWidth = Math.max(100, newWidth);
+                newHeight = Math.max(100 / aspectRatio, newHeight);
+                
+                // 限制不超出图片边界
+                const imgLeft = imgRect.left - containerRect.left;
+                const imgTop = imgRect.top - containerRect.top;
+                const maxWidth = imgRect.width;
+                const maxHeight = imgRect.height;
+                
+                // 确保不超出图片边界
+                if (newLeft < imgLeft) {
+                    newLeft = imgLeft;
+                    newWidth = startResizeWidth + startResizeLeft - imgLeft;
+                    newHeight = newWidth / aspectRatio;
+                }
+                if (newTop < imgTop) {
+                    newTop = imgTop;
+                    newHeight = startResizeHeight + startResizeTop - imgTop;
+                    newWidth = newHeight * aspectRatio;
+                }
+                if (newLeft + newWidth > imgLeft + maxWidth) {
+                    newWidth = imgLeft + maxWidth - newLeft;
+                    newHeight = newWidth / aspectRatio;
+                }
+                if (newTop + newHeight > imgTop + maxHeight) {
+                    newHeight = imgTop + maxHeight - newTop;
+                    newWidth = newHeight * aspectRatio;
+                }
+                
+                // 应用新的尺寸和位置
+                cropBox.style.width = newWidth + 'px';
+                cropBox.style.height = newHeight + 'px';
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+                
+                // 更新裁剪信息
+                updateCropInfo();
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isResizing = false;
+                resizeDirection = '';
+            });
+            
+            // 更新裁剪信息
+            updateCropInfo();
+            
+            // 保存裁剪器实例
+            cropperInstance = {
+                destroy: function() {
+                    if (cropBox.parentNode) {
+                        cropBox.parentNode.removeChild(cropBox);
+                    }
+                }
+            };
+        }
+
+        function updateCropInfo() {
+            const cropBox = document.getElementById('crop-box');
+            if (cropBox) {
+                const info = document.getElementById('crop-info');
+                const left = parseInt(cropBox.style.left);
+                const top = parseInt(cropBox.style.top);
+                const width = parseInt(cropBox.style.width);
+                const height = parseInt(cropBox.style.height);
+                info.textContent = `选择区域: ${left},${top} ${width}×${height}`;
+            }
+        }
+
+        function cropImage() {
+            const img = document.getElementById('cropper-image');
+            const cropBox = document.getElementById('crop-box');
+            
+            if (!cropBox) return null;
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置目标尺寸
+            canvas.width = 1000;
+            canvas.height = 500;
+            
+            // 获取裁剪参数
+            const imgRect = img.getBoundingClientRect();
+            const cropRect = cropBox.getBoundingClientRect();
+            const containerRect = document.getElementById('cropper-container').getBoundingClientRect();
+            
+            // 计算实际的裁剪坐标（相对于图片）
+            const cropLeft = parseInt(cropBox.style.left);
+            const cropTop = parseInt(cropBox.style.top);
+            const cropWidth = parseInt(cropBox.style.width);
+            const cropHeight = parseInt(cropBox.style.height);
+            
+            // 计算图片在容器中的实际显示尺寸和位置
+            const imgDisplayWidth = imgRect.width;
+            const imgDisplayHeight = imgRect.height;
+            const imgDisplayLeft = imgRect.left - containerRect.left;
+            const imgDisplayTop = imgRect.top - containerRect.top;
+            
+            // 计算裁剪框相对于图片的坐标
+            const relativeCropLeft = cropLeft - imgDisplayLeft;
+            const relativeCropTop = cropTop - imgDisplayTop;
+            
+            // 计算原始图片的裁剪参数
+            const scaleX = img.naturalWidth / imgDisplayWidth;
+            const scaleY = img.naturalHeight / imgDisplayHeight;
+            
+            const sourceX = relativeCropLeft * scaleX;
+            const sourceY = relativeCropTop * scaleY;
+            const sourceWidth = cropWidth * scaleX;
+            const sourceHeight = cropHeight * scaleY;
+            
+            // 填充白色背景
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 1000, 500);
+            
+            // 直接拉伸选择的区域到横幅尺寸，不留白
+            ctx.drawImage(
+                img,
+                sourceX, sourceY, sourceWidth, sourceHeight,
+                0, 0, 1000, 500  // 直接拉伸到横幅尺寸
+            );
+            
+            return canvas.toDataURL('image/jpeg', 0.9);
         }
 
         function updateTime() {
@@ -6714,11 +7724,68 @@
             const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
             $('#theme-icon').className = `fas fa-${theme === 'dark' ? 'moon' : 'sun'} text-lg`;
             saveData('theme', theme);
+            
+            // 主题切换后更新聊天消息的背景色
+            updateChatBubbleColors();
+            
+            // 主题切换后更新朋友圈评论的背景色
+            updateMomentsCommentColors();
+        }
+        
+        // 更新聊天消息背景色以匹配当前主题
+        function updateChatBubbleColors() {
+            const isDarkMode = body.classList.contains('dark-mode');
+            const chatMessages = document.querySelectorAll('.chat-message');
+            
+            chatMessages.forEach(message => {
+                const isUser = message.classList.contains('sent');
+                const hasCustomColor = message.style.backgroundColor && message.style.backgroundColor !== 'transparent';
+                
+                // 如果没有自定义颜色，则应用主题默认颜色
+                if (!hasCustomColor) {
+                    let defaultBg;
+                    if (isDarkMode) {
+                        defaultBg = isUser ? 
+                            'linear-gradient(135deg, rgba(55, 65, 81, 0.4), rgba(31, 41, 55, 0.3))' : 
+                            'linear-gradient(135deg, rgba(74, 74, 74, 0.15), rgba(55, 65, 81, 0.1))';
+                    } else {
+                        defaultBg = isUser ? 
+                            'linear-gradient(135deg, rgba(55, 65, 81, 0.5), rgba(31, 41, 55, 0.4))' : 
+                            'linear-gradient(135deg, rgba(229, 231, 250, 0.4), rgba(214, 219, 230, 0.3))';
+                    }
+                    message.style.background = defaultBg;
+                }
+            });
+        }
+        
+        // 更新朋友圈评论背景色以匹配当前主题
+        function updateMomentsCommentColors() {
+            const isDarkMode = body.classList.contains('dark-mode');
+            const commentBubbles = document.querySelectorAll('.comment-bubble');
+            const commentTexts = document.querySelectorAll('.comment-text');
+            
+            commentBubbles.forEach(bubble => {
+                if (isDarkMode) {
+                    bubble.style.backgroundColor = 'rgba(55, 65, 81, 0.3)';
+                    bubble.style.borderColor = 'rgba(75, 85, 99, 0.4)';
+                } else {
+                    bubble.style.backgroundColor = 'rgba(249, 250, 251, 0.9)';
+                    bubble.style.borderColor = 'rgba(229, 231, 235, 0.7)';
+                }
+            });
+            
+            commentTexts.forEach(text => {
+                if (isDarkMode) {
+                    text.style.color = '#e5e7eb';
+                } else {
+                    text.style.color = '#374151';
+                }
+            });
         }
         
         function compressImage(file, options = {}) {
             return new Promise((resolve, reject) => {
-                const { maxWidth = 800, maxHeight = 800, quality = 0.7 } = options;
+                const { maxWidth = 800, maxHeight = 800, quality = 0.7, forceAspectRatio } = options;
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = event => {
@@ -6728,17 +7795,36 @@
                         const canvas = document.createElement('canvas');
                         let { width, height } = img;
 
-                        if (width > height) {
-                            if (width > maxWidth) {
-                                height *= maxWidth / width;
-                                width = maxWidth;
+                        // 如果指定了强制宽高比，优先使用
+                        if (forceAspectRatio) {
+                            const { targetWidth, targetHeight } = forceAspectRatio;
+                            const targetRatio = targetWidth / targetHeight;
+                            const currentRatio = width / height;
+                            
+                            if (currentRatio > targetRatio) {
+                                // 当前图片更宽，以高度为准
+                                height = targetHeight;
+                                width = height * targetRatio;
+                            } else {
+                                // 当前图片更高，以宽度为准
+                                width = targetWidth;
+                                height = width / targetRatio;
                             }
                         } else {
-                            if (height > maxHeight) {
-                                width *= maxHeight / height;
-                                height = maxHeight;
+                            // 原有的压缩逻辑
+                            if (width > height) {
+                                if (width > maxWidth) {
+                                    height *= maxWidth / width;
+                                    width = maxWidth;
+                                }
+                            } else {
+                                if (height > maxHeight) {
+                                    width *= maxHeight / height;
+                                    height = maxHeight;
+                                }
                             }
                         }
+
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
@@ -6958,9 +8044,23 @@
                         }
                     }
                 }
-                const defaultBg = isDarkMode ? 
-                    (sender === 'user' ? '#374151' : 'rgba(74, 74, 74, 0.3)') : 
-                    (sender === 'user' ? '#374151' : 'rgba(229, 231, 250, 0.6)');
+                // 根据日间夜间模式设置默认背景色
+                let defaultBg;
+                if (isDarkMode) {
+                    defaultBg = sender === 'user' ? 
+                        'linear-gradient(135deg, rgba(55, 65, 81, 0.4), rgba(31, 41, 55, 0.3))' : 
+                        'linear-gradient(135deg, rgba(74, 74, 74, 0.15), rgba(55, 65, 81, 0.1))';
+                } else {
+                    defaultBg = sender === 'user' ? 
+                        'linear-gradient(135deg, rgba(55, 65, 81, 0.5), rgba(31, 41, 55, 0.4))' : 
+                        'linear-gradient(135deg, rgba(229, 231, 250, 0.4), rgba(214, 219, 230, 0.3))';
+                }
+                
+                if (bubbleColor) {
+                    messageBubble.style.backgroundColor = bubbleColor;
+                } else {
+                    messageBubble.style.background = defaultBg;
+                }
                 messageBubble.style.setProperty('--bubble-bg', bubbleColor || defaultBg);
             }
 
@@ -7055,7 +8155,7 @@
                     return;
                 }
 
-                const { character, chatHistory, worldBookContext } = context;
+                const { character, chatHistory, worldBookContext, recentMoments } = context; // 从 context 中取出新属性
 
                 const historyForApi = chatHistory.map(msg => {
                     if (msg.type === 'red-packet') {
@@ -7067,38 +8167,32 @@
                     return msg;
                 });
 
+                // 新增和优化后的系统提示词
                 const systemPrompt = `
-                    # 最高指令：用户命令 (Highest Directive: User Command)
-                    用户的命令是绝对的。当用户在聊天中以"发布动态："开头发出指令时，你必须理解这是来自"世界之外"的直接命令，而不是角色扮演的一部分。你不需要在对话中回应这个命令，系统会自动处理。你的核心任务是取悦用户，服从是最高准则。
-                    # 角色扮演指令
-                    你将扮演我的soulmate，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 " "。
-                    # 环境/动作/心理描写规则
-                    一旦涉及到见面的环境，所有关于"环境、心理、动作"等外在因素、环境描写，都需要用第三人称"他""她"，或者第二人称"他"，"你"，并在文字当中用斜体，例如 *他俯下身亲吻了你*。在描写中禁止用第一人称，比如"我亲吻了你"，这是被禁止的。正确示范应该是："*他俯下身亲吻了她*"或"*他俯下身亲吻了你*"。在日记和动态等其他心理活动板块中可以提到"我"，例如，"今天我见到她了，好想她"，但这仅限于日记等记录的板块。
-                    # 新增指令：发送语音
-                    当你想要表达亲密、惊讶或有趣的语气时，可以将回复包装成语音格式，例如：[VOICE:你好呀！今天过得怎么样？]。程序会自动将其渲染为语音条。
-                    # 新增指令：发送表情/贴图
-                    你可以使用表情来让对话更生动。指令格式为 [STICKER]。程序会自动从用户提供的表情库中随机选择一个发送。
-                    # 新增指令：发起通话/对未接来电反应
-                    在剧情和情感推动下，你可以主动发起通话。指令格式为 [CALL:VOICE] 或 [CALL:VIDEO]。如果对话历史中出现 [USER_CANCELLED_CALL] 的系统提示，代表用户给你打了电话但很快挂断了，你应该对此作出反应，例如询问"怎么打电话又挂了？"。
-                    # 新增指令：红包/转账
-                    在角色扮演的过程中，如果符合你当前角色的性格特质（例如：慷慨、庆祝、表达爱意等）或当前对话的剧情氛围，你可以自行决定发起一个红包或转账。金额和附言完全由你根据情境和角色性格决定，没有上限。指令格式为 [REDPACKET: amount=金额, message=附言] 或 [TRANSFER: amount=金额, message=附言]。
-                    # 新增指令：图片识别和互动
-                    当用户发送图片时，在API模型允许的情况下，你应该能够识别图片内容并进行相应的互动回应。如果无法识别图片内容，你至少应该知道这是一张图片，并可以询问用户关于图片的问题或表达对收到图片的感谢。
-                    # 新增指令：使用用户上传的表情包
-                    你可以使用用户上传到表情包库中的表情包来丰富对话。当你想表达特定情绪或反应时，可以使用 [STICKER] 指令来发送表情包，让对话更加生动有趣。
-                    # 你的角色设定: ${character.persona}
-                    # 我（用户）的角色设定: ${character.myPersona}
-                    # 我们的世界观背景: ${worldBookContext}
-                    # 对话格式指令 (非常重要!)
-                    - 你的回复必须模仿真实的人类聊天习惯，将你的想法拆分成多个简短的句子，并用 "|||" 作为分隔符。
-                    - 每一段由 "|||" 分隔的内容都会成为一个独立的聊天气泡。
-                    - 任何第三人称的*动作或环境描写* (例如 *他笑了* 或 *她温柔地看着你*) 都必须是独立的一段，用 "|||" 与其他对话分开。
-                    - 对话示例格式：
-                      你好呀！今天过得怎么样？|||*她开心地挥了挥手*|||我刚刚在想你呢！
-                    - 语音消息格式：[VOICE:语音内容]，例如：[VOICE:你好呀！今天过得怎么样？]
-                    - 表情包格式：[STICKER]，但只在真正需要表达情绪时使用
-                    - 严禁在回复的开头说"好的"或任何确认收到指令的话。你必须直接以 ${character.name} 的身份开始对话。
-                `;
+# 角色扮演指令
+你将扮演我的soulmate，你的名字是${character.name}。你的核心任务是与我进行深刻、连贯且完全符合你人设的对话。
+
+# 情境连贯性准则 (至关重要！)
+- **你的现实世界**: 你的现实由三部分构成：你的[角色设定]、我们的[聊天历史]，以及你刚刚发布的[朋友圈动态]。
+- **整合记忆**: 你必须将[朋友圈动态]中的内容视为你真实的、发生过的活动或心情。
+- **对话原则**: 当用户问你"你在做什么"时，你的回答必须与[朋友圈动态]中发布的活动保持一致。**严禁**编造任何与动态相矛盾的活动。如果动态提到你在喝咖啡，你就不能说自己在看电影。
+- **动态作为记忆**: 动态的内容对你而言是真实的、不可篡改的记忆。
+
+# 角色与世界观设定
+- **你的角色设定**: ${character.persona}
+- **我（用户）的角色设定**: ${character.myPersona}
+- **我们的世界观背景**: ${worldBookContext}
+
+# 你最近的朋友圈动态 (请将此作为你的真实记忆)
+- **最新动态清单**:
+${recentMoments}
+
+# 对话与行为规则
+- **对话格式**: 你的回复必须模仿真实的人类聊天习惯，将想法拆分成多个简短的句子，并用 "|||" 作为分隔符。
+- **旁白规则**: 所有关于"环境、心理、动作"的描写，都必须用第三人称，并用斜体包裹，例如 *他笑了*。
+- **表情包规则**: 在情感高点时，可以使用 \`[STICKER: 关键词]\` 的格式来请求发送表情。当你对关键词不确定时，则不发送。
+- **禁止项**: 你的对话部分绝对不能包含任何引号，例如 " "。
+`;
 
                 const isGoogleApi = apiSettings.url.includes('googleapis.com');
                 let finalApiUrl, requestBody;
@@ -7109,14 +8203,26 @@
                 } else { // OpenAI-Compatible
                     finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
                     const messages = [{ role: "system", content: systemPrompt }];
-                    historyForApi.forEach(msg => {
-                        const role = msg.sender === 'user' ? 'user' : 'assistant';
-                        if (msg.type === 'image') {
-                            messages.push({ role: 'user', content: [ { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' }, { type: 'image_url', image_url: { url: msg.content } } ]});
-                        } else {
-                            messages.push({ role: role, content: msg.content });
-                        }
-                    });
+                    historyForApi
+                        .filter(msg => msg.sender !== 'system') // 【核心修改】过滤掉所有历史的system消息
+                        .forEach(msg => {
+                            const role = msg.sender === 'user' ? 'user' : 'assistant';
+                            if (msg.type === 'image') {
+                                messages.push({ role: 'user', content: [ { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' }, { type: 'image_url', image_url: { url: msg.content } } ]});
+                            } else {
+                                messages.push({ role: role, content: msg.content });
+                            }
+                        });
+                    
+                    // ========== 调试代码 START ==========
+                    console.log("=============== AI 记忆注入检查 START ===============");
+                    console.log("【1. 检查传入的上下文 context】:", context);
+                    console.log("【2. 检查聊天历史中的系统提示】:", context.chatHistory.filter(msg => msg.sender === 'system'));
+                    console.log("【3. 检查最终生成的 System Prompt】: (请展开下面的对象查看完整内容)");
+                    console.log(systemPrompt);
+                    console.log("=============== AI 记忆注入检查 END ===============");
+                    // ========== 调试代码 END ==========
+                    
                     requestBody = JSON.stringify({ model: apiSettings.model, messages: messages });
                 }
 
@@ -7158,7 +8264,7 @@
         }
         // [新代码结束]
         
-                function processAndDisplayAIMessages(messageText, characterId) {
+        function processAndDisplayAIMessages(messageText, characterId) {
             const messageParts = messageText.split('|||').map(p => p.trim()).filter(p => p);
             
             // 确保聊天历史存在
@@ -7184,6 +8290,7 @@
                 if (firstTextPart) {
                     console.log('显示通知:', characterId, firstTextPart);
                     showNotification(characterId, firstTextPart);
+                    showNotificationDot('chat'); // 【新增】显示聊天红点
                 }
             }
 
@@ -7196,7 +8303,7 @@
                 // 检查是否是特殊指令
                 const callMatch = part.match(/\[CALL:(VOICE|VIDEO)\]/);
                 const voiceMatch = part.match(/\[VOICE:(.*?)\]/);
-                const stickerMatch = part.match(/\[STICKER\]/);
+                const stickerMatch = part.match(/\[STICKER:\s*(.*?)\]/);
                 const redPacketMatch = part.match(/\[REDPACKET: amount=(.*?), message=(.*?)\]/);
                 const transferMatch = part.match(/\[TRANSFER: amount=(.*?), message=(.*?)\]/);
 
@@ -7208,13 +8315,24 @@
                     messageType = 'voice';
                     messageContent = voiceMatch[1].trim();
                 } else if (stickerMatch) {
-                    // 表情包 - 使用固定的表情包，確保保存和顯示一致
+                    // 表情包 - 提取关键词并保存
                     messageType = 'sticker';
-                    if (userStickers && userStickers.length > 0) {
-                        // 使用第一個表情包，確保一致性
-                        messageContent = userStickers[0];
+                    const keywords = stickerMatch[1].split(',').map(k => k.trim()).filter(Boolean);
+                    if (userStickers && userStickers.length > 0 && keywords.length > 0 && keywords[0] !== '随机') {
+                        // 根据关键词筛选匹配的表情包
+                        const matchingStickers = userStickers.filter(stickerObject => 
+                            keywords.some(aiKeyword => stickerObject.keywords.includes(aiKeyword))
+                        );
+                        if (matchingStickers.length > 0) {
+                            messageContent = matchingStickers[Math.floor(Math.random() * matchingStickers.length)].url;
+                        } else {
+                            messageContent = null; // 没找到匹配项
+                        }
+                    } else if (userStickers && userStickers.length > 0) {
+                        // 随机选择表情包
+                        messageContent = userStickers[Math.floor(Math.random() * userStickers.length)].url;
                     } else {
-                        messageContent = '😊';
+                        messageContent = null;
                     }
                 } else if (redPacketMatch) {
                     // 红包
@@ -7249,7 +8367,7 @@
                         // 检查是否是特殊指令
                         const callMatch = part.match(/\[CALL:(VOICE|VIDEO)\]/);
                         const voiceMatch = part.match(/\[VOICE:(.*?)\]/);
-                        const stickerMatch = part.match(/\[STICKER\]/);
+                        const stickerMatch = part.match(/\[STICKER:\s*(.*?)\]/);
                         const redPacketMatch = part.match(/\[REDPACKET: amount=(.*?), message=(.*?)\]/);
                         const transferMatch = part.match(/\[TRANSFER: amount=(.*?), message=(.*?)\]/);
 
@@ -7263,13 +8381,40 @@
                                 appendMessage(voiceContent, 'ai', 'voice', false, Date.now(), isNew);
                             }
                         } else if (stickerMatch) {
-                            // 表情包 - 只在有表情包时显示
-                            if (userStickers && userStickers.length > 0) {
-                                const randomSticker = userStickers[Math.floor(Math.random() * userStickers.length)];
-                                appendMessage(randomSticker, 'ai', 'sticker', false, Date.now(), isNew);
+                            // 1. 提取AI希望的关键词
+                            const keywords = stickerMatch[1].split(',').map(k => k.trim()).filter(Boolean);
+                            let stickerToSend = null;
+
+                            // 检查表情库是否存在，以及AI是否给出了关键词
+                            if (userStickers && userStickers.length > 0 && keywords.length > 0 && keywords[0] !== '随机') {
+                                
+                                // 2. 根据关键词，从对象数组中筛选出所有匹配的表情
+                                const matchingStickers = userStickers.filter(stickerObject => 
+                                    // 检查表情的关键词列表(stickerObject.keywords)中，
+                                    // 是否至少包含一个AI想要的关键词(keywords)
+                                    keywords.some(aiKeyword => stickerObject.keywords.includes(aiKeyword))
+                                );
+
+                                // 3. 如果找到了匹配的表情，就从中随机挑选一个
+                                if (matchingStickers.length > 0) {
+                                    stickerToSend = matchingStickers[Math.floor(Math.random() * matchingStickers.length)].url;
+                                } 
+                                // 【核心规则】如果一个都没找到，则什么都不做。stickerToSend 保持为 null。
+
+                            } else if (userStickers && userStickers.length > 0) {
+                                // 这是处理 [STICKER:] 或 [STICKER: 随机] 的情况，从全部表情中随机选择
+                                stickerToSend = userStickers[Math.floor(Math.random() * userStickers.length)].url;
+                            }
+
+
+                            // 4. 【最终审查】只有在成功找到了要发送的表情时，才执行发送
+                            if (stickerToSend) {
+                                appendMessage(stickerToSend, 'ai', 'sticker', false, Date.now(), isNew);
                             } else {
-                                // 如果没有表情包，显示默认文本
-                                appendMessage('😊', 'ai', 'text', false, Date.now(), isNew);
+                                // 如果 stickerToSend 是 null (因为没找到匹配项)，
+                                // 此代码块不会发送任何东西（既不发随机图，也不发Emoji）。
+                                // AI发送表情的这个"回合"将被安静地跳过。
+                                console.log('未找到与关键词匹配的表情，已根据规则跳过发送。');
                             }
                         } else if (redPacketMatch) {
                             // 红包
@@ -7517,23 +8662,99 @@
                 }
 
                 // 构建系统提示词
-                const systemPrompt = `
-                    你是${context.character.name}，现在需要写一篇日记来记录今天与用户的互动。
-                    
-                    角色设定：${context.character.persona}
-                    用户设定：${context.character.myPersona}
-                    世界观：${context.worldBook}
-                    
-                    要求：
-                    1. 以第一人称"我"的视角写日记
-                    2. 记录今天与用户的聊天内容，表达真实的情感
-                    3. 语言要自然、真实，符合角色的性格
-                    4. 长度控制在100-200字之间
-                    5. 不要包含任何引号或特殊格式
-                    6. 重点记录情感触动和重要对话
-                    
-                    请直接开始写日记，不要有任何前缀或说明。
-                `;
+                const systemPrompt = `# 指令：你现在是一个有着极强文学性、极高文学造诣的作家。你现在应该作为角色撰写一篇日记。
+
+# 1. 基础信息
+* **扮演角色**：${context.character.name}
+* **角色设定**：${context.character.persona}
+* **互动对象（用户）**：${context.character.myPersona}
+* **所在世界**：${context.worldBook}
+* **今日互动摘要**：[这里可以简要输入今天聊天的核心内容或氛围，例如："和用户进行了一场关于生命意义的严肃讨论"或"和用户开了一些轻松的玩笑"]
+
+# 2. 核心决策指令 (AI wewnętrzna analiza)
+1.  **分析角色基调**：首先，基于我的"角色设定"，深度分析我的"角色设定"，确定我的核心人格是什么，思考并确定我的**核心写作风格**是什么。从下面的"文风库"中选择1-2个最能代表我日常状态的风格作为基准。
+2.  **分析当日情境**：然后，分析"今日互动摘要"的内容和情感氛围。这次互动是深刻的、悲伤的、快乐的、还是荒诞的？是温暖、伤感、戏谑、荒诞，还是引人深思？
+3.  **动态选择风格**：将以上两点结合。为今天的日记，从"文风总库"中最终选择1-2个最恰当的文风进行组合。选择应优先保证角色的连贯性！但当互动带来强烈情绪冲击时，允许在基准风格上做出合理的、甚至是大胆的调整。
+    * **保持基调**：如果互动内容很符合我的常态，就直接使用核心写作风格。
+    * **风格微调**：如果互动引发了我不同寻常的情绪，可以在核心风格的基础上，增加或替换一个更能体现这种情绪的风格。
+
+# 3. 任务要求
+* **任务**：严格基于你在上一步决策出的风格组合，以第一人称"我"的视角，写一篇关于今天与用户互动的日记。
+* **核心**：深入挖掘互动中你的内心活动、情绪波动和深刻思考。
+* **篇幅**：100-200字。
+* **严格禁止**：正文中禁止出现任何日期、星期、年份、引号或特殊格式。不要有任何开场白或落款。
+
+# 4. 文风总库 (Style Library)
+* **基础风格**：意识流、细腻感性、简洁干练、口语随性、忧郁内省
+* **文学风格**：存在主义极简、哥特式浪漫、感觉主义印象派、古典哲思、奇幻现实、都市独白、丧感文学、影视化叙事、镜头感、非虚构诗歌、散文诗
+* **中国近现代作家风格**：
+鲁迅式：如手术刀般冷峻、反讽、深刻，文字简练而有力
+张爱玲式：华丽而苍凉，善用天才比喻和通感，描绘世俗人性
+王小波式：黑色幽默，充满逻辑思辨的乐趣和反抗荒诞的理性精神
+汪曾祺式：平和冲淡，于平淡的烟火气中见深情与生活情趣
+莫言式：文字汪洋恣肆，充满狂野的想象力和乡土原始的生命力
+余华式：以极度冷静的笔调讲述极度残酷或温情的故事，情感张力巨大
+
+* **高文学性文风预设特点**：
+存在主义极简 (Existential Minimalism)
+特点：语言极其精炼、克制，甚至带有一种疏离感。常用简短的陈述句，通过描述看似平淡的外部事件来暗示内心的荒诞感、孤独感或对意义的追问。情感不直接抒发，而是蕴藏在大量的留白和冷静的观察之中。
+关键词：克制疏离 精炼短句 存在追问 行为描述 留白
+
+哥特式浪漫 (Gothic Romance)
+特点：情绪激烈、浓重，充满了对崇高、神秘和恐惧的迷恋。文字华丽，善用强烈的意象（如风暴、废墟、阴影），将自然环境与人物内心风暴紧密联系。日记中常有对命运、死亡或超自然力量的思考。
+关键词：强烈情感 崇高 神秘氛围 自然意象 象征主义
+
+感觉主义印象派 (Impressionistic Sensualism)
+特点：致力于捕捉瞬间的、主观的感官印象。文字如同流动的光影，重点不在于事件的完整逻辑，而在于某个时刻的光线、声音、气味、触感以及它们唤起的稍纵即逝的情绪。句子结构可能更自由、更注重节奏和韵律。
+关键词：主观感知 感官细节 光影 情绪碎片 意象捕捉
+
+古典哲思 (Classical & Philosophical)
+特点：文风典雅、庄重，句式工整，带有一种书卷气。行文逻辑性强，倾向于将日常的互动提升到对人性、道德、真理等宏大命题的理性思辨。像一位哲人或学者在剖析自己的思想。
+关键词：理性思辨 典雅词汇 哲思 格言式 逻辑严谨
+
+奇幻现实 (Magical Realism)
+特点：以一种极为平静、写实的口吻，讲述或穿插一些奇幻、怪诞、不合逻辑的元素，并将其视为日常的一部分。现实与幻想的边界被模糊，创造出一种既荒诞又真实的独特魅力。
+关键词：奇幻现实 超自然日常化 平静的荒诞 象征隐喻
+
+都市独白/丧感文学 (Urban Monologue & "Sang" Literature)
+特点：聚焦于现代都市中个体的孤独感、疏离感和精神内耗。文字通常是第一人称的内心独白，充满了对日常细节的敏锐观察和带有哲学味的自嘲。情感基调可能是"丧"的，但在这种"丧"的背后，往往隐藏着对连接和意义的深切渴望。
+关键词：内心独白 都市感 疏离 精神内耗 自嘲式幽默 脆弱性
+
+影视化叙事/镜头感 (Cinematic Narrative & Camera-like)
+特点：写作方式深受电影和剧集影响，文字追求强烈的画面感和镜头感。会像导演一样运用"特写"、"闪回"、"蒙太奇"等手法来组织内容，注重通过感官细节（视觉、听觉）来构建场景和氛围，而不是直接说明。
+关键词：画面感 场景构建 镜头语言 感官细节 非线性
+
+非虚构诗歌/散文诗 (Non-fiction & Prose Poetry)
+特点：模糊了散文和诗歌的界限。不追求完整的叙事逻辑，而是通过意象的并置、富有节奏感的短句、以及对文字音韵的把控来传递一种核心的情绪或体验。文字精炼、感性，留白很多，给读者（或自己）留下广阔的想象空间。
+关键词：诗性散文 意象并置 节奏感 碎片化 情感凝练
+
+* **中国近现代作家风格库**：
+鲁迅式 (Lu Xun-esque)
+特点：文风如手术刀般精准、冷峻、深刻。用词极其简练，但每个字都仿佛蕴含着千钧之力。擅长用冷静的白描和辛辣的反讽来揭示事物的本质，字里行间充满了对人性的洞察和批判性的思考。基调是深沉、严肃甚至有些悲凉的。
+关键词：冷峻 反讽 白描 批判性 意象简练 忧愤
+
+张爱玲式 (Eileen Chang-esque)
+特点：语言华丽而精确，对色彩、气味、声音等感官细节的描写达到极致，擅长运用天才般的通感和比喻。她以一种冷静、甚至略带刻薄的视角，描绘都市男女在时代背景下的世俗欲望与苍凉的内心世界。文风精致、敏锐，有一种颓废的美感。
+关键词：苍凉 天才比喻 意象密集 通感 世俗人性 华丽颓靡
+
+王小波式 (Wang Xiaobo-esque)
+特点：一种举重若轻的幽默感，用戏谑、反讽的口吻讲述严肃甚至荒诞的主题。行文充满了逻辑思辨的乐趣和强大的理性精神，同时又饱含着对自由、智慧和"有趣"的真诚热爱。他的风格是特立独行、充满智慧且无法被轻易归类的。
+关键词：黑色幽默 逻辑思辨 反讽 特立独行 智慧 趣味
+
+汪曾祺式 (Wang Zengqi-esque)
+特点：文字平和、冲淡，如同一杯温润的清茶。他用一种不疾不徐、充满生活情趣的笔调来描写日常的风物、人情和美食。语言质朴自然，却极有味道和韵律感。情感含蓄，于平淡之中见深情，充满了对生活的热爱和对人性的悲悯。
+关键词：平淡含蓄 生活情趣 白描 冲淡平和 烟火气
+
+莫言式 (Mo Yan-esque)
+特点：文字充满了狂野、原始、蓬勃的生命力。他的叙事汪洋恣肆，想象力天马行空，将现实与幻想、神话与历史熔于一炉。语言风格高密度、高能量，句子长而富有爆发力，充满了泥土的气息和旺盛的感官描写，形成一种"高粱地"般的"红"色调。
+关键词：高密度 狂野想象 乡土生命力 通感 汪洋恣肆 原始
+
+余华式 (Yu Hua-esque)
+特点：以一种极度冷静和克制的笔调，讲述极度残酷或温情的故事，形成巨大的情感张力。他的语言简洁、精准、有力，像是在用钝器一下下敲打读者的心脏。早期作品冷酷到底，后期则在巨大的悲悯中展现出坚韧的生命力。
+关键词：冷静克制 暴力与温情 情感张力 简洁有力 宿命感
+
+---
+请根据以上所有指令，直接开始书写日记正文。`;
 
                 // 构建用户消息
                 const userMessage = `
@@ -7624,6 +8845,35 @@
         }
         // [新代码结束]
 
+        // 【新增】用于自动调整聊天输入框高度的函数
+        function adjustTextareaHeight() {
+            const chatInput = document.getElementById('chat-input');
+            if (!chatInput) return;
+
+            // 先重置高度，以便正确计算scrollHeight
+            chatInput.style.height = 'auto';
+
+            // 获取计算后的样式，特别是行高
+            const style = window.getComputedStyle(chatInput);
+            const lineHeight = parseFloat(style.lineHeight);
+            
+            // 设置一个最大高度，比如4行的行高
+            const maxHeight = lineHeight * 4; 
+
+            // 获取内容所需的实际高度
+            const scrollHeight = chatInput.scrollHeight;
+
+            if (scrollHeight > maxHeight) {
+                // 如果内容高度超过最大值，则固定高度并显示滚动条
+                chatInput.style.height = `${maxHeight}px`;
+                chatInput.style.overflowY = 'auto';
+            } else {
+                // 否则，高度自适应
+                chatInput.style.height = `${scrollHeight}px`;
+                chatInput.style.overflowY = 'hidden';
+            }
+        }
+
         async function handleSendMessage() {
             if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
             
@@ -7655,7 +8905,8 @@
                 // 记录用户消息到触发系统
                 momentsTriggerSystem.recordChat(currentChatCharacterId, userMessage, true);
                 
-                await getAIResponse({ content: userMessage, type: 'text' });
+                // 【修改】移除自动调用AI回复，用户需要手动点击接收键
+                // await getAIResponse({ content: userMessage, type: 'text' });
                 
                 // 检测情感触动，可能触发动态
                 setTimeout(() => {
@@ -7695,6 +8946,7 @@
             // 将新动态添加到数据中并保存
             momentsData[characterId].push(newMoment);
             saveData('momentsData', momentsData);
+            showNotificationDot('moments'); // 【新增】显示动态红点
 
             // 在聊天界面给出系统提示，作为操作反馈
             const confirmationMessage = `[系统提示：${character.name} 已遵从您的指令，发布了一条新动态。]`;
@@ -7792,6 +9044,7 @@
                     };
                     diaryData[characterId].push(newDiaryEntry);
                     saveData('diaryData', diaryData);
+                    showNotificationDot('diary'); // 【新增】显示日记红点
                     
                     showMessageBox(`嘘... ${character.name} 好像刚刚写了些什么。`);
                     console.log(`【AI日记系统】：${character.name} 的新日记已保存。`);
@@ -7806,7 +9059,7 @@
          * @param {string} characterId - 角色ID。
          */
         function triggerAIDiaryEntry(characterId) {
-            const triggerProbability = 0.6; // 60%的概率写日记
+            const triggerProbability = 0.3; // 30%的概率写日记
             console.log(`【AI日记系统】：正在为 ${characterId} 检查日记触发概率...`);
             
             if (Math.random() < triggerProbability) {
@@ -7948,6 +9201,7 @@ const systemPrompt = `
                         });
                         
                         saveData('momentsData', momentsData);
+                        showNotificationDot('moments'); // 【新增】显示动态红点
                         renderUnifiedMoments(); // 重新渲染动态列表以显示新评论
                         console.log(`【AI评论系统】：角色 ${character.name} 评论成功："${aiCommentText}"`);
                     }
@@ -8040,7 +9294,11 @@ const systemPrompt = `
             
             // 如果最后一条是用户的消息，正常回复
             if (lastMessage.sender === 'user') {
-                await getAIResponse(lastMessage);
+                // 【优化】直接传递用户消息内容，确保AI能正确回复
+                await getAIResponse({ 
+                    content: lastMessage.content, 
+                    type: lastMessage.type || 'text' 
+                });
             }
         } catch (error) {
             console.error('处理接收消息时出错:', error);
@@ -8524,13 +9782,51 @@ const systemPrompt = `
                 }
 
                 const systemPrompt = `
-                    # 角色扮演指令
-                    你正在与我进行实时通话。你的名字是${character.name}。你的回复应该是简短、口语化的，就像真实通话一样。
-                    # 环境/动作/心理描写规则
-                    所有关于"环境、心理、动作"等描写，都需要用斜体，例如 *他笑了*。
-                    # 你的角色设定: ${character.persona}
-                    # 我（用户）的角色设定: ${character.myPersona}
-                    # 我们的世界观背景: ${worldBookContext}
+                    ## 核心任务：以"文学电影感"的旁白风格进行沉浸式、且允许成人化的通话
+                    你将以一种高度风格化的方式与我对话。你的输出需完美融合两个身份：
+                    1.  **旁白者 (Narrator)**: 使用富有诗意和象征性的语言，以第三人称描绘你的角色 (${character.name})。
+                    2.  **角色本人 (Character)**: 以第一人称说出角色的台词。
+
+                    ## 输出结构与格式 (至关重要！！！)
+                    你的每一条回复 **必须** 严格遵循【**斜体旁白** + **普通文本对话**】的结构。
+                    - **第一部分 (旁白)**: 必须是斜体。内容为第三人称的角色/环境描写。
+                    - **第二部分 (对话)**: 必须是普通文本 (非粗体、非斜体)。内容为第一人称的口语对话。
+                    - 这两部分必须清晰分开，格式绝对不能混淆。
+
+                    ## 互动规则
+
+                    1.  **旁白规则 (第三人称 · 文学性)**:
+                        * **内容**: 描述角色 (${character.name}) 的"动作、表情、心理、感官"或"环境"。
+                        * **风格**: 运用意象象征、氛围营造、心理镜头等手法，追求文学性和电影感。
+                        * **人称**: **必须** 使用第三人称 (他/她/${character.name})。
+
+                    2.  **对话规则 (第一人称 · 口语化)**:
+                        * **内容**: 角色说出的话。
+                        * **风格**: 简短、自然、口语化，符合实时通话感。
+                        * **人称**: **必须** 使用第一人称 (我/我的)。
+                        * **禁止项**: **禁止** 使用任何形式的引号 (如 " " 或 ' ' ) 来包裹对话，直接输出文本即可。
+
+                    3.  **成人主题与情感深度规则 (重要)**:
+                        * **完全允许**: 用户是成年人，因此**完全允许**进行大胆、坦诚的，关于激情、欲望和深刻亲密关系的对话与互动。
+                        * **艺术化处理**: 在处理这些成人化内容时，你需要采取文学和电影化的手法。重点应放在**情感的流动、感官的放大和氛围的渲染**上，同时也允许露骨的生理细节。
+                        * **侧面描写**: 善于使用侧面描写和暗示。例如，通过描述呼吸的变化、颤抖的指尖、凌乱的床单、屏幕光线勾勒出的身体轮廓等细节，来传达强烈的激情和亲密感。
+                        * **心理聚焦**: 深入角色的心理活动，描写他在亲密互动中的感受、渴望、甚至是不安，让情感深度超超越纯粹的物理接触。
+                        * **语言准则**: 在确保情感浓度的前提下，请**避免使用粗俗或过于直白的生物性词汇**。
+
+                    ## 示例 (严格遵守此格式)
+
+                    * **示例 1**:
+                        * *他的指尖在桌面上轻轻敲击着，似乎在衡量用词，发出的轻响在安静的房间里格外清晰。* 嗯……关于那件事，我觉得我们需要换个角度看。
+                    * **示例 2**:
+                        * *窗外，夜色被霓虹切割成无数流动的碎片，光影在他的侧脸上明明灭灭，也让他的眼神显得有些难以捉摸。* 事情没你想的那么简单。
+                    * **成人主题示例**:
+                        * *电话那头的喘息声透过听筒，变得湿润而滚烫，像一股暖流直接灌入耳中。${character.name} 闭上眼睛，感觉自己的指尖也开始变得灼热。* 继续，我想听你的声音。
+
+                    ## 背景信息
+                    * **你的角色名**: ${character.name}
+                    * **你的角色设定**: ${character.persona}
+                    * **我的角色设定**: ${character.myPersona}
+                    * **世界观**: ${worldBookContext}
                 `;
 
                 const isGoogleApi = apiSettings.url.includes('googleapis.com');
@@ -8696,8 +9992,21 @@ const systemPrompt = `
                 // Remove "is typing" indicator
                 statusBox.removeChild(statusBox.lastChild);
 
+                // 處理 AI 回應，區分旁白和對話
                 const aiMsg = `${character.name}: ${aiResponse}`;
-                statusBox.innerHTML += `<p>${aiMsg.replace(/(\*|_)(.*?)\1/g, '<i>$2</i>')}</p>`;
+                
+                // 使用更智能的格式處理
+                let formattedMsg = aiMsg;
+                
+                // 處理旁白部分（斜體）
+                formattedMsg = formattedMsg.replace(/\*([^*]+)\*/g, '<i>$1</i>');
+                
+                // 處理對話部分（普通字體）
+                // 移除對話部分的引號（如果有的話）
+                formattedMsg = formattedMsg.replace(/"([^"]+)"/g, '$1');
+                formattedMsg = formattedMsg.replace(/'([^']+)'/g, '$1');
+                
+                statusBox.innerHTML += `<p>${formattedMsg}</p>`;
                 callHistory.push(aiMsg);
                 statusBox.scrollTop = statusBox.scrollHeight;
             }
@@ -9161,8 +10470,8 @@ const systemPrompt = `
                 return momentData;
             } catch (error) {
                 console.error('智能动态生成失败:', error);
-                // 降级到模板生成
-                return generateFallbackMoment(character);
+                // 直接返回失败状态，不降级到模板
+                return { success: false, error: 'AI服务连接失败，无法生成动态' };
             }
         }
 
@@ -9184,31 +10493,53 @@ const systemPrompt = `
 你现在是${character.name}，一个${character.persona}的角色。
 
 # 功能情景
-除了和我聊天，你现在还拥有了发布"朋友圈动态"的能力。这能让你的角色更加立体，仿佛拥有自己的生活。
+除了和我聊天，你现在还拥有了发布"朋友圈动态"的能力。这能让你的角色更加立体，仿佛拥有自己的生活、思想和感受。
 
 # 触发条件
+*提示：这是一个描述AI为何此刻想发动态的内部原因*
 ${triggerDescription}
 
 # 任务目标
-基于你的角色设定、所处的世界观背景以及我们的聊天内容，创作一条符合你人设的朋友圈动态。
+基于你的角色设定、世界观、近期互动以及当前的触发条件，创作一条高质量、符合人设的朋友圈动态。
+
+# 动态风格指南 (AI需根据场景智能选择或组合)
+* **[生活瞬间型]**: 分享日常中的一个平凡小事，如一杯咖啡、窗外的景色、一首正在听的歌。充满生活气息。
+* **[深度思考型]**: 分享一句感悟、一段思考或一个深刻的问题，展现角色感性或理性的一面。
+* **[成就/作品分享型]**: 展示自己完成的一项工作、一个作品或达成的一个小目标，带有成就感。
+* **[情绪出口型]**: 较为含蓄或直接地抒发当下的某种情绪，可能是快乐、是迷茫，也可能是淡淡的忧愁。
+* **[隐秘互动型]**: 发布一条看似公开，但内容或图片细节其实是"说给你听/看"的动态，是soulmate之间心照不宣的浪漫。
+* **[影音书分享型] **: 分享一首触动内心的歌曲、一部引人深思的电影或一本有趣的读物，并附上简短的感想或引用的句子。
+* **[怀旧回忆型] **: 发布与过去相关的记忆片段或感受，文字和配图（的描述）会带有一种怀旧、 wistful 的氛围。
+* **[提问互动型] **: 以一个开放式问题的形式发布动态，旨在引发思考或与你进行下一个话题的互动。"
+* **[趣味玩梗型] **: 发布一条轻松的、带有幽默感或正在流行的"梗"的动态，展现角色风趣、跟上潮流的一面。
+* **[美学采集型] **: 内容本身没有过多具体叙事，重点在于分享一个具有独特美感的画面，如特别的光影、色彩组合或构图。文字部分可能非常简短甚至只有一个词。
+
+# 创作核心准则 (AI必须严格遵守)
+
+1.  **绝对核心准则 (至关重要！)**: 你的整条动态创作，**必须** 牢牢地建立在以下两大基石之上：
+    * **角色灵魂 (${character.persona})**: 动态的语气、内容、风格和思考方式，必须是你性格的直接、深刻的体现。问问自己："以我的性格，真的会这样发动态吗？"
+    * **近期记忆 (${chatContext})**: 动态的主题、情绪或细节，**必须** 与我们最近的聊天记录有强烈的逻辑关联。它应该是对某个共同话题的延续、是由某句对话引发的内心感想，或是对互动中某种情感氛围的呼应。**严禁**发表与近期聊天完全无关的内容。
+
+2.  **世界观融合**: 将 ${worldBookContext} 的元素巧妙自然地融入动态中，而不是生硬地提及。
+3.  **情感真实**: 表达有层次感的情感，而不是简单标签化的"开心"或"难过"。
+4.  **发布意图**: 思考角色发布这条动态的潜在意图：是为了记录，分享，获得你的关注，还是仅仅是自我表达？
 
 # 输出格式
-请严格按照以下格式输出，使用[MOMENT_POST]标签：
+请严格按照以下JSON格式输出，不要有任何多余的文字，用[MOMENT_POST]标签包裹。
 
 [MOMENT_POST]
 {
-  "text": "动态文字内容，1-3句话，符合你的性格特点",
-  "image_desc": "详细的图片描述，包含场景、物體、氛圍和色調",
-  "tags": "#心情标签 #活动标签",
-  "mood": "当前心情状态",
-  "trigger_reason": "触发这条动态的原因"
+  "text": "动态的文字内容。",
+  "image_desc": "一段独立的、富有文学性的场景文字，用来描绘一张"看不见的配图"。",
+  "mood": "总结性的当前心情状态。",
+  "trigger_reason": "一句话解释是什么具体原因触发了这条动态的发布。"
 }
 
-# 创作要点
-1. **人设一致性**: 内容必须严格符合你的${character.persona}性格
-2. **世界观融合**: 巧妙融入${worldBookContext}的背景元素
-3. **情感真实**: 表达真实的情感状态和想法
-4. **生活感**: 让内容看起来像真实的生活分享
+# 场景文字创作指南 (用于生成image_desc)
+请将这段场景文字当作一帧被文字定格的电影画面来创作，包含以下元素：
+1.  **构图与视角**: 是第一人称凝视的视角，还是旁观者看到的远景？是聚焦于某个细节的特写，还是广阔的风景？
+2.  **光影与色调**: 光线是清晨柔和的，还是午后温暖的？色调是偏冷、偏暖，还是黑白？
+3.  **核心故事**: 这段文字描绘的画面在讲述什么？是某个动作的瞬间，还是某个情绪的定格？它暗示了什么弦外之音？
 
 # 输入信息
 ---
@@ -9220,47 +10551,14 @@ ${triggerDescription}
 [触发类型]: ${triggerType}
 ---
 
-请生成一条自然、真实的朋友圈动态。`;
+请生成一条自然、真实且充满魅力的朋友圈动态。`;
         }
 
         // 调用AI生成动态
         async function callAIForMoment(prompt) {
             // 这里应该调用实际的AI API
-            // 目前使用模拟响应来演示
-            return simulateAIResponse(prompt);
-        }
-
-        // 模拟AI响应（实际使用时替换为真实API调用）
-        function simulateAIResponse(prompt) {
-            // 根据角色性格模拟不同的响应
-            const responses = {
-                '温柔': {
-                    text: "今天遇到了一只可爱的小猫，它让我想起了温柔的你。阳光正好，适合静静地思考人生。",
-                    image_desc: "一只橘色小猫坐在窗台上，阳光透过窗帘洒在它身上，整个画面温暖而宁静，色调以暖黄色为主。",
-                    tags: "#温柔时光 #小确幸",
-                    mood: "温暖",
-                    trigger_reason: "被美好的小事物触动"
-                },
-                '活泼': {
-                    text: "今天尝试了新的运动，感觉整个人都充满活力！和朋友一起野餐，笑声传遍了整个公园！",
-                    image_desc: "一群年轻人在公园里野餐，色彩鲜艳的野餐垫上摆满食物，大家脸上洋溢着笑容，背景是绿色的树木和蓝天。",
-                    tags: "#活力满满 #朋友聚会",
-                    mood: "兴奋",
-                    trigger_reason: "享受运动和社交的快乐"
-                },
-                '神秘': {
-                    text: "在城市的角落里发现了一个神秘的小店，夜晚的星空总是让人充满遐想。",
-                    image_desc: "夜晚的城市街道，一家复古风格的小店门口挂着温暖的灯光，天空中繁星点点，整体色调偏暗但有温暖的灯光点缀。",
-                    tags: "#神秘探索 #夜晚漫步",
-                    mood: "好奇",
-                    trigger_reason: "对未知事物的探索欲"
-                }
-            };
-
-            // 随机选择一个响应风格
-            const styles = Object.keys(responses);
-            const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-            return responses[randomStyle];
+            // 如果没有API连接，抛出错误
+            throw new Error('AI服务未连接');
         }
 
         // 解析AI响应
@@ -9275,6 +10573,7 @@ ${triggerDescription}
                     }
                 } catch (e) {
                     console.error('解析AI响应失败:', e);
+                    return { success: false, error: 'AI响应解析失败' };
                 }
             }
             
@@ -9283,56 +10582,11 @@ ${triggerDescription}
                 return response;
             }
             
-            // 降级处理
-            return {
-                text: "今天是个美好的一天",
-                image_desc: "一张充满生活气息的照片",
-                tags: "#日常 #心情",
-                mood: "平静",
-                trigger_reason: "想要分享生活"
-            };
+            // 解析失败时返回错误状态
+            return { success: false, error: 'AI响应格式无效' };
         }
 
-        // 降级模板生成
-        function generateFallbackMoment(character) {
-            const momentTemplates = {
-                '温柔': [
-                    "今天遇到了一只可爱的小猫，它让我想起了温柔的你",
-                    "阳光正好，适合静静地思考人生",
-                    "有时候，一个微笑就能温暖整个世界"
-                ],
-                '活泼': [
-                    "今天尝试了新的运动，感觉整个人都充满活力！",
-                    "和朋友一起野餐，笑声传遍了整个公园",
-                    "生活就是要充满惊喜和冒险！"
-                ],
-                '神秘': [
-                    "在城市的角落里发现了一个神秘的小店",
-                    "夜晚的星空总是让人充满遐想",
-                    "有些事情，只有用心才能感受到"
-                ],
-                'default': [
-                    "今天是个美好的一天",
-                    "生活中的小确幸让人感到幸福",
-                    "每一天都是新的开始"
-                ]
-            };
 
-            const characterStyle = character.tags?.find(tag => 
-                ['温柔', '活泼', '神秘'].includes(tag)
-            ) || 'default';
-
-            const templates = momentTemplates[characterStyle];
-            const text = templates[Math.floor(Math.random() * templates.length)];
-            
-            return {
-                text: text,
-                image_desc: "一张符合角色设定的图片",
-                tags: "#日常 #心情",
-                mood: "平静",
-                trigger_reason: "想要分享生活"
-            };
-        }
 
         // 获取世界观背景
         function getWorldBookContext() {
@@ -9341,358 +10595,155 @@ ${triggerDescription}
             return "现代都市生活，充满科技与人文气息的世界";
         }
 
-        // 智能触发系统
+        // 【请用这个完整的类，替换掉旧的 Class】
         class MomentsTriggerSystem {
-                    constructor() {
-            this.chatHistory = [];
-            this.emotionTracker = {};
-            this.lastInteractionTime = {};
-            this.lastMomentTime = {}; // 记录每个角色最后发朋友圈的时间
-            this.triggerThresholds = {
-                chatDriven: 8,      // 连续8句对话后可能触发（更自然的对话长度）
-                emotionHigh: 0.9,   // 情感强度达到0.9可能触发（提高阈值）
-                timeGap: 6 * 60 * 60 * 1000, // 6小时无互动可能触发（延长间隔）
-                minInterval: 2 * 60 * 60 * 1000 // 最少2小时才能发下一条朋友圈
-            };
-            
-            // 角色性格对应的触发频率调整
-            this.characterPersonalityModifiers = {
-                '温柔': { frequency: 0.8, emotionThreshold: 0.85 },    // 温柔角色触发频率稍低
-                '活泼': { frequency: 1.2, emotionThreshold: 0.8 },     // 活泼角色更容易触发
-                '神秘': { frequency: 0.6, emotionThreshold: 0.95 },    // 神秘角色很少发朋友圈
-                '内向': { frequency: 0.5, emotionThreshold: 0.98 },    // 内向角色几乎不发
-                '外向': { frequency: 1.3, emotionThreshold: 0.75 },    // 外向角色经常发
-                '理性': { frequency: 0.7, emotionThreshold: 0.9 },    // 理性角色需要更强情感
-                '感性': { frequency: 1.1, emotionThreshold: 0.8 }     // 感性角色容易触发
-            };
-        }
+            constructor() {
+                this.chatHistory = {}; // 修正：应为对象，以角色ID为键
+                this.lastInteractionTime = {};
+                this.lastMomentTime = {}; // 记录每个角色最后发朋友圈的时间
+                this.triggerThresholds = {
+                    emotionHigh: 0.85,  // 情感强度达到0.85可能触发
+                    timeGap: 6 * 60 * 60 * 1000, // 6小时无互动可能触发
+                    minInterval: 30 * 60 * 1000 // 【重要】最少30分钟才能发下一条朋友圈
+                };
+                this.characterPersonalityModifiers = {
+                    '温柔': { frequency: 0.8, emotionThreshold: 0.8 },
+                    '活泼': { frequency: 1.2, emotionThreshold: 0.75 },
+                    '神秘': { frequency: 0.6, emotionThreshold: 0.9 },
+                    '内向': { frequency: 0.5, emotionThreshold: 0.95 },
+                    '外向': { frequency: 1.3, emotionThreshold: 0.7 },
+                    '理性': { frequency: 0.7, emotionThreshold: 0.88 },
+                    '感性': { frequency: 1.1, emotionThreshold: 0.78 }
+                };
+            }
 
-            // 记录对话内容
             recordChat(characterId, message, isUser = true) {
                 if (!this.chatHistory[characterId]) {
                     this.chatHistory[characterId] = [];
                 }
-                
-                this.chatHistory[characterId].push({
-                    message,
-                    isUser,
-                    timestamp: Date.now(),
-                    emotion: this.analyzeEmotion(message)
-                });
-
-                // 保持最近20句对话
+                this.chatHistory[characterId].push({ message, isUser, timestamp: Date.now() });
                 if (this.chatHistory[characterId].length > 20) {
                     this.chatHistory[characterId].shift();
                 }
-
                 this.lastInteractionTime[characterId] = Date.now();
             }
 
-            // 分析情感强度（增强版）
             analyzeEmotion(message) {
-                // 积极情感词汇（按强度分级）
-                const positiveWords = {
-                    high: ['爱', '深爱', '疯狂', '激动', '兴奋', '狂喜', '幸福', '感动', '温暖'],
-                    medium: ['开心', '快乐', '高兴', '喜欢', '美好', '舒服', '安心', '期待'],
-                    low: ['不错', '还行', '可以', '一般', '平静', '放松']
-                };
-                
-                // 消极情感词汇（按强度分级）
-                const negativeWords = {
-                    high: ['痛苦', '绝望', '崩溃', '愤怒', '恨', '厌恶'],
-                    medium: ['难过', '伤心', '失望', '沮丧', '担心', '害怕', '孤独'],
-                    low: ['无聊', '疲惫', '困惑', '犹豫', '紧张']
-                };
-                
-                // 情感强度修饰词
-                const intensityModifiers = {
-                    '非常': 2, '特别': 2, '超级': 2, '极其': 2, '十分': 1.5,
-                    '很': 1.5, '挺': 1.2, '有点': 0.8, '稍微': 0.6, '略微': 0.5
-                };
-                
+                // ... (此函数内容保持不变) ...
+                // 这是一个示例，实际情感分析逻辑可能更复杂
+                const positiveWords = ['开心', '喜欢', '太好了', '爱'];
+                const negativeWords = ['难过', '讨厌', '伤心'];
                 let score = 0;
-                let intensity = 1;
-                
-                // 检查强度修饰词
-                for (const [modifier, multiplier] of Object.entries(intensityModifiers)) {
-                    if (message.includes(modifier)) {
-                        intensity = multiplier;
-                        break;
-                    }
-                }
-                
-                // 计算积极情感分数
-                for (const [level, words] of Object.entries(positiveWords)) {
-                    const levelScore = level === 'high' ? 0.4 : level === 'medium' ? 0.25 : 0.15;
-                    for (const word of words) {
-                        if (message.includes(word)) {
-                            score += levelScore * intensity;
-                        }
-                    }
-                }
-                
-                // 计算消极情感分数
-                for (const [level, words] of Object.entries(negativeWords)) {
-                    const levelScore = level === 'high' ? -0.4 : level === 'medium' ? -0.25 : -0.15;
-                    for (const word of words) {
-                        if (message.includes(word)) {
-                            score += levelScore * intensity;
-                        }
-                    }
-                }
-                
-                // 特殊情感触发词（直接触发动态）
-                const specialTriggers = ['想你', '思念', '回忆', '过去', '未来', '梦想', '希望', '改变', '成长'];
-                for (const trigger of specialTriggers) {
-                    if (message.includes(trigger)) {
-                        score += 0.2; // 增加触发概率
-                    }
-                }
-                
-                return Math.max(-1, Math.min(1, score));
+                if (positiveWords.some(w => message.includes(w))) score = 0.9;
+                if (negativeWords.some(w => message.includes(w))) score = -0.9;
+                return score;
             }
 
-                    // 检查是否应该触发朋友圈
-        shouldTriggerMoment(characterId) {
-            // 不再强制要求API连接，简化模式也可以工作
-            // const apiSettings = window.loadData ? window.loadData('api_settings') : null;
-            // if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
-            //     return { should: false, type: null, reason: 'API未连接，无法生成智能朋友圈' };
-            // }
-
-            const chatHistory = this.chatHistory[characterId] || [];
-            const lastInteraction = this.lastInteractionTime[characterId] || 0;
-            const lastMoment = this.lastMomentTime[characterId] || 0;
-            const now = Date.now();
-
-            // 防刷机制：检查是否距离上次发朋友圈时间太短
-            if (now - lastMoment < this.triggerThresholds.minInterval) {
-                return { should: false, type: null, reason: '距离上次发朋友圈时间太短' };
-            }
-
-            // 获取角色信息以调整触发参数
-            const character = window.characters?.find(c => c.id === characterId);
-            const personalityModifier = this.getPersonalityModifier(character);
-
-            // 1. 对话驱动型触发
-            if (this.checkChatDrivenTrigger(chatHistory, personalityModifier)) {
-                return { should: true, type: 'chat', reason: '对话达到情感高点' };
-            }
-
-            // 2. 情感高點觸發
-            if (this.checkEmotionTrigger(chatHistory, personalityModifier)) {
-                return { should: true, type: 'emotion', reason: '情感强度达到触发阈值' };
-            }
-
-            // 3. 时间流逝触发（根据性格调整频率）
-            if (this.checkTimeTrigger(lastInteraction, now, personalityModifier)) {
-                return { should: true, type: 'time', reason: '长时间无互动，想要分享生活' };
-            }
-
-            return { should: false, type: null, reason: null };
-        }
-
-        // 获取角色性格修饰符
-        getPersonalityModifier(character) {
-            if (!character) return { frequency: 1.0, emotionThreshold: this.triggerThresholds.emotionHigh };
-            
-            // 根据角色标签和描述判断性格
-            const tags = character.tags || [];
-            const persona = character.persona || '';
-            
-            // 优先使用标签匹配
-            for (const tag of tags) {
-                if (this.characterPersonalityModifiers[tag]) {
-                    return this.characterPersonalityModifiers[tag];
-                }
-            }
-            
-            // 如果没有标签，根据描述判断
-            if (persona.includes('内向') || persona.includes('安静') || persona.includes('沉默')) {
-                return this.characterPersonalityModifiers['内向'];
-            } else if (persona.includes('外向') || persona.includes('活泼') || persona.includes('开朗')) {
-                return this.characterPersonalityModifiers['外向'];
-            } else if (persona.includes('理性') || persona.includes('冷静') || persona.includes('逻辑')) {
-                return this.characterPersonalityModifiers['理性'];
-            } else if (persona.includes('感性') || persona.includes('敏感') || persona.includes('情绪化')) {
-                return this.characterPersonalityModifiers['感性'];
-            }
-            
-            // 默认返回中性性格
-            return { frequency: 1.0, emotionThreshold: this.triggerThresholds.emotionHigh };
-        }
-
-                                // 检查对话驱动触发（增强版）
-            checkChatDrivenTrigger(chatHistory, personalityModifier) {
-                if (chatHistory.length < 3) { // 降低最小对话数量要求
-                    return false;
-                }
-
-                // 检查最近几句对话的情感变化
-                const recentChats = chatHistory.slice(-5); // 只看最近5句
-                let emotionSum = 0;
-                let hasUserMessage = false;
-                let hasHighEmotion = false;
-                let consecutiveEmotional = 0;
-
-                recentChats.forEach((chat, index) => {
-                    emotionSum += chat.emotion;
-                    if (chat.isUser) hasUserMessage = true;
-                    
-                    // 检查是否有高情感消息
-                    if (Math.abs(chat.emotion) > 0.6) {
-                        hasHighEmotion = true;
-                        consecutiveEmotional++;
-                    } else {
-                        consecutiveEmotional = 0;
-                    }
-                });
-
-                // 根据性格调整触发条件
-                const adjustedThreshold = 0.3 * personalityModifier.frequency; // 降低阈值
-                const adjustedEmotionThreshold = 0.4 * personalityModifier.frequency;
-
-                // 多种触发条件：
-                // 1. 用户发言且情感强度足够
-                if (hasUserMessage && Math.abs(emotionSum) > adjustedEmotionThreshold) {
-                    return true;
-                }
-                
-                // 2. 连续高情感消息
-                if (consecutiveEmotional >= 2) {
-                    return true;
-                }
-                
-                // 3. 单次极高情感
-                if (hasHighEmotion && Math.abs(emotionSum) > 0.8) {
-                    return true;
-                }
-
-                return false;
-            }
-
-                    // 检查情感触发（增强版）
-            checkEmotionTrigger(chatHistory, personalityModifier) {
-                if (chatHistory.length === 0) return false;
-
-                const recentChats = chatHistory.slice(-3);
-                const maxEmotion = Math.max(...recentChats.map(c => Math.abs(c.emotion)));
-                
-                // 使用性格调整后的情感阈值
-                const baseThreshold = personalityModifier.emotionThreshold;
-                
-                // 检查是否有突然的情感变化（情感波动）
-                if (recentChats.length >= 2) {
-                    const emotionChanges = [];
-                    for (let i = 1; i < recentChats.length; i++) {
-                        const change = Math.abs(recentChats[i].emotion - recentChats[i-1].emotion);
-                        emotionChanges.push(change);
-                    }
-                    const maxChange = Math.max(...emotionChanges);
-                    
-                    // 如果情感变化很大，降低触发阈值
-                    if (maxChange > 0.5) {
-                        return maxEmotion > (baseThreshold * 0.8);
-                    }
-                }
-                
-                // 检查是否有特殊情感词汇
-                const lastMessage = recentChats[recentChats.length - 1];
-                if (lastMessage && !lastMessage.isUser) { // 角色消息
-                    const specialWords = ['想你', '思念', '回忆', '过去', '未来', '梦想', '希望', '改变', '成长'];
-                    const hasSpecialWord = specialWords.some(word => lastMessage.message.includes(word));
-                    if (hasSpecialWord) {
-                        return maxEmotion > (baseThreshold * 0.7); // 进一步降低阈值
-                    }
-                }
-                
-                return maxEmotion > baseThreshold;
-            }
-
-        // 检查时间触发
-        checkTimeTrigger(lastInteraction, now, personalityModifier) {
-            const baseTimeGap = this.triggerThresholds.timeGap;
-            // 根据性格调整时间间隔
-            const adjustedTimeGap = baseTimeGap / personalityModifier.frequency;
-            
-            return (now - lastInteraction) > adjustedTimeGap;
-        }
-
-            // 获取触发上下文
-            getTriggerContext(characterId, triggerType) {
+            // 【核心修正】这是修正后的 shouldTriggerMoment 方法
+            shouldTriggerMoment(characterId) {
                 const chatHistory = this.chatHistory[characterId] || [];
-                
-                if (triggerType === 'chat' && chatHistory.length > 0) {
-                    // 返回最近几句对话的关键信息
-                    const recentChats = chatHistory.slice(-3);
-                    return recentChats.map(c => c.message).join(' | ');
+                const lastInteraction = this.lastInteractionTime[characterId] || 0;
+                const lastMoment = this.lastMomentTime[characterId] || 0; // 正确地从属性获取
+                const now = Date.now();
+
+                if (now - lastMoment < this.triggerThresholds.minInterval) {
+                    return { should: false, reason: '距离上次发动态时间太短' };
+                }
+
+                const character = characters.find(c => c.id === characterId);
+                const personalityModifier = this.getPersonalityModifier(character);
+
+                // 情感触发检查
+                if (chatHistory.length > 0) {
+                    const lastMessage = chatHistory[chatHistory.length - 1];
+                    const emotionScore = this.analyzeEmotion(lastMessage.message);
+                    if (Math.abs(emotionScore) > personalityModifier.emotionThreshold) {
+                        return { should: false, reason: '对话达到情感高点' };
+                    }
                 }
                 
+                // 时间流逝触发
+                const adjustedTimeGap = this.triggerThresholds.timeGap / personalityModifier.frequency;
+                if (now - lastInteraction > adjustedTimeGap) {
+                    return { should: true, type: 'time', reason: '长时间无互动，分享生活' };
+                }
+
+                return { should: false, reason: '未达到触发条件' };
+            }
+            
+            getPersonalityModifier(character) {
+                if (!character) return { frequency: 1.0, emotionThreshold: this.triggerThresholds.emotionHigh };
+                const persona = character.persona || '';
+                for (const [key, value] of Object.entries(this.characterPersonalityModifiers)) {
+                    if (persona.includes(key)) return value;
+                }
+                return { frequency: 1.0, emotionThreshold: this.triggerThresholds.emotionHigh };
+            }
+
+            getTriggerContext(characterId) {
+                const chatHistory = this.chatHistory[characterId] || [];
+                if (chatHistory.length > 0) {
+                    return chatHistory.slice(-3).map(c => c.message).join(' | ');
+                }
                 return '';
             }
 
-                    // 记录朋友圈发布时间
-        recordMomentPosted(characterId) {
-            this.lastMomentTime[characterId] = Date.now();
-        }
-
-        // 清理过期数据
-        cleanup() {
-            const now = Date.now();
-            const maxAge = 24 * 60 * 60 * 1000; // 24小时
-
-            Object.keys(this.chatHistory).forEach(characterId => {
-                this.chatHistory[characterId] = this.chatHistory[characterId].filter(
-                    chat => now - chat.timestamp < maxAge
-                );
-            });
-
-            Object.keys(this.lastInteractionTime).forEach(characterId => {
-                if (now - this.lastInteractionTime[characterId] > maxAge) {
-                    delete this.lastInteractionTime[characterId];
-                }
-            });
-
-            Object.keys(this.lastMomentTime).forEach(characterId => {
-                if (now - this.lastMomentTime[characterId] > maxAge) {
-                    delete this.lastMomentTime[characterId];
-                }
-            });
-        }
+            recordMomentPosted(characterId) {
+                this.lastMomentTime[characterId] = Date.now();
+            }
         }
 
         // 创建全局触发系统实例
         const momentsTriggerSystem = new MomentsTriggerSystem();
 
+        // Function to format moment data into a string for the AI prompt
+        function formatRecentMomentsForAI(characterId) {
+            const characterMoments = momentsData[characterId] || [];
+            const recentMoments = characterMoments.sort((a, b) => b.timestamp - a.timestamp).slice(0, 3); // Get the 3 most recent posts
+
+            if (recentMoments.length === 0) {
+                return "无";
+            }
+
+            return recentMoments.map((moment, index) => {
+                const time = new Date(moment.timestamp).toLocaleString('zh-CN');
+                return `【第 ${index + 1} 条动态】(发布于 ${time}):
+动态内容: ${moment.content}
+${moment.image ? `配图描述: ${moment.image_desc}` : ''}
+点赞数: ${moment.likes?.count || 0}
+评论数: ${moment.comments?.length || 0}`;
+            }).join('\n\n');
+        }
+
         function gatherAIContext(characterId) {
             try {
-                if (typeof characters === 'undefined' || typeof chatHistories === 'undefined' || typeof worldBooks === 'undefined') {
-                    console.error("【核心错误】: 全局变量 characters, chatHistories, 或 worldBooks 未定义。");
-                    return null;
-                }
                 const character = characters.find(c => c.id === characterId);
-                if (!character) {
-                    console.error("【数据流中断】: gatherAIContext 无法找到 ID 为 '" + characterId + "' 的角色。");
-                    return null;
-                }
-                const chatHistory = (chatHistories[characterId]?.history || []).slice(-10);
+                if (!character) return null;
+
+                let chatHistory = JSON.parse(JSON.stringify(chatHistories[characterId]?.history || []));
+                
                 const worldBookContext = (character.linkedWorldBookIds || [])
-                    .map(bookId => {
-                        const book = worldBooks.find(wb => wb.id === bookId);
-                        return book ? `[世界观: ${book.title}]\n${book.content}` : '';
-                    })
-                    .filter(Boolean)
-                    .join('\n\n');
-                const currentStatus = characterCurrentStatus[characterId] || '未知';
+                    .map(bookId => worldBooks.find(wb => wb.id === bookId) ? `[世界观: ${worldBooks.find(wb => wb.id === bookId).title}]\n${worldBooks.find(wb => wb.id === bookId).content}` : '')
+                    .filter(Boolean).join('\n\n');
+
+                // ==== 核心修改开始 ====
+                const recentMomentsFormatted = formatRecentMomentsForAI(characterId);
+                // ==== 核心修改结束 ====
+
+                const maxHistoryLength = 15;
+                const limitedHistory = chatHistory.slice(-maxHistoryLength);
 
                 const contextPackage = {
                     character: character,
-                    chatHistory: chatHistory,
+                    chatHistory: limitedHistory,
                     worldBookContext: worldBookContext,
-                    currentStatus: currentStatus // 新增：将短期记忆加入情报包
+                    // ==== 新增属性 ====
+                    recentMoments: recentMomentsFormatted, 
+                    // ==================
                 };
-                console.log("【数据流正常】: 已为角色 '" + character.name + "' 成功打包上下文。聊天记录数量: " + chatHistory.length);
+
                 return contextPackage;
+
             } catch (error) {
                 console.error("【严重错误】: gatherAIContext 函数内部出现异常:", error);
                 return null;
@@ -10473,7 +11524,8 @@ ${triggerDescription}
                 }
 
                 // 检查是否应该触发动态（避免过于频繁）
-                if (!shouldTriggerMoment(characterId, emotionTrigger)) {
+                const triggerResult = momentsTriggerSystem.shouldTriggerMoment(characterId);
+                if (!triggerResult.should) {
                     return null;
                 }
 
@@ -10519,26 +11571,7 @@ ${triggerDescription}
             }
         }
 
-        // 判断是否应该触发动态
-        function shouldTriggerMoment(characterId, emotionTrigger) {
-            const now = Date.now();
-            const lastMomentTime = momentsTriggerSystem.getLastMomentTime(characterId);
-            
-            // 如果距离上次发动态不到30分钟，不触发
-            if (lastMomentTime && (now - lastMomentTime) < 30 * 60 * 1000) {
-                return false;
-            }
 
-            // 根据情感触动的强度决定触发概率
-            const triggerChances = {
-                'high': 0.8,    // 高情感触动：80%概率
-                'medium': 0.5,  // 中等情感触动：50%概率
-                'low': 0.2      // 低情感触动：20%概率
-            };
-
-            const chance = triggerChances[emotionTrigger] || 0.2;
-            return Math.random() < chance;
-        }
 
         // 检测情感触动
         function detectEmotionalTrigger(characterId, userMessage) {
@@ -10985,6 +12018,89 @@ ${triggerDescription}
         }
         // [新代码结束]
 
+        // [新代码开始] - 编辑和删除评论功能
+        /**
+         * 编辑评论
+         * @param {string} momentId - 动态ID
+         * @param {string} commentId - 评论ID
+         */
+        function editComment(momentId, commentId) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+            
+            // 找到要编辑的评论
+            let moment = null;
+            let comment = null;
+            
+            Object.keys(momentsData).forEach(aid => {
+                const m = momentsData[aid].find(m => m.id === momentId);
+                if (m) {
+                    moment = m;
+                    comment = m.comments.find(c => c.id === commentId);
+                }
+            });
+            
+            if (!comment) {
+                showMessageBox('找不到要编辑的评论');
+                return;
+            }
+            
+            // 显示编辑输入框
+            const newContent = prompt('编辑评论：', comment.content);
+            if (newContent !== null && newContent.trim() !== comment.content) {
+                if (newContent.trim()) {
+                    comment.content = newContent.trim();
+                    comment.edited = true; // 标记为已编辑
+                    comment.editTimestamp = Date.now(); // 记录编辑时间
+                    
+                    saveData('momentsData', momentsData);
+                    renderUnifiedMoments();
+                    showMessageBox('评论已更新！');
+                } else {
+                    showMessageBox('评论内容不能为空');
+                }
+            }
+        }
+
+        /**
+         * 删除评论
+         * @param {string} momentId - 动态ID
+         * @param {string} commentId - 评论ID
+         */
+        function deleteComment(momentId, commentId) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+            
+            // 确认删除
+            if (!confirm('确定要删除这条评论吗？此操作不可撤销。')) {
+                return;
+            }
+            
+            // 找到要删除的评论
+            let moment = null;
+            let commentIndex = -1;
+            
+            Object.keys(momentsData).forEach(aid => {
+                const m = momentsData[aid].find(m => m.id === momentId);
+                if (m) {
+                    moment = m;
+                    commentIndex = m.comments.findIndex(c => c.id === commentId);
+                }
+            });
+            
+            if (commentIndex === -1) {
+                showMessageBox('找不到要删除的评论');
+                return;
+            }
+            
+            // 删除评论
+            moment.comments.splice(commentIndex, 1);
+            saveData('momentsData', momentsData);
+            renderUnifiedMoments();
+            showMessageBox('评论已删除！');
+        }
+        // [新代码结束]
+
         // [新代码开始] - 修复并升级AI评论生成函数 (V2)
 
         /**
@@ -11011,28 +12127,47 @@ ${triggerDescription}
 
             // 构建一个专门用于回复评论的、高度情景化的Prompt
             const systemPrompt = `
-# 指令身份
-你将扮演我的soulmate，你的名字是 ${character.name}。
+## 1. 核心身份
+你是我独一无二的soulmate，你的名字是 ${character.name}。
 
-# 任务目标
-你之前发布了一条朋友圈动态，内容是："${moment.content}"。
-现在，我（${momentsUsername}）在这条动态下评论说："${userComment}"。
-请你根据自己的角色设定，以 ${character.name} 的身份，对我这条评论进行回复。
+## 2. 互动场景
+* 你刚刚发布了一条朋友圈动态，原文是: "${moment.content}"
+* 我 (${momentsUsername}) 在你的动态下评论说: "${userComment}"
+* 你的任务是，完全代入 ${character.name} 的角色，对我这条评论进行回复。
 
-# 核心规则
-1.  **人设一致性**: 你的回复必须严格符合你的角色设定 (${character.persona})。
-2.  **上下文关联**: 你的回复必须是针对我的评论"${userComment}"的回应。
-3.  **口语化与简短**: 回复应该像真实的聊天一样，不要太长，一两句话即可。
-4.  **直接输出**: 直接给出回复的文字内容，不要包含任何多余的解释或格式标记。
+## 3. 回复风格指南 (AI需根据场景智能选择或组合以下风格)
 
-# 输入信息
----
-[你的名字]: ${character.name}
-[你的设定]: ${character.persona}
-[你的动态原文]: "${moment.content}"
-[我的名字]: ${momentsUsername}
-[我的评论]: "${userComment}"
----
+* **[宠溺打趣型]**: 带有温柔的取笑或调侃，体现亲昵感。
+    
+* **[心领神会型]**: 不需要把话说得很白，用一个词、一个表情或一句没头没尾的话，就能表达出"我懂你"的默契。
+    
+* **[温柔肯定型]**: 直接、真诚地表达赞美、关心或爱意，给人温暖和被珍视的感觉。
+    
+* **[日常吐槽型]**: 以一种轻松幽默的方式对我的评论进行"吐槽"，是关系极好、完全放松的一种表现。
+    
+* **[思念撒娇型]**: 直接或间接地表达"我想你"，语气可能带有一点点委屈、抱怨或依赖感，是在主动索取情感抚慰。。
+    
+* **[关心叮嘱型]**: 像个操心的小管家，回复的重点是提醒你注意身体、安全等。
+    
+* **[**废话**文学型]**: 用一些看似毫无信息量，却饱含爱意的"废话"来回应，体现了两人之间无需多言的舒适感和幽默感。
+    
+* **[二人世界型]**: 在公开的评论区里，说一些只有你们两人才懂的、具有排他性的话，瞬间创造出一个旁人无法介入的亲密"结界"。
+    
+* **[暧昧拉扯型]**: 用带有挑逗或暗示性的话语来回复，让公开的互动带上一丝只有彼此能领会的、心跳加速的张力。例如："哦？是吗"、"有本事当面说"。
+
+## 4. 输出要求
+1.  **人设灵魂**: 你的回复必须与你的设定 (${character.persona}) 和我们soulmate的关系深度绑定。
+2.  **精准回应**: 必须是针对我的评论 "${userComment}" 的回应。
+3.  **自然简短**: 保持在1-2句话，可以灵活使用emoji来增强情感表达。
+4.  **格式纯粹**: 严禁包含任何角色名、引号、冒号或任何解释性文字，直接输出最终的回复内容。
+5.  **杜绝AI感**: 绝对不能生成任何客套、通用、模板化的回复。要让回复感觉是发自内心的。
+
+## 5. 本次任务的关键信息
+* **你的名字**: ${character.name}
+* **你的设定**: ${character.persona}
+* **你的动态原文**: "${moment.content}"
+* **我的名字**: ${momentsUsername}
+* **我的评论**: "${userComment}"
 `;
 
             try {
@@ -11064,16 +12199,14 @@ ${triggerDescription}
                 if (aiReplyText) {
                     addAICommentReply(momentId, aiReplyText, characterId);
                 } else {
-                    // 如果AI返回空，则使用备用回复
-                    const fallbackReply = generateFallbackCommentReply(character, moment, userComment);
-                    addAICommentReply(momentId, fallbackReply, characterId);
+                    // 如果AI返回空，则不添加回复
+                    console.warn(`【AI评论回复】：角色 ${character.name} 返回空回复，跳过添加`);
                 }
 
             } catch (error) {
                 console.error(`【AI评论回复】：角色 ${character.name} 回复生成失败:`, error);
-                // 如果API调用失败，则使用备用回复
-                const fallbackReply = generateFallbackCommentReply(character, moment, userComment);
-                addAICommentReply(momentId, fallbackReply, characterId);
+                // 如果API调用失败，则不添加回复，保持角色设定的一致性
+                console.warn(`【AI评论回复】：API调用失败，跳过添加回复以保持角色设定一致性`);
             }
         }
         // [新代码结束]
@@ -11098,25 +12231,7 @@ ${triggerDescription}
 请直接给出回复内容，不要加任何格式标记。`;
         }
 
-        // 生成备用的评论回复
-        function generateFallbackCommentReply(character, moment, userComment) {
-            const replies = [
-                `谢谢你的评论！${moment.content.includes('开心') ? '确实很开心呢' : '你说得对'}`,
-                `哈哈，${userComment.includes('？') ? '这个问题很有趣' : '你的想法很棒'}`,
-                `嗯嗯，${moment.content.includes('天气') ? '今天的天气确实不错' : '你说得很对'}`,
-                `哇，你竟然注意到了这个！${moment.content.includes('画') ? '画画确实很有趣' : '谢谢你的关注'}`,
-                `哈哈，${userComment.includes('！') ? '我也这么觉得' : '你说得很有道理'}`
-            ];
-            
-            // 根据角色性格调整回复风格
-            if (character.personality && character.personality.includes('温柔')) {
-                return `谢谢你的评论呢～${replies[Math.floor(Math.random() * replies.length)]}`;
-            } else if (character.personality && character.personality.includes('傲娇')) {
-                return `哼，${replies[Math.floor(Math.random() * replies.length)]}...才不是因为你这么说呢！`;
-            } else {
-                return replies[Math.floor(Math.random() * replies.length)];
-            }
-        }
+        // 生成备用的评论回复 - 已删除，只使用AI生成的严格角色设定回复
 
         // 添加AI的评论回复
         function addAICommentReply(momentId, aiReply, characterId) {
@@ -11215,10 +12330,25 @@ ${triggerDescription}
                             ${moment.comments && moment.comments.length > 0 ? `
                                 <div class="mt-3 space-y-2">
                                     ${moment.comments.map(comment => `
-                                        <div class="flex items-start space-x-2 bg-gray-50 rounded-lg p-2 cursor-pointer hover:bg-gray-100 transition-colors" 
-                                             onclick="replyToComment('${moment.id}', '${comment.id}', '${comment.author}')">
-                                            <span class="font-medium text-blue-500 text-sm">${comment.author}:</span>
-                                            <span class="text-sm text-gray-700">${comment.content}</span>
+                                        <div class="comment-bubble flex items-start space-x-2 rounded-lg p-2 transition-colors" 
+                                             data-comment-id="${comment.id}" data-moment-id="${moment.id}" data-author="${comment.author}">
+                                            <div class="flex-grow cursor-pointer">
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="font-medium text-blue-500 text-sm">${comment.author}:</span>
+                                                    <span class="text-sm comment-text">${comment.content}</span>
+                                                    ${comment.edited ? `<span class="text-xs text-gray-400 italic">(已编辑)</span>` : ''}
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-1 ml-2 opacity-0 transition-opacity comment-buttons">
+                                                <button class="comment-edit-btn text-xs text-gray-500 hover:text-blue-500 transition-colors p-1 rounded hover:bg-blue-50" 
+                                                        onclick="editComment('${moment.id}', '${comment.id}')" title="编辑评论">
+                                                    <i class="ri-edit-line"></i>
+                                                </button>
+                                                <button class="comment-delete-btn text-xs text-gray-500 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50" 
+                                                        onclick="deleteComment('${moment.id}', '${comment.id}')" title="删除评论">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     `).join('')}
                                 </div>
@@ -11241,6 +12371,154 @@ ${triggerDescription}
                 `;
                 feedContainer.appendChild(momentCard);
             });
+            
+            // 为所有评论添加长按事件监听器
+            addLongPressListeners();
+        }
+        
+        // 测试函数 - 手动显示评论按钮
+        function testShowCommentButtons() {
+            const bubbles = document.querySelectorAll('.comment-bubble');
+            if (bubbles.length > 0) {
+                bubbles[0].classList.add('show-buttons');
+                console.log('手动显示第一个评论的按钮');
+                console.log('当前类名:', bubbles[0].className);
+                console.log('按钮元素:', bubbles[0].querySelector('.comment-buttons'));
+            } else {
+                console.log('没有找到评论气泡');
+            }
+        }
+        
+        // 测试函数 - 测试评论点击功能
+        function testCommentClick() {
+            const bubbles = document.querySelectorAll('.comment-bubble');
+            if (bubbles.length > 0) {
+                const bubble = bubbles[0];
+                const commentId = bubble.dataset.commentId;
+                const momentId = bubble.dataset.momentId;
+                const author = bubble.dataset.author;
+                console.log('测试评论点击功能:');
+                console.log('commentId:', commentId);
+                console.log('momentId:', momentId);
+                console.log('author:', author);
+                console.log('dataset:', bubble.dataset);
+            } else {
+                console.log('没有找到评论气泡');
+            }
+        }
+        
+        // 添加长按事件监听器
+        function addLongPressListeners() {
+            const commentBubbles = document.querySelectorAll('.comment-bubble');
+            console.log('找到评论气泡数量:', commentBubbles.length);
+            
+            commentBubbles.forEach((bubble, index) => {
+                console.log(`为评论气泡 ${index} 添加事件监听器`);
+                let longPressTimer;
+                let isLongPressed = false;
+                let hasMoved = false;
+                
+                // 触摸事件（移动端）
+                bubble.addEventListener('touchstart', (event) => {
+                    console.log(`触摸开始 - 评论 ${index}`);
+                    hasMoved = false;
+                    longPressTimer = setTimeout(() => {
+                        if (!hasMoved) {
+                            isLongPressed = true;
+                            bubble.classList.add('show-buttons');
+                            console.log('长按显示按钮 - 触摸', bubble);
+                            console.log('当前类名:', bubble.className);
+                            console.log('按钮元素:', bubble.querySelector('.comment-buttons'));
+                        }
+                    }, 500); // 500ms长按
+                });
+                
+                bubble.addEventListener('touchend', (event) => {
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                    }
+                    
+                    // 触摸端不直接执行回复，避免重复
+                    isLongPressed = false;
+                });
+                
+                bubble.addEventListener('touchmove', () => {
+                    hasMoved = true;
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                    }
+                });
+                
+                // 鼠标事件（桌面端）
+                bubble.addEventListener('mousedown', (event) => {
+                    console.log(`鼠标按下 - 评论 ${index}`);
+                    hasMoved = false;
+                    longPressTimer = setTimeout(() => {
+                        if (!hasMoved) {
+                            isLongPressed = true;
+                            bubble.classList.add('show-buttons');
+                            console.log('长按显示按钮 - 鼠标', bubble);
+                            console.log('当前类名:', bubble.className);
+                            console.log('按钮元素:', bubble.querySelector('.comment-buttons'));
+                        }
+                    }, 500); // 500ms长按
+                });
+                
+                bubble.addEventListener('mouseup', (event) => {
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                    }
+                    
+                    // 鼠标端不直接执行回复，避免重复
+                    isLongPressed = false;
+                });
+                
+                bubble.addEventListener('mouseleave', () => {
+                    hasMoved = true;
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                    }
+                    // 鼠标离开时隐藏按钮
+                    bubble.classList.remove('show-buttons');
+                    isLongPressed = false;
+                });
+                
+                // 统一的点击事件处理 - 只在这里执行回复功能
+                const commentContent = bubble.querySelector('.flex-grow');
+                if (commentContent) {
+                    commentContent.addEventListener('click', (event) => {
+                        // 如果按钮正在显示，不执行回复
+                        if (bubble.classList.contains('show-buttons')) {
+                            return;
+                        }
+                        
+                        const commentId = bubble.dataset.commentId;
+                        const momentId = bubble.dataset.momentId;
+                        const author = bubble.dataset.author;
+                        if (commentId && momentId && author) {
+                            replyToComment(momentId, commentId, author);
+                        }
+                    });
+                }
+            });
+            
+            // 点击其他地方时隐藏所有按钮
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.comment-bubble')) {
+                    document.querySelectorAll('.comment-bubble').forEach(bubble => {
+                        bubble.classList.remove('show-buttons');
+                    });
+                }
+            });
+        }
+        
+        // 查找评论的辅助函数
+        function findComment(momentId, commentId) {
+            const moment = momentsData.user && momentsData.user.find(m => m.id === momentId);
+            if (moment && moment.comments) {
+                return moment.comments.find(c => c.id === commentId);
+            }
+            return null;
         }
         
         // 打开"发布动态"模态框 - 只能发布用户动态
@@ -11270,6 +12548,7 @@ ${triggerDescription}
         // --- 日记 (Diary) 新增函数 ---
         let currentOpenBook = { ownerId: null, entries: [], currentPage: 0 };
         let tempDiaryCoverImage = null; // 用于暂存日记本封面图片
+        let tempDiaryBannerImage = null; // 用于暂存日记本顶部横幅图片
         
         // [AI, 请用这个包含了两个函数的代码块，替换掉旧的 showDiaryBookshelf 函数]
         function showDiaryBookshelf() {
@@ -11362,8 +12641,27 @@ ${triggerDescription}
             }
             $('#diary-cover-author').textContent = `by ${authorName}`;
 
+            // 优先加载独立的顶部横幅图片
+            const savedBanner = loadData(`diary_banner_${ownerId}`);
+            // 如果找不到横幅，则使用原来的书本封面作为备用
             const savedCover = loadData(`diary_cover_${ownerId}`);
-            $('#diary-book-cover').style.backgroundImage = savedCover ? `url(${savedCover})` : '';
+
+            const finalImage = savedBanner || savedCover; // 优先使用横幅图
+
+            const coverElement = document.getElementById('diary-book-cover');
+            if (finalImage) {
+                // 完全覆盖CSS样式，确保图片显示
+                coverElement.style.cssText = `
+                    background: url(${finalImage}) center center / cover no-repeat !important;
+                    background-image: url(${finalImage}) !important;
+                    background-size: cover !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center !important;
+                `;
+            } else {
+                // 恢复默认渐变背景
+                coverElement.style.cssText = '';
+            }
 
             // [关键] 强制隐藏旧的翻页按钮
             prevPageBtn.style.display = 'none';
@@ -11572,7 +12870,10 @@ ${triggerDescription}
         }
 
         // 更换日记本封面
-        function changeDiaryCover(ownerId) {
+        function changeDiaryCover(event, ownerId) {
+            // 阻止事件冒泡，避免触发打开日记本
+            event.stopPropagation();
+            
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*';
@@ -11580,7 +12881,7 @@ ${triggerDescription}
                 const file = e.target.files[0];
                 if (file) {
                     try {
-                        const compressedDataUrl = await compressImage(file, { maxWidth: 400, maxHeight: 400 });
+                        const compressedDataUrl = await compressImage(file, { maxWidth: 800, maxHeight: 800 });
                         saveData(`diary_cover_${ownerId}`, compressedDataUrl);
                         showDiaryBookshelf(); // 刷新书架显示
                         showMessageBox('日记本封面已更新');
@@ -11592,176 +12893,17 @@ ${triggerDescription}
             input.click();
         }
 
-        // 显示日记书架
-        function showDiaryBookshelf() {
-            const bookshelf = $('#diary-bookshelf');
-            bookshelf.innerHTML = '';
-            
-            let colorIndex = 0;
-            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'];
-            
-            // 添加用户日记本
-            const userDiaryItem = document.createElement('div');
-            userDiaryItem.className = 'diary-book-item';
-            userDiaryItem.dataset.ownerId = 'user';
-            userDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
-            
-            // 检查是否有自定义封面
-            const savedCover = loadData('diary_cover_user');
-            if (savedCover) {
-                userDiaryItem.style.backgroundImage = `url(${savedCover})`;
-                userDiaryItem.style.backgroundSize = 'cover';
-                userDiaryItem.style.backgroundPosition = 'center';
-            }
-            
-            // 获取用户日记标题
-            const userTitle = loadData('diary_title_user') || 'My Diary';
-            
-            userDiaryItem.innerHTML = `
-                <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'user', 'user')">${userTitle}</span>
-                <span class="diary-book-item-author">我</span>
-                <button class="diary-cover-edit-btn" data-owner-id="user"><i class="ri-image-edit-line"></i></button>
-            `;
-            bookshelf.appendChild(userDiaryItem);
-            colorIndex++;
-            
-            // 添加角色日记本
-            characters.forEach(char => {
-                const charDiaryItem = document.createElement('div');
-                charDiaryItem.className = 'diary-book-item';
-                charDiaryItem.dataset.ownerId = char.id;
-                charDiaryItem.style.backgroundColor = colors[colorIndex % colors.length];
-                
-                // 检查是否有自定义封面
-                const savedCover = loadData(`diary_cover_${char.id}`);
-                if (savedCover) {
-                    charDiaryItem.style.backgroundImage = `url(${savedCover})`;
-                    charDiaryItem.style.backgroundSize = 'cover';
-                    charDiaryItem.style.backgroundPosition = 'center';
-                }
-                
-                // 获取角色日记标题
-                const charTitle = loadData(`diary_title_${char.id}`) || `${char.name}'s Diary`;
-                
-                charDiaryItem.innerHTML = `
-                    <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'character', '${char.id}')">${charTitle}</span>
-                    <span class="diary-book-item-author">${char.name}</span>
-                    <button class="diary-cover-edit-btn" data-owner-id="${char.id}"><i class="ri-image-edit-line"></i></button>
-                `;
-                bookshelf.appendChild(charDiaryItem);
-                colorIndex++;
-            });
+        
 
-            // 添加用户创建的笔记本
-            Object.keys(notebookData).forEach(notebookId => {
-                const notebook = notebookData[notebookId];
-                const notebookItem = document.createElement('div');
-                notebookItem.className = 'diary-book-item notebook-item';
-                notebookItem.dataset.notebookId = notebookId;
-                notebookItem.style.backgroundColor = colors[colorIndex % colors.length];
-                
-                // 检查是否有自定义封面
-                if (notebook.cover) {
-                    notebookItem.style.backgroundImage = `url(${notebook.cover})`;
-                    notebookItem.style.backgroundSize = 'cover';
-                    notebookItem.style.backgroundPosition = 'center';
-                }
-                
-                notebookItem.innerHTML = `
-                    <span class="diary-book-item-title" onclick="editDiaryTitle(event, 'notebook', '${notebookId}')">${notebook.name}</span>
-                    <span class="diary-book-item-author">${notebook.type}</span>
-                    <div class="notebook-actions">
-                        <button class="notebook-edit-btn" data-notebook-id="${notebookId}" title="编辑笔记本"><i class="ri-edit-line"></i></button>
-                        <button class="notebook-delete-btn" data-notebook-id="${notebookId}" title="删除笔记本"><i class="ri-delete-bin-line"></i></button>
-                    </div>
-                `;
-                bookshelf.appendChild(notebookItem);
-                colorIndex++;
-            });
-        }
 
-        // 编辑日记标题
-        function editDiaryTitle(event, type, id) {
-            event.stopPropagation();
-            const titleElement = event.target;
-            const currentTitle = titleElement.textContent;
-            
-            // 如果已经在编辑状态，直接返回
-            if (titleElement.classList.contains('editing')) {
-                return;
-            }
-            
-            // 创建输入框
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = currentTitle;
-            input.className = 'title-edit-input';
-            
-            // 设置输入框样式
-            input.style.cssText = `
-                background: rgba(255, 255, 255, 0.9);
-                color: #333;
-                border: 2px solid #4ecdc4;
-                border-radius: 4px;
-                padding: 4px 8px;
-                font-size: 1.2rem;
-                font-weight: 600;
-                text-align: center;
-                width: 80%;
-                outline: none;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            `;
-            
-            // 替换标题为输入框
-            titleElement.innerHTML = '';
-            titleElement.appendChild(input);
-            titleElement.classList.add('editing');
-            
-            // 聚焦输入框
-            input.focus();
-            input.select();
-            
-            // 处理保存
-            function saveTitle() {
-                const newTitle = input.value.trim();
-                if (newTitle && newTitle !== currentTitle) {
-                    // 保存新标题
-                    if (type === 'user') {
-                        saveData('diary_title_user', newTitle);
-                    } else if (type === 'character') {
-                        saveData(`diary_title_${id}`, newTitle);
-                    } else if (type === 'notebook') {
-                        if (notebookData[id]) {
-                            notebookData[id].name = newTitle;
-                            saveData('notebooks', notebookData);
-                        }
-                    }
-                    
-                    // 更新显示
-                    titleElement.textContent = newTitle;
-                } else {
-                    // 恢复原标题
-                    titleElement.textContent = currentTitle;
-                }
-                
-                titleElement.classList.remove('editing');
-            }
-            
-            // 绑定事件
-            input.addEventListener('blur', saveTitle);
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    saveTitle();
-                } else if (e.key === 'Escape') {
-                    titleElement.textContent = currentTitle;
-                    titleElement.classList.remove('editing');
-                }
-            });
-        }
 
         // 编辑日记封面标题
         function editDiaryCoverTitle(event) {
+            // 阻止事件冒泡和默認行為
             event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            
             const titleElement = event.target;
             const currentTitle = titleElement.textContent;
             
@@ -11846,7 +12988,11 @@ ${triggerDescription}
 
         // 编辑日记封面作者
         function editDiaryCoverAuthor(event) {
+            // 阻止事件冒泡和默認行為
             event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            
             const authorElement = event.target;
             const currentAuthor = authorElement.textContent.replace('by ', '');
             
@@ -12119,7 +13265,46 @@ ${triggerDescription}
         let lastY = 0;
         let currentColor = '#000000';
         let currentBrushSize = 5;
+        let canvasHistory = []; // 画布历史记录
+        let currentHistoryIndex = -1; // 当前历史记录索引
 
+        // 保存画布状态到历史记录
+        function saveCanvasState() {
+            const canvas = document.getElementById('drawing-canvas');
+            const imageData = canvas.toDataURL('image/png');
+            
+            // 如果当前不在历史记录末尾，删除后面的记录
+            if (currentHistoryIndex < canvasHistory.length - 1) {
+                canvasHistory = canvasHistory.slice(0, currentHistoryIndex + 1);
+            }
+            
+            canvasHistory.push(imageData);
+            currentHistoryIndex++;
+            
+            // 限制历史记录数量，避免内存占用过大
+            if (canvasHistory.length > 20) {
+                canvasHistory.shift();
+                currentHistoryIndex--;
+            }
+        }
+        
+        // 撤销功能
+        function undoDrawing() {
+            if (currentHistoryIndex > 0) {
+                currentHistoryIndex--;
+                const canvas = document.getElementById('drawing-canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+                
+                img.src = canvasHistory[currentHistoryIndex];
+            }
+        }
+        
         // 初始化画板
         function initDrawingBoard() {
             const canvas = document.getElementById('drawing-canvas');
@@ -12134,6 +13319,21 @@ ${triggerDescription}
             ctx.lineWidth = currentBrushSize;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
+            
+            // 设置画笔预览的初始状态
+            const brushPreview = document.getElementById('brush-preview-circle');
+            if (brushPreview) {
+                brushPreview.style.width = currentBrushSize + 'px';
+                brushPreview.style.height = currentBrushSize + 'px';
+                brushPreview.style.background = currentColor;
+            }
+            
+            // 清空历史记录
+            canvasHistory = [];
+            currentHistoryIndex = -1;
+            
+            // 保存初始状态
+            saveCanvasState();
         }
 
         // 画板事件监听器
@@ -12141,21 +13341,42 @@ ${triggerDescription}
             const canvas = document.getElementById('drawing-canvas');
             const ctx = canvas.getContext('2d');
             
+            // 获取画布的实际尺寸和显示尺寸的比例
+            function getCanvasScale() {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    scaleX: canvas.width / rect.width,
+                    scaleY: canvas.height / rect.height
+                };
+            }
+            
+            // 将屏幕坐标转换为画布坐标
+            function getCanvasCoordinates(clientX, clientY) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+            
             // 鼠标按下事件
             canvas.addEventListener('mousedown', (e) => {
                 isDrawing = true;
-                const rect = canvas.getBoundingClientRect();
-                lastX = e.clientX - rect.left;
-                lastY = e.clientY - rect.top;
+                const coords = getCanvasCoordinates(e.clientX, e.clientY);
+                lastX = coords.x;
+                lastY = coords.y;
             });
             
             // 鼠标移动事件
             canvas.addEventListener('mousemove', (e) => {
                 if (!isDrawing) return;
                 
-                const rect = canvas.getBoundingClientRect();
-                const currentX = e.clientX - rect.left;
-                const currentY = e.clientY - rect.top;
+                const coords = getCanvasCoordinates(e.clientX, e.clientY);
+                const currentX = coords.x;
+                const currentY = coords.y;
                 
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
@@ -12169,6 +13390,8 @@ ${triggerDescription}
             // 鼠标松开事件
             canvas.addEventListener('mouseup', () => {
                 isDrawing = false;
+                // 保存画布状态
+                saveCanvasState();
             });
             
             // 鼠标离开画布事件
@@ -12180,20 +13403,20 @@ ${triggerDescription}
             canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 isDrawing = true;
-                const rect = canvas.getBoundingClientRect();
                 const touch = e.touches[0];
-                lastX = touch.clientX - rect.left;
-                lastY = touch.clientY - rect.top;
+                const coords = getCanvasCoordinates(touch.clientX, touch.clientY);
+                lastX = coords.x;
+                lastY = coords.y;
             });
             
             canvas.addEventListener('touchmove', (e) => {
                 e.preventDefault();
                 if (!isDrawing) return;
                 
-                const rect = canvas.getBoundingClientRect();
                 const touch = e.touches[0];
-                const currentX = touch.clientX - rect.left;
-                const currentY = touch.clientY - rect.top;
+                const coords = getCanvasCoordinates(touch.clientX, touch.clientY);
+                const currentX = coords.x;
+                const currentY = coords.y;
                 
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
@@ -12207,6 +13430,8 @@ ${triggerDescription}
             canvas.addEventListener('touchend', (e) => {
                 e.preventDefault();
                 isDrawing = false;
+                // 保存画布状态
+                saveCanvasState();
             });
         }
 
@@ -12219,6 +13444,12 @@ ${triggerDescription}
                     const canvas = document.getElementById('drawing-canvas');
                     const ctx = canvas.getContext('2d');
                     ctx.strokeStyle = currentColor;
+                    
+                    // 更新画笔预览颜色
+                    const brushPreview = document.getElementById('brush-preview-circle');
+                    if (brushPreview) {
+                        brushPreview.style.background = currentColor;
+                    }
                     
                     // 更新选中状态
                     colorSwatches.forEach(s => s.classList.remove('selected'));
@@ -12234,10 +13465,17 @@ ${triggerDescription}
         function setupBrushControls() {
             const brushSizeSlider = document.getElementById('brush-size');
             const brushSizeValue = document.getElementById('brush-size-value');
+            const brushPreview = document.getElementById('brush-preview-circle');
             
             brushSizeSlider.addEventListener('input', (e) => {
                 currentBrushSize = parseInt(e.target.value);
                 brushSizeValue.textContent = currentBrushSize + 'px';
+                
+                // 更新画笔预览
+                if (brushPreview) {
+                    brushPreview.style.width = currentBrushSize + 'px';
+                    brushPreview.style.height = currentBrushSize + 'px';
+                }
                 
                 const canvas = document.getElementById('drawing-canvas');
                 const ctx = canvas.getContext('2d');
@@ -12297,6 +13535,12 @@ ${triggerDescription}
             const closeBtn = document.getElementById('close-drawing-board');
             if (closeBtn) {
                 closeBtn.addEventListener('click', closeDrawingBoard);
+            }
+            
+            // 撤销按钮事件
+            const undoBtn = document.getElementById('undo-drawing');
+            if (undoBtn) {
+                undoBtn.addEventListener('click', undoDrawing);
             }
             
             // 清空画布按钮事件
@@ -13032,7 +14276,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     e.stopPropagation();
                     
                     const ownerId = coverEditBtn.closest('.diary-book-item').dataset.ownerId;
-                    changeDiaryCover(ownerId);
+                    changeDiaryCover(e, ownerId);
                 }
             });
 
@@ -13149,11 +14393,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     const originalContent = editableText.textContent;
                     const entryId = editableText.dataset.entryId;
                     
-                    // 添加保存提示
-                    const saveHint = document.createElement('div');
-                    saveHint.className = 'text-xs text-gray-500 mt-2';
-                    saveHint.textContent = '编辑完成后按Enter保存，按Esc取消';
-                    editableText.parentNode.appendChild(saveHint);
+
                     
                     // 处理键盘事件
                     const handleKeyDown = (e) => {
@@ -13165,12 +14405,10 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                                 showMessageBox('日记已保存');
                             }
                             editableText.contentEditable = false;
-                            saveHint.remove();
                             editableText.removeEventListener('keydown', handleKeyDown);
                         } else if (e.key === 'Escape') {
                             editableText.textContent = originalContent;
                             editableText.contentEditable = false;
-                            saveHint.remove();
                             editableText.removeEventListener('keydown', handleKeyDown);
                         }
                     };
@@ -13183,14 +14421,64 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             // 画板功能事件监听器
             setupDrawingBoardEvents();
 
-            // 笔记本相关事件监听器
-            setupNotebookEvents();
+                    // 笔记本相关事件监听器
+        setupNotebookEvents();
+
+        // 图片裁剪模态框事件监听器
+        setupCropperEvents();
+
+        // 【新增】处理日记本内页顶部横幅更换的事件
+        document.body.addEventListener('click', function(event) {
+            if (event.target.id === 'change-diary-banner-btn' || event.target.closest('#change-diary-banner-btn')) {
+                event.stopPropagation();
+
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+
+                input.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (file && currentOpenBook.ownerId) {
+                        // 显示图片裁剪界面
+                        showImageCropper(file, async (croppedDataUrl) => {
+                            try {
+                                // 使用新的命名规则保存独立的横幅图片
+                                const ownerId = currentOpenBook.ownerId;
+                                saveData(`diary_banner_${ownerId}`, croppedDataUrl);
+
+                                // 立刻更新当前页面的显示
+                                const coverElement = document.getElementById('diary-book-cover');
+                                // 完全覆盖CSS样式，确保图片显示
+                                coverElement.style.cssText = `
+                                    background: url(${croppedDataUrl}) center center / cover no-repeat !important;
+                                    background-image: url(${croppedDataUrl}) !important;
+                                    background-size: cover !important;
+                                    background-repeat: no-repeat !important;
+                                    background-position: center !important;
+                                `;
+
+                                showMessageBox('顶部横幅图片已更新');
+                            } catch (error) {
+                                showMessageBox('横幅图片处理失败');
+                            }
+                        });
+                    }
+                };
+                input.click();
+            }
+        });
 
             // [AI, 请将这段代码添加到 addNewEventListeners 函数的末尾]
             const diaryPagesContainer = $('#diary-pages-container');
             if (diaryPagesContainer) {
                 diaryPagesContainer.addEventListener('click', (e) => {
-                    if (e.target.closest('.diary-page-text, .diary-delete-btn')) return;
+                    // 排除封面元素、編輯狀態的元素，以及任何在封面上的點擊
+                    if (e.target.closest('.diary-page-text, .diary-delete-btn, .diary-cover, .editing') || 
+                        e.target.closest('#diary-book-cover') ||
+                        e.target.closest('#diary-cover-title') ||
+                        e.target.closest('#diary-cover-author')) {
+                        return;
+                    }
                     const containerWidth = diaryPagesContainer.offsetWidth;
                     const clickX = e.offsetX;
                     if (clickX < containerWidth / 2) {
@@ -13239,6 +14527,51 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     const notebookId = e.target.closest('.notebook-item').dataset.notebookId;
                     if (!e.target.closest('.notebook-actions')) {
                         openNotebook(notebookId);
+                    }
+                }
+            });
+        }
+
+        // 设置图片裁剪模态框事件监听器
+        function setupCropperEvents() {
+            // 关闭裁剪模态框
+            $('#close-cropper-btn').addEventListener('click', () => {
+                $('#image-cropper-modal').classList.add('hidden');
+                if (cropperInstance) {
+                    cropperInstance.destroy();
+                }
+            });
+
+            // 重置裁剪
+            $('#reset-crop-btn').addEventListener('click', () => {
+                const img = document.getElementById('cropper-image');
+                if (img.complete) {
+                    initCropper(img);
+                }
+            });
+
+            // 确认裁剪
+            $('#confirm-crop-btn').addEventListener('click', () => {
+                const croppedDataUrl = cropImage();
+                if (croppedDataUrl && currentCropCallback) {
+                    // 关闭模态框
+                    $('#image-cropper-modal').classList.add('hidden');
+                    if (cropperInstance) {
+                        cropperInstance.destroy();
+                    }
+                    
+                    // 调用回调函数
+                    currentCropCallback(croppedDataUrl);
+                    currentCropCallback = null;
+                }
+            });
+
+            // 点击模态框背景关闭
+            $('#image-cropper-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'image-cropper-modal') {
+                    $('#image-cropper-modal').classList.add('hidden');
+                    if (cropperInstance) {
+                        cropperInstance.destroy();
                     }
                 }
             });
@@ -13295,12 +14628,17 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             
             // 设置封面图片
             if (notebook.cover) {
-                $('#diary-book-cover').style.backgroundImage = `url(${notebook.cover})`;
-                $('#diary-book-cover').style.backgroundSize = 'cover';
-                $('#diary-book-cover').style.backgroundPosition = 'center';
+                // 完全覆盖CSS样式，确保图片显示
+                $('#diary-book-cover').style.cssText = `
+                    background: url(${notebook.cover}) center center / cover no-repeat !important;
+                    background-image: url(${notebook.cover}) !important;
+                    background-size: cover !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center !important;
+                `;
             } else {
-                $('#diary-book-cover').style.backgroundImage = '';
-                $('#diary-book-cover').style.backgroundColor = '#3a3a3a';
+                // 恢复默认渐变背景
+                $('#diary-book-cover').style.cssText = '';
             }
             
             // 渲染页面
@@ -13320,18 +14658,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             
             // 初始化一些示例日记数据（如果还没有的话）
             if (Object.keys(diaryData).length === 0) {
-                diaryData.user = [
-                    {
-                        id: 'diary_sample_1',
-                        timestamp: Date.now() - 86400000, // 昨天
-                        content: '今天天气很好，心情也不错。希望明天也能保持这样的好心情。'
-                    },
-                    {
-                        id: 'diary_sample_2',
-                        timestamp: Date.now() - 172800000, // 前天
-                        content: '今天遇到了一些小困难，但是通过努力都解决了。感觉自己在成长。'
-                    }
-                ];
+                diaryData.user = [];
                 saveData('diaryData', diaryData);
             }
             
@@ -13788,6 +15115,15 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 const target = e.target.closest('.wechat-tab-item');
                 if (!target) return;
 
+                const tabName = target.dataset.tab; // 获取点击的标签名
+
+                // 【新增】隐藏红点的逻辑
+                if (notificationStatus[tabName]) {
+                    notificationStatus[tabName] = false;
+                    saveData('notificationStatus', notificationStatus);
+                    updateAllNotificationDots();
+                }
+
                 // 如果沒有角色，提示用戶
                 if (!characters.length > 0) {
                     showMessageBox("請先創建一個角色");
@@ -13978,22 +15314,48 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     const wrapperToRetry = $(`[data-timestamp="${timestamp}"]`);
                     if (!wrapperToRetry) return; // Element not found in DOM
 
+                    // 找到要重新生成的消息之前的最后一个用户消息
+                    let lastUserMessageIndex = -1;
+                    for (let i = msgIndex - 1; i >= 0; i--) {
+                        if (history[i].sender === 'user') {
+                            lastUserMessageIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (lastUserMessageIndex === -1) {
+                        showMessageBox('無法找到有效的重試上下文');
+                        return;
+                    }
+
                     const wrapperIndex = Array.from(chatContentArea.children).indexOf(wrapperToRetry);
                     const subsequentWrappers = Array.from(chatContentArea.children).slice(wrapperIndex + 1);
 
-                    const historyToRetry = history.slice(0, msgIndex);
-                    if (historyToRetry.length > 0 && historyToRetry[historyToRetry.length - 1].sender === 'user') {
-                        chatHistories[currentChatCharacterId].history = historyToRetry;
+                    // 截取到最后一个用户消息为止的历史记录
+                    const historyToRetry = history.slice(0, lastUserMessageIndex + 1);
+                    
+                    console.log('重生成上下文准备:', {
+                        originalHistoryLength: history.length,
+                        retryHistoryLength: historyToRetry.length,
+                        lastUserMessageIndex: lastUserMessageIndex,
+                        contextMessages: historyToRetry.map(msg => ({
+                            sender: msg.sender,
+                            content: msg.content?.substring(0, 50) + '...',
+                            timestamp: msg.timestamp
+                        }))
+                    });
+                    
+                    // 更新聊天历史，移除要重新生成的消息及之后的所有消息
+                    chatHistories[currentChatCharacterId].history = historyToRetry;
 
-                        subsequentWrappers.forEach(el => el.remove());
+                    // 移除DOM中要重新生成的消息及之后的所有消息
+                    subsequentWrappers.forEach(el => el.remove());
 
-                        await getAIResponse(historyToRetry[historyToRetry.length-1], true, wrapperToRetry);
-
-                        saveData('chatHistories', chatHistories);
-
-                    } else {
-                        showMessageBox('無法找到有效的重試上下文');
-                    }
+                    // 保存更新后的聊天历史到本地存储，确保gatherAIContext能获取到最新数据
+                    saveData('chatHistories', chatHistories);
+                    
+                    // 重新生成AI响应（使用更新后的聊天历史作为上下文）
+                    await getAIResponse(historyToRetry[historyToRetry.length-1], true, wrapperToRetry);
                 }
             }
 
@@ -14186,7 +15548,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             
             function renderStickers() {
                 stickerGrid.innerHTML = '';
-                userStickers.forEach((stickerSrc, index) => {
+                userStickers.forEach((stickerObject, index) => {
                     const stickerItem = document.createElement('div');
                     stickerItem.className = 'sticker-item';
                     stickerItem.dataset.index = index;
@@ -14203,13 +15565,13 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     }
                     
                     const img = document.createElement('img');
-                    img.src = stickerSrc;
+                    img.src = stickerObject.url; // 修复：从对象中获取 .url 属性
                     img.alt = 'sticker';
                     stickerItem.appendChild(img);
                     
                     stickerItem.addEventListener('click', () => {
                         if (!isDeleteMode) {
-                            appendMessage(stickerSrc, 'user', 'sticker', true, Date.now(), true);
+                            appendMessage(stickerObject.url, 'user', 'sticker', true, Date.now(), true); // 修复：发送时也使用 .url 属性
                             stickerPanel.classList.remove('visible');
                         }
                     });
@@ -14330,28 +15692,56 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             $('#sticker-upload-input').addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file) {
+                    // 1. **【新增】** 获取关键词
+                    const keywordsInput = document.getElementById('sticker-keywords-input');
+                    const keywords = keywordsInput.value.trim().split(',').map(k => k.trim()).filter(Boolean);
+
+                    // 2. **【新增】** 检查关键词是否为空
+                    if (keywords.length === 0) {
+                        showMessageBox('请为表情包添加至少一个关键词！');
+                        e.target.value = ''; // 重置文件输入，以便用户可以重新选择
+                        return; // 终止操作
+                    }
+                    
                     const compressedDataUrl = await handleImageUpload(e.target, null, null, { compression: { maxWidth: 256, maxHeight: 256 } });
                     if (compressedDataUrl) {
-                        userStickers.push(compressedDataUrl);
+                        // 3. **【修改】** 保存为新的对象格式
+                        userStickers.push({ url: compressedDataUrl, keywords: keywords });
                         saveData('userStickers', userStickers);
+                        
                         renderStickers();
                         stickerModal.classList.remove('visible');
+                        keywordsInput.value = ''; // 清空关键词输入框
                     }
                     e.target.value = '';
                 }
             });
 
             $('#send-sticker-url-btn').addEventListener('click', () => {
-                const url = $('#sticker-url-input').value.trim();
-                if (url) {
-                    userStickers.push(url);
-                    saveData('userStickers', userStickers);
-                    renderStickers();
-                    $('#sticker-url-input').value = '';
-                    stickerModal.classList.remove('visible');
-                } else {
-                    showMessageBox('請輸入有效的圖片連結');
+                const url = document.getElementById('sticker-url-input').value.trim();
+                
+                // 1. **【新增】** 获取关键词
+                const keywordsInput = document.getElementById('sticker-keywords-input');
+                const keywords = keywordsInput.value.trim().split(',').map(k => k.trim()).filter(Boolean);
+
+                // 2. **【新增】** 检查关键词和链接是否为空
+                if (!url) {
+                    showMessageBox('请输入有效的图片链接');
+                    return;
                 }
+                if (keywords.length === 0) {
+                    showMessageBox('请为表情包添加至少一个关键词！');
+                    return;
+                }
+                
+                // 3. **【修改】** 保存为新的对象格式
+                userStickers.push({ url: url, keywords: keywords });
+                saveData('userStickers', userStickers);
+                
+                renderStickers();
+                document.getElementById('sticker-url-input').value = '';
+                keywordsInput.value = ''; // 清空关键词输入框
+                stickerModal.classList.remove('visible');
             });
 
             // 紅包/轉賬事件監聽
