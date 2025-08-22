@@ -5626,6 +5626,15 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        /* 触摸滚动优化 */
+        will-change: scroll-position;
+        /* 确保触摸事件正常工作 */
+        -webkit-tap-highlight-color: transparent;
+        /* 防止触摸时出现选择框 */
+        -webkit-touch-callout: none;
+        /* 触摸滚动性能优化 */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
     }
 
     /* 滚动提示指示器 */
@@ -17351,12 +17360,41 @@ ${eventTypeSpecificInput}
                 let touchStartY = 0;
                 let touchStartScrollTop = 0;
                 let isTouchScrolling = false;
+                let touchStartTime = 0;
                 
                 textContainer.addEventListener('touchstart', (e) => {
                     touchStartY = e.touches[0].clientY;
                     touchStartScrollTop = textContainer.scrollTop;
+                    touchStartTime = Date.now();
                     isScrollingText = true;
                     isTouchScrolling = false;
+                    
+                    // 添加触摸反馈
+                    textContainer.style.transform = 'scale(0.98)';
+                    textContainer.style.transition = 'transform 0.1s ease';
+                    
+                    // 更新调试信息
+                    const debugInfo = document.getElementById('touch-debug-info');
+                    if (debugInfo) {
+                        debugInfo.innerHTML = `
+                            <div style="
+                                position: absolute;
+                                bottom: 10px;
+                                left: 10px;
+                                background: rgba(0, 0, 0, 0.7);
+                                color: white;
+                                padding: 4px 8px;
+                                border-radius: 8px;
+                                font-size: 10px;
+                                font-family: monospace;
+                                z-index: 100;
+                                pointer-events: none;
+                                opacity: 0.6;
+                            ">
+                                触摸开始: Y=${touchStartY}, 滚动位置=${touchStartScrollTop}
+                            </div>
+                        `;
+                    }
                 });
 
                 textContainer.addEventListener('touchmove', (e) => {
@@ -17374,29 +17412,58 @@ ${eventTypeSpecificInput}
                     );
                     
                     if (isInsideTextContainer && Math.abs(deltaY) > 5) {
-                        // 阻止页面滚动，处理文本框滚动
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        isTouchScrolling = true;
-                        
-                        // 计算新的滚动位置（添加惯性效果）
-                        const newScrollTop = touchStartScrollTop + deltaY * 1.2;
+                        // 只在文本框有内容可滚动时才阻止默认行为
                         const maxScrollTop = textContainer.scrollHeight - textContainer.clientHeight;
+                        const canScrollUp = textContainer.scrollTop > 0;
+                        const canScrollDown = textContainer.scrollTop < maxScrollTop;
                         
-                        // 限制滚动范围
-                        if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
-                            textContainer.scrollTop = newScrollTop;
-                        } else if (newScrollTop < 0) {
-                            textContainer.scrollTop = 0;
-                        } else if (newScrollTop > maxScrollTop) {
-                            textContainer.scrollTop = maxScrollTop;
+                        if ((deltaY > 0 && canScrollDown) || (deltaY < 0 && canScrollUp)) {
+                            // 阻止页面滚动，处理文本框滚动
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            isTouchScrolling = true;
+                            
+                            // 计算新的滚动位置（添加惯性效果）
+                            const newScrollTop = touchStartScrollTop + deltaY * 1.2;
+                            
+                            // 限制滚动范围
+                            if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
+                                textContainer.scrollTop = newScrollTop;
+                            } else if (newScrollTop < 0) {
+                                textContainer.scrollTop = 0;
+                            } else if (newScrollTop > maxScrollTop) {
+                                textContainer.scrollTop = maxScrollTop;
+                            }
+                            
+                            // 更新调试信息
+                            const debugInfo = document.getElementById('touch-debug-info');
+                            if (debugInfo) {
+                                debugInfo.innerHTML = `
+                                    <div style="
+                                        position: absolute;
+                                        bottom: 10px;
+                                        left: 10px;
+                                        background: rgba(0, 0, 0, 0.7);
+                                        color: white;
+                                        padding: 4px 8px;
+                                        border-radius: 8px;
+                                        font-size: 10px;
+                                        font-family: monospace;
+                                        z-index: 100;
+                                        pointer-events: none;
+                                        opacity: 0.6;
+                                    ">
+                                        滚动中: deltaY=${deltaY}, 新位置=${Math.round(newScrollTop)}
+                                    </div>
+                                `;
+                            }
+                            
+                            clearTimeout(scrollTimeout);
+                            scrollTimeout = setTimeout(() => {
+                                isScrollingText = false;
+                            }, 300);
                         }
-                        
-                        clearTimeout(scrollTimeout);
-                        scrollTimeout = setTimeout(() => {
-                            isScrollingText = false;
-                        }, 300);
                     }
                 }, { passive: false });
 
@@ -17411,6 +17478,34 @@ ${eventTypeSpecificInput}
                         isScrollingText = false;
                         isTouchScrolling = false;
                     }, 100);
+                    
+                    // 恢复触摸反馈
+                    textContainer.style.transform = 'scale(1)';
+                    textContainer.style.transition = 'transform 0.2s ease';
+                    
+                    // 更新调试信息
+                    const debugInfo = document.getElementById('touch-debug-info');
+                    if (debugInfo) {
+                        const touchDuration = Date.now() - touchStartTime;
+                        debugInfo.innerHTML = `
+                            <div style="
+                                position: absolute;
+                                bottom: 10px;
+                                left: 10px;
+                                background: rgba(0, 0, 0, 0.7);
+                                color: white;
+                                padding: 4px 8px;
+                                border-radius: 8px;
+                                font-size: 10px;
+                                font-family: monospace;
+                                z-index: 100;
+                                pointer-events: none;
+                                opacity: 0.6;
+                            ">
+                                触摸结束: 持续时间=${touchDuration}ms, 滚动=${isTouchScrolling ? '是' : '否'}
+                            </div>
+                        `;
+                    }
                 });
 
                 // 防止触摸事件冒泡到父元素
@@ -17423,21 +17518,71 @@ ${eventTypeSpecificInput}
                 console.log('文本框滚动高度:', textContainer.scrollHeight);
                 console.log('文本框可视高度:', textContainer.clientHeight);
                 
-                // 添加触摸滚动测试提示
-                const testMessage = document.createElement('div');
-                testMessage.innerHTML = '<p style="color: #BE3255; font-size: 12px; text-align: center; margin: 10px 0; padding: 8px; background: rgba(190, 50, 85, 0.1); border-radius: 8px;">📱 触摸滚动测试：在文本框内上下滑动手指</p>';
-                testMessage.id = 'touch-scroll-test';
-                textContainer.insertBefore(testMessage, textContainer.firstChild);
+                // 添加触摸滚动指示器
+                const scrollIndicator = document.createElement('div');
+                scrollIndicator.innerHTML = `
+                    <div style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        background: rgba(190, 50, 85, 0.8);
+                        color: white;
+                        padding: 6px 10px;
+                        border-radius: 15px;
+                        font-size: 11px;
+                        font-weight: 500;
+                        z-index: 100;
+                        pointer-events: none;
+                        opacity: 0.8;
+                        transition: opacity 0.3s ease;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    ">
+                        📱 触摸滚动
+                    </div>
+                `;
+                scrollIndicator.id = 'touch-scroll-indicator';
+                textContainer.appendChild(scrollIndicator);
                 
-                // 5秒后自动隐藏测试提示
-                setTimeout(() => {
-                    const testMsg = document.getElementById('touch-scroll-test');
-                    if (testMsg) {
-                        testMsg.style.opacity = '0';
-                        testMsg.style.transition = 'opacity 0.5s ease';
-                        setTimeout(() => testMsg.remove(), 500);
+                // 添加触摸调试信息
+                const debugInfo = document.createElement('div');
+                debugInfo.innerHTML = `
+                    <div style="
+                        position: absolute;
+                        bottom: 10px;
+                        left: 10px;
+                        background: rgba(0, 0, 0, 0.7);
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 8px;
+                        font-size: 10px;
+                        font-family: monospace;
+                        z-index: 100;
+                        pointer-events: none;
+                        opacity: 0.6;
+                    ">
+                        触摸调试: 等待触摸...
+                    </div>
+                `;
+                debugInfo.id = 'touch-debug-info';
+                textContainer.appendChild(debugInfo);
+                
+                // 触摸时显示指示器
+                textContainer.addEventListener('touchstart', () => {
+                    const indicator = document.getElementById('touch-scroll-indicator');
+                    if (indicator) {
+                        indicator.style.opacity = '1';
                     }
-                }, 5000);
+                });
+                
+                // 触摸结束后隐藏指示器
+                textContainer.addEventListener('touchend', () => {
+                    const indicator = document.getElementById('touch-scroll-indicator');
+                    if (indicator) {
+                        setTimeout(() => {
+                            indicator.style.opacity = '0.8';
+                        }, 1000);
+                    }
+                });
             }
 
             // 1. 首先执行加载数据和基础设置
