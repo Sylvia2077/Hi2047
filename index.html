@@ -5161,7 +5161,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
         background: 
             radial-gradient(circle at 20% 20%, rgba(200, 170, 189, 0.1) 0%, transparent 50%),
             radial-gradient(circle at 80% 80%, rgba(190, 50, 85, 0.08) 0%, transparent 50%),
@@ -5184,7 +5184,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 2;
+        z-index: 0;
     }
 
     .monitoring-card .tech-light-dots::before,
@@ -5241,7 +5241,7 @@
         width: 20px;
         height: 20px;
         pointer-events: none;
-        z-index: 2;
+        z-index: 0;
     }
 
     .monitoring-card .corner-glow.top-left {
@@ -5312,7 +5312,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
         background: repeating-linear-gradient(
             0deg,
             transparent,
@@ -5367,7 +5367,7 @@
                 rgba(200, 170, 189, 0.1) 2px,
                 rgba(200, 170, 189, 0.1) 4px
             );
-        z-index: 1;
+        z-index: 0;
         pointer-events: none;
     }
 
@@ -5604,8 +5604,6 @@
 
     /* 状态文本容器美化 */
     #monitoring-text-container {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(200, 170, 189, 0.5) transparent;
         /* 防止滚动冲突 */
         overscroll-behavior: contain;
         /* 添加滚动提示 */
@@ -5613,75 +5611,99 @@
         /* 让容器在页面中居中，但文本保持自然段落格式 */
         max-width: 800px;
         margin: 0 auto;
-        /* 设置合适的左右边距 */
+        /* 设置合适的左右边距，为滚动条留出空间 */
         padding-left: 2rem;
-        padding-right: 2rem;
+        padding-right: 3rem;
         /* 触摸优化 */
         -webkit-overflow-scrolling: touch;
         touch-action: pan-y;
         /* 确保在手机上可以正常滚动 */
         overflow-y: auto;
-        /* 防止文本选择干扰触摸 */
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        /* 触摸滚动优化 */
-        will-change: scroll-position;
-        /* 确保触摸事件正常工作 */
-        -webkit-tap-highlight-color: transparent;
-        /* 防止触摸时出现选择框 */
-        -webkit-touch-callout: none;
         /* 触摸滚动性能优化 */
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
+        /* 设置合适的高度，避免滚动条过长 */
+        height: 300px !important;
+        min-height: 200px !important;
+        max-height: 550px !important;
+        /* 确保滚动条不会超出容器边界 */
+        box-sizing: border-box;
     }
 
-    /* 滚动提示指示器 */
-    #monitoring-text-container::before {
-        content: '滚动查看内容';
-        position: absolute;
-        top: 10px;
-        right: 2rem;
-        background: rgba(200, 170, 189, 0.8);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 10px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-        z-index: 10;
-    }
-
-    #monitoring-text-container:hover::before {
-        opacity: 1;
-    }
-
+    /* 自定义滚动条样式 - 赛博朋克风格 */
     #monitoring-text-container::-webkit-scrollbar {
-        width: 6px;
+        width: 12px;
+        background: rgba(20, 20, 30, 0.9);
+        border-radius: 6px;
+        border: 1px solid rgba(190, 50, 85, 0.5);
+        /* 确保滚动条在容器内部 */
+        margin-right: 0;
+        /* 确保滚动条在最上层 */
+        z-index: 9999;
     }
 
     #monitoring-text-container::-webkit-scrollbar-track {
-        background: transparent;
+        background: rgba(20, 20, 30, 0.4);
+        border-radius: 6px;
+        border: 1px solid rgba(190, 50, 85, 0.3);
+        /* 确保滚动条轨道在最上层 */
+        z-index: 9999;
     }
 
+    /* Firefox 滚动条样式 */
+    #monitoring-text-container {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(190, 50, 85, 0.9) rgba(20, 20, 30, 0.4);
+        /* 确保滚动条可见 */
+        overflow-y: auto !important;
+        /* 确保滚动条在容器内部 */
+        overflow-x: hidden !important;
+        /* 确保容器在最上层 */
+        position: relative;
+        z-index: 9999;
+    }
+
+
+
     #monitoring-text-container::-webkit-scrollbar-thumb {
-        background: rgba(200, 170, 189, 0.5);
-        border-radius: 3px;
-        transition: background 0.3s ease;
+        background: linear-gradient(135deg, 
+            rgba(190, 50, 85, 0.9) 0%, 
+            rgba(120, 30, 60, 0.9) 50%, 
+            rgba(190, 50, 85, 0.9) 100%);
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 8px rgba(190, 50, 85, 0.5);
+        transition: all 0.3s ease;
+        /* 限制滚动条滑块的最小高度，避免过长 */
+        min-height: 20px;
+        /* 确保滚动条滑块在最上层 */
+        z-index: 9999;
     }
 
     #monitoring-text-container::-webkit-scrollbar-thumb:hover {
-        background: rgba(200, 170, 189, 0.7);
+        background: linear-gradient(135deg, 
+            rgba(220, 70, 105, 0.9) 0%, 
+            rgba(150, 50, 80, 0.9) 50%, 
+            rgba(220, 70, 105, 0.9) 100%);
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 12px rgba(220, 70, 105, 0.7);
+        /* 确保hover状态也在最上层 */
+        z-index: 9999;
     }
 
-    .dark-mode #monitoring-text-container::-webkit-scrollbar-thumb {
-        background: rgba(86, 136, 151, 0.4);
-    }
-
-    .dark-mode #monitoring-text-container::-webkit-scrollbar-thumb:hover {
-        background: rgba(86, 136, 151, 0.6);
+    #monitoring-text-container::-webkit-scrollbar-thumb:active {
+        background: linear-gradient(135deg, 
+            rgba(255, 90, 125, 0.9) 0%, 
+            rgba(180, 70, 90, 0.9) 50%, 
+            rgba(255, 90, 125, 0.9) 100%);
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            0 0 16px rgba(255, 90, 125, 0.8);
+        /* 确保active状态也在最上层 */
+        z-index: 9999;
     }
 
     /* 状态文本美化 */
@@ -5959,7 +5981,7 @@
             #CEA9BC 80%, 
             transparent 100%);
         animation: scanLine 3s linear infinite;
-        z-index: 3;
+        z-index: 0;
         opacity: 0.8;
     }
 
@@ -5982,7 +6004,7 @@
         bottom: 0;
         overflow: hidden;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
     }
 
     /* 2.5. 米白色-粉色渐变透明背景 */
@@ -5992,9 +6014,9 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, rgba(255, 248, 240, 0.15) 0%, rgba(255, 228, 225, 0.2) 50%, rgba(255, 248, 240, 0.15) 100%);
+        background: linear-gradient(135deg, rgba(255, 248, 240, 0.15) 0%, rgba(255, 228, 225, 0.2) 50%, rgba(255, 228, 225, 0.2) 50%, rgba(255, 248, 240, 0.15) 100%);
         border-radius: 15px;
-        z-index: 1;
+        z-index: 0;
     }
 
     .monitoring-card .data-stream::before {
@@ -6041,7 +6063,7 @@
         border-radius: 50%;
         animation: energyGlow 4s ease-in-out infinite;
         opacity: 0.4;
-        z-index: 1;
+        z-index: 0;
     }
 
     .dark-mode .monitoring-card .energy-ring {
@@ -6083,7 +6105,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
     }
 
     .monitoring-card .pulse-grid .pulse-dot {
@@ -6146,7 +6168,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
     }
 
     .monitoring-card .connection-lines .line {
@@ -6190,7 +6212,7 @@
         background: #C8AABD;
         box-shadow: 0 0 8px #C8AABD;
         animation: statusPulse 2s ease-in-out infinite;
-        z-index: 3;
+        z-index: 0;
     }
 
     .dark-mode .monitoring-card .status-indicator {
@@ -6221,7 +6243,7 @@
         width: 20px;
         height: 20px;
         pointer-events: none;
-        z-index: 2;
+        z-index: 0;
     }
 
     .monitoring-card .corner-decoration.top-left {
@@ -6302,7 +6324,7 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
     }
 
     .monitoring-card .floating-particles .particle {
@@ -7007,7 +7029,7 @@
                         <!-- 米白色-粉色渐变透明背景 -->
                         <div class="cream-pink-bg"></div>
                         
-                        <div id="monitoring-text-container" class="h-full overflow-y-auto">
+                        <div id="monitoring-text-container" class="overflow-y-auto" style="height: 400px; min-height: 400px;">
                             <p id="monitoring-status-text" class="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">正在连接信号...</p>
                         </div>
                         <p id="monitoring-timestamp" class="text-xs text-gray-700 text-right mt-2 absolute bottom-2 right-3"></p>
@@ -8111,15 +8133,15 @@
                 let newLeft = startLeft + deltaX;
                 let newTop = startTop + deltaY;
                 
-                // 限制裁剪框不超出图片边界
-                const maxLeft = imgRect.left - containerRect.left + imgRect.width - cropWidth;
-                const maxTop = imgRect.top - containerRect.top + imgRect.height - cropHeight;
-                const minLeft = imgRect.left - containerRect.left;
-                const minTop = imgRect.top - containerRect.top;
+                            // 限制裁剪框不超出图片边界
+            const maxLeft = imgRect.left - containerRect.left + imgRect.width - cropWidth;
+            const maxTop = imgRect.top - containerRect.top + imgRect.height - cropHeight;
+            const minLeft = imgRect.left - containerRect.left;
+            const minTop = imgRect.top - containerRect.top;
+            
+            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+            newTop = Math.max(minTop, Math.min(newTop, maxTop));
                 
-                newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
-                newTop = Math.max(minTop, Math.min(newTop, maxTop));
-                    
                 cropBox.style.left = newLeft + 'px';
                 cropBox.style.top = newTop + 'px';
             }
@@ -8296,8 +8318,8 @@
             // 鼠标移动事件
             document.addEventListener('mousemove', function(e) {
                 if (isResizing) {
-                    const deltaX = e.clientX - startResizeX;
-                    const deltaY = e.clientY - startResizeY;
+                const deltaX = e.clientX - startResizeX;
+                const deltaY = e.clientY - startResizeY;
                     handleResize(deltaX, deltaY);
                 }
             });
@@ -11656,42 +11678,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
             momentsTriggerSystem.cleanup();
         }, 60 * 60 * 1000); // 每小时清理一次
 
-        // 添加测试函数来验证功能
-        function testFeatures() {
-            console.log('=== 功能测试开始 ===');
-            
-            // 测试1: 检查接收按钮是否存在
-            const receiveBtn = document.querySelector('#receive-chat-button');
-            console.log('测试1 - 接收按钮:', receiveBtn ? '✅ 存在' : '❌ 不存在');
-            
-            // 测试2: 检查通知元素是否存在
-            const notificationEl = document.querySelector('#new-message-alert');
-            console.log('测试2 - 通知元素:', notificationEl ? '✅ 存在' : '❌ 不存在');
-            
-            // 测试3: 检查是否有角色数据
-            console.log('测试3 - 角色数据:', characters.length > 0 ? `✅ 有 ${characters.length} 个角色` : '❌ 没有角色');
-            
-            // 测试4: 检查聊天历史数据结构
-            console.log('测试4 - 聊天历史:', Object.keys(chatHistories).length > 0 ? `✅ 有 ${Object.keys(chatHistories).length} 个聊天记录` : '❌ 没有聊天记录');
-            
-            // 测试5: 检查API设置
-            const apiSettings = loadData('api_settings');
-            console.log('测试5 - API设置:', apiSettings && apiSettings.url ? '✅ 已配置' : '❌ 未配置');
-            
-            // 测试6: 检查接收按钮图标
-            if (receiveBtn) {
-                const icon = receiveBtn.querySelector('i');
-                console.log('测试6 - 接收按钮图标:', icon ? `✅ ${icon.className}` : '❌ 没有图标');
-            }
-            
-            console.log('=== 功能测试完成 ===');
-            
-            // 显示测试结果
-            showMessageBox('功能测试完成，请查看控制台输出');
-        }
 
-        // 将测试函数添加到全局作用域，方便在控制台调用
-        window.testFeatures = testFeatures;
         
         // 页面加载时检查通知权限
         document.addEventListener('DOMContentLoaded', () => {
@@ -11706,161 +11693,11 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
 
         });
         
-        // 添加消息接收测试函数
-        function testMessageReceiving() {
-            console.log('=== 消息接收测试 ===');
-            
-            // 检查当前聊天状态
-            console.log('当前聊天角色ID:', currentChatCharacterId);
-            console.log('当前微信角色ID:', currentWeChatCharacterId);
-            
-            // 检查聊天界面状态
-            const chatScreen = $('#wechat-chat-screen');
-            const isChatScreenActive = !chatScreen.classList.contains('hidden');
-            console.log('聊天界面是否激活:', isChatScreenActive);
-            
-            // 检查聊天历史
-            if (currentChatCharacterId) {
-                const chatSession = chatHistories[currentChatCharacterId];
-                if (chatSession) {
-                    console.log('当前角色聊天记录数量:', chatSession.history.length);
-                    if (chatSession.history.length > 0) {
-                        const lastMessage = chatSession.history[chatSession.history.length - 1];
-                        console.log('最后一条消息:', lastMessage);
-                    }
-                }
-            }
-            
-            // 检查通知元素
-            const notificationEl = $('#new-message-alert');
-            console.log('通知元素状态:', notificationEl ? '存在' : '不存在');
-            if (notificationEl) {
-                console.log('通知元素类名:', notificationEl.className);
-                console.log('通知元素样式:', notificationEl.style.transform);
-            }
-            
-            console.log('=== 测试完成 ===');
-        }
+
         
-        // 添加模拟AI消息接收测试函数
-        function testAIMessageReceiving(characterId) {
-            console.log('=== 模拟AI消息接收测试 ===');
-            
-            if (!characterId) {
-                characterId = currentChatCharacterId || Object.keys(chatHistories)[0];
-            }
-            
-            if (!characterId) {
-                console.error('没有可用的角色ID');
-                return;
-            }
-            
-            console.log('测试角色ID:', characterId);
-            
-            // 模拟AI消息
-            const testMessage = `这是一条测试消息，时间: ${new Date().toLocaleTimeString()}`;
-            
-            // 调用消息处理函数
-            processAndDisplayAIMessages(testMessage, characterId);
-            
-            console.log('已发送测试消息，请检查：');
-            console.log('1. 聊天历史是否更新');
-            console.log('2. 通知是否显示');
-            console.log('3. 接收按钮是否停止旋转');
-            
-            // 延迟检查结果
-            setTimeout(() => {
-                const chatSession = chatHistories[characterId];
-                if (chatSession && chatSession.history.length > 0) {
-                    const lastMessage = chatSession.history[chatSession.history.length - 1];
-                    console.log('最新消息:', lastMessage);
-                }
-            }, 1000);
-        }
+
         
-        // 添加完整的后台消息测试函数
-        function testBackgroundMessageFlow(characterId) {
-            console.log('=== 后台消息流程测试 ===');
-            
-            if (!characterId) {
-                characterId = currentChatCharacterId || Object.keys(chatHistories)[0];
-            }
-            
-            if (!characterId) {
-                console.error('没有可用的角色ID');
-                return;
-            }
-            
-            console.log('测试角色ID:', characterId);
-            console.log('当前聊天角色:', currentChatCharacterId);
-            console.log('当前界面:', $('#wechat-chat-screen').classList.contains('hidden') ? '非聊天界面' : '聊天界面');
-            
-            // 模拟用户发送消息
-            const userMessage = { content: '这是一条测试消息', type: 'text' };
-            
-            // 模拟AI响应（后台处理）
-            console.log('开始模拟AI后台响应...');
-            
-            // 模拟API调用延迟
-            setTimeout(() => {
-                const aiResponse = `收到你的测试消息了！|||现在我在后台处理回复|||时间: ${new Date().toLocaleTimeString()}`;
-                
-                console.log('AI响应完成，开始处理消息...');
-                processAndDisplayAIMessages(aiResponse, characterId);
-                
-                console.log('消息处理完成，请检查：');
-                console.log('1. 聊天历史是否更新');
-                console.log('2. 如果不在聊天界面，是否有通知弹窗');
-                console.log('3. 接收按钮状态');
-                
-            }, 2000);
-        }
-        
-        // 添加通知权限测试函数
-        function testNotificationPermission() {
-            console.log('=== 通知权限测试 ===');
-            
-            if (!('Notification' in window)) {
-                console.log('❌ 浏览器不支持系统通知');
-                return;
-            }
-            
-            console.log('✅ 浏览器支持系统通知');
-            console.log('当前通知权限:', Notification.permission);
-            
-            if (Notification.permission === 'granted') {
-                console.log('✅ 通知权限已授予');
-                
-                // 测试发送一个系统通知
-                const testNotification = new Notification('测试通知', {
-                    body: '这是一条测试通知，如果您能看到这条通知，说明系统通知功能正常！',
-                    icon: 'https://placehold.co/96x96/777/FFF?text=✓',
-                    tag: 'test-notification'
-                });
-                
-                setTimeout(() => testNotification.close(), 3000);
-                
-            } else if (Notification.permission === 'denied') {
-                console.log('❌ 通知权限被拒绝');
-                console.log('请在浏览器设置中允许通知权限，或点击地址栏左侧的图标进行设置');
-            } else {
-                console.log('⏳ 通知权限未设置');
-                console.log('正在请求通知权限...');
-                requestNotificationPermission().then(granted => {
-                    if (granted) {
-                        console.log('✅ 通知权限已授予');
-                    } else {
-                        console.log('❌ 通知权限被拒绝');
-                    }
-                });
-            }
-        }
-        
-        // 测试全屏提醒功能
-        function testFullscreenAlert() {
-            console.log('=== 测试全屏提醒 ===');
-            showFullscreenAlert('test', '这是一条测试消息，用于测试全屏提醒功能是否正常工作！');
-        }
+
         
         // 自定义接收按钮图标
         function setReceiveButtonIcon(iconClass) {
@@ -11877,24 +11714,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
             console.log('已设置为邮件发送图标');
         }
         
-        // 测试邮件发送图标闪烁效果
-        function testMailSendFlash() {
-            console.log('=== 测试邮件发送图标闪烁 ===');
-            const receiveBtn = document.querySelector('#receive-chat-button');
-            if (receiveBtn) {
-                // 开始闪烁
-                receiveBtn.classList.add('spinning');
-                console.log('开始闪烁动画...');
-                
-                // 3秒后停止闪烁
-                setTimeout(() => {
-                    receiveBtn.classList.remove('spinning');
-                    console.log('闪烁动画停止');
-                }, 3000);
-            } else {
-                console.error('接收按钮不存在');
-            }
-        }
+
         
         // 预设的优雅图标选项
         const elegantIcons = {
@@ -12004,15 +11824,9 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
             document.head.appendChild(style);
         }
         
-        window.testMessageReceiving = testMessageReceiving;
-        window.testAIMessageReceiving = testAIMessageReceiving;
-        window.testBackgroundMessageFlow = testBackgroundMessageFlow;
-        window.testNotificationPermission = testNotificationPermission;
-        window.testFullscreenAlert = testFullscreenAlert;
         window.showIconSelector = showIconSelector;
         window.setReceiveButtonIcon = setReceiveButtonIcon;
         window.setMailSendIcon = setMailSendIcon;
-        window.testMailSendFlash = testMailSendFlash;
 
 
 
@@ -13240,36 +13054,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
             addLongPressListeners();
         }
         
-        // 测试函数 - 手动显示评论按钮
-        function testShowCommentButtons() {
-            const bubbles = document.querySelectorAll('.comment-bubble');
-            if (bubbles.length > 0) {
-                bubbles[0].classList.add('show-buttons');
-                console.log('手动显示第一个评论的按钮');
-                console.log('当前类名:', bubbles[0].className);
-                console.log('按钮元素:', bubbles[0].querySelector('.comment-buttons'));
-            } else {
-                console.log('没有找到评论气泡');
-            }
-        }
-        
-        // 测试函数 - 测试评论点击功能
-        function testCommentClick() {
-            const bubbles = document.querySelectorAll('.comment-bubble');
-            if (bubbles.length > 0) {
-                const bubble = bubbles[0];
-                const commentId = bubble.dataset.commentId;
-                const momentId = bubble.dataset.momentId;
-                const author = bubble.dataset.author;
-                console.log('测试评论点击功能:');
-                console.log('commentId:', commentId);
-                console.log('momentId:', momentId);
-                console.log('author:', author);
-                console.log('dataset:', bubble.dataset);
-            } else {
-                console.log('没有找到评论气泡');
-            }
-        }
+
         
         // 添加长按事件监听器
         function addLongPressListeners() {
@@ -17356,44 +17141,22 @@ ${eventTypeSpecificInput}
                     }
                 }, { passive: false });
 
-                // 触摸设备支持
+                // 触摸设备支持 - 简化版本
                 let touchStartY = 0;
                 let touchStartScrollTop = 0;
-                let isTouchScrolling = false;
-                let touchStartTime = 0;
                 
                 textContainer.addEventListener('touchstart', (e) => {
                     touchStartY = e.touches[0].clientY;
                     touchStartScrollTop = textContainer.scrollTop;
-                    touchStartTime = Date.now();
-                    isScrollingText = true;
-                    isTouchScrolling = false;
                     
-                    // 添加触摸反馈
-                    textContainer.style.transform = 'scale(0.98)';
-                    textContainer.style.transition = 'transform 0.1s ease';
+                    // 检查是否触摸在滚动条区域
+                    const touchX = e.touches[0].clientX;
+                    const rect = textContainer.getBoundingClientRect();
+                    const isOnScrollbarTouch = touchX >= rect.right - 16;
                     
-                    // 更新调试信息
-                    const debugInfo = document.getElementById('touch-debug-info');
-                    if (debugInfo) {
-                        debugInfo.innerHTML = `
-                            <div style="
-                                position: absolute;
-                                bottom: 10px;
-                                left: 10px;
-                                background: rgba(0, 0, 0, 0.7);
-                                color: white;
-                                padding: 4px 8px;
-                                border-radius: 8px;
-                                font-size: 10px;
-                                font-family: monospace;
-                                z-index: 100;
-                                pointer-events: none;
-                                opacity: 0.6;
-                            ">
-                                触摸开始: Y=${touchStartY}, 滚动位置=${touchStartScrollTop}
-                            </div>
-                        `;
+                    if (isOnScrollbarTouch) {
+                        console.log('📱 触摸滚动条区域开始');
+                        textContainer.style.boxShadow = 'inset 0 0 10px rgba(190, 50, 85, 0.3)';
                     }
                 });
 
@@ -17401,189 +17164,149 @@ ${eventTypeSpecificInput}
                     const touchY = e.touches[0].clientY;
                     const deltaY = touchStartY - touchY;
                     
-                    // 检查是否在文本框内触摸
-                    const rect = textContainer.getBoundingClientRect();
-                    const touchX = e.touches[0].clientX;
-                    const isInsideTextContainer = (
-                        touchX >= rect.left && 
-                        touchX <= rect.right && 
-                        touchY >= rect.top && 
-                        touchY <= rect.bottom
-                    );
-                    
-                    if (isInsideTextContainer && Math.abs(deltaY) > 5) {
-                        // 只在文本框有内容可滚动时才阻止默认行为
+                    if (Math.abs(deltaY) > 5) {
                         const maxScrollTop = textContainer.scrollHeight - textContainer.clientHeight;
-                        const canScrollUp = textContainer.scrollTop > 0;
-                        const canScrollDown = textContainer.scrollTop < maxScrollTop;
+                        const newScrollTop = touchStartScrollTop + deltaY;
                         
-                        if ((deltaY > 0 && canScrollDown) || (deltaY < 0 && canScrollUp)) {
-                            // 阻止页面滚动，处理文本框滚动
-                            e.preventDefault();
-                            e.stopPropagation();
-                            
-                            isTouchScrolling = true;
-                            
-                            // 计算新的滚动位置（添加惯性效果）
-                            const newScrollTop = touchStartScrollTop + deltaY * 1.2;
-                            
-                            // 限制滚动范围
-                            if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
-                                textContainer.scrollTop = newScrollTop;
-                            } else if (newScrollTop < 0) {
-                                textContainer.scrollTop = 0;
-                            } else if (newScrollTop > maxScrollTop) {
-                                textContainer.scrollTop = maxScrollTop;
-                            }
-                            
-                            // 更新调试信息
-                            const debugInfo = document.getElementById('touch-debug-info');
-                            if (debugInfo) {
-                                debugInfo.innerHTML = `
-                                    <div style="
-                                        position: absolute;
-                                        bottom: 10px;
-                                        left: 10px;
-                                        background: rgba(0, 0, 0, 0.7);
-                                        color: white;
-                                        padding: 4px 8px;
-                                        border-radius: 8px;
-                                        font-size: 10px;
-                                        font-family: monospace;
-                                        z-index: 100;
-                                        pointer-events: none;
-                                        opacity: 0.6;
-                                    ">
-                                        滚动中: deltaY=${deltaY}, 新位置=${Math.round(newScrollTop)}
-                                    </div>
-                                `;
-                            }
-                            
-                            clearTimeout(scrollTimeout);
-                            scrollTimeout = setTimeout(() => {
-                                isScrollingText = false;
-                            }, 300);
+                        if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
+                            textContainer.scrollTop = newScrollTop;
+                            console.log('📱 触摸滚动中:', {
+                                deltaY: deltaY,
+                                newScrollTop: newScrollTop,
+                                maxScrollTop: maxScrollTop
+                            });
                         }
                     }
-                }, { passive: false });
+                });
 
                 textContainer.addEventListener('touchend', (e) => {
-                    if (isTouchScrolling) {
-                        // 如果进行了触摸滚动，阻止默认行为
+                    // 触摸结束，清除视觉反馈
+                    textContainer.style.boxShadow = '';
+                    console.log('📱 触摸滚动结束');
+                });
+
+                // 鼠标拖拽滚动条支持 - 重写版本
+                let isDragging = false;
+                let dragStartY = 0;
+                let dragStartScrollTop = 0;
+
+                // 更精确的滚动条检测
+                function isOnScrollbar(e) {
+                    const rect = textContainer.getBoundingClientRect();
+                    
+                    // 使用固定的滚动条宽度，与CSS中的12px保持一致
+                    const scrollbarWidth = 12;
+                    
+                    // 检查是否在滚动条区域（右侧12px范围内）
+                    const isInScrollbarArea = e.clientX >= rect.right - scrollbarWidth;
+                    
+                    console.log('🎯 滚动条检测:', {
+                        clientX: e.clientX,
+                        rectRight: rect.right,
+                        scrollbarWidth: scrollbarWidth,
+                        threshold: rect.right - scrollbarWidth,
+                        isInScrollbarArea: isInScrollbarArea,
+                        rect: rect
+                    });
+                    
+                    return isInScrollbarArea;
+                }
+
+                textContainer.addEventListener('mousedown', (e) => {
+                    if (isOnScrollbar(e)) {
+                        isDragging = true;
+                        dragStartY = e.clientY;
+                        dragStartScrollTop = textContainer.scrollTop;
+                        textContainer.style.cursor = 'grabbing';
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('✅ 开始拖拽滚动条');
+                        
+                        // 添加拖拽状态样式
+                        textContainer.style.userSelect = 'none';
+                        
+                        // 添加拖拽时的视觉反馈
+                        textContainer.style.boxShadow = 'inset 0 0 10px rgba(190, 50, 85, 0.3)';
+                    }
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        const deltaY = e.clientY - dragStartY;
+                        const newScrollTop = dragStartScrollTop + deltaY;
+                        const maxScrollTop = textContainer.scrollHeight - textContainer.clientHeight;
+                        
+                        // 限制滚动范围
+                        const clampedScrollTop = Math.max(0, Math.min(newScrollTop, maxScrollTop));
+                        textContainer.scrollTop = clampedScrollTop;
+                        
+                        console.log('🔄 拖拽中:', {
+                            deltaY: deltaY,
+                            newScrollTop: newScrollTop,
+                            clampedScrollTop: clampedScrollTop,
+                            maxScrollTop: maxScrollTop
+                        });
+                    }
+                });
+
+                document.addEventListener('mouseup', (e) => {
+                    if (isDragging) {
+                        isDragging = false;
+                        textContainer.style.cursor = 'default';
+                        textContainer.style.userSelect = '';
+                        textContainer.style.boxShadow = '';
+                        console.log('✅ 拖拽结束');
+                    }
+                });
+
+                // 防止拖拽时选中文本
+                textContainer.addEventListener('selectstart', (e) => {
+                    if (isDragging) {
                         e.preventDefault();
                     }
-                    
-                    // 触摸结束后重置状态
-                    setTimeout(() => {
-                        isScrollingText = false;
-                        isTouchScrolling = false;
-                    }, 100);
-                    
-                    // 恢复触摸反馈
-                    textContainer.style.transform = 'scale(1)';
-                    textContainer.style.transition = 'transform 0.2s ease';
-                    
-                    // 更新调试信息
-                    const debugInfo = document.getElementById('touch-debug-info');
-                    if (debugInfo) {
-                        const touchDuration = Date.now() - touchStartTime;
-                        debugInfo.innerHTML = `
-                            <div style="
-                                position: absolute;
-                                bottom: 10px;
-                                left: 10px;
-                                background: rgba(0, 0, 0, 0.7);
-                                color: white;
-                                padding: 4px 8px;
-                                border-radius: 8px;
-                                font-size: 10px;
-                                font-family: monospace;
-                                z-index: 100;
-                                pointer-events: none;
-                                opacity: 0.6;
-                            ">
-                                触摸结束: 持续时间=${touchDuration}ms, 滚动=${isTouchScrolling ? '是' : '否'}
-                            </div>
-                        `;
+                });
+
+                // 添加点击滚动条跳转功能 - 优化版本
+                textContainer.addEventListener('click', (e) => {
+                    if (isOnScrollbar(e)) {
+                        const rect = textContainer.getBoundingClientRect();
+                        const clickY = e.clientY - rect.top;
+                        const containerHeight = rect.height;
+                        const scrollHeight = textContainer.scrollHeight;
+                        const maxScrollTop = scrollHeight - containerHeight;
+                        
+                        // 计算点击位置对应的滚动位置
+                        const newScrollTop = Math.max(0, Math.min(
+                            (clickY / containerHeight) * scrollHeight, 
+                            maxScrollTop
+                        ));
+                        
+                        textContainer.scrollTop = newScrollTop;
+                        console.log('🎯 点击滚动条跳转:', {
+                            clickY: clickY,
+                            containerHeight: containerHeight,
+                            scrollHeight: scrollHeight,
+                            newScrollTop: newScrollTop,
+                            maxScrollTop: maxScrollTop
+                        });
                     }
                 });
 
-                // 防止触摸事件冒泡到父元素
-                textContainer.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: false });
-                textContainer.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
-                textContainer.addEventListener('touchend', (e) => e.stopPropagation(), { passive: false });
+                // 添加调试信息
+                console.log('🎯 滚动条拖拽功能已初始化');
+                console.log('📊 文本框信息:', {
+                    scrollHeight: textContainer.scrollHeight,
+                    clientHeight: textContainer.clientHeight,
+                    scrollTop: textContainer.scrollTop,
+                    overflowY: textContainer.style.overflowY,
+                    computedOverflowY: window.getComputedStyle(textContainer).overflowY
+                });
+                
 
-                // 添加触摸调试信息（开发时使用，生产环境可以删除）
-                console.log('触摸滚动事件已绑定到文本框:', textContainer);
-                console.log('文本框滚动高度:', textContainer.scrollHeight);
-                console.log('文本框可视高度:', textContainer.clientHeight);
-                
-                // 添加触摸滚动指示器
-                const scrollIndicator = document.createElement('div');
-                scrollIndicator.innerHTML = `
-                    <div style="
-                        position: absolute;
-                        top: 10px;
-                        right: 10px;
-                        background: rgba(190, 50, 85, 0.8);
-                        color: white;
-                        padding: 6px 10px;
-                        border-radius: 15px;
-                        font-size: 11px;
-                        font-weight: 500;
-                        z-index: 100;
-                        pointer-events: none;
-                        opacity: 0.8;
-                        transition: opacity 0.3s ease;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                    ">
-                        📱 触摸滚动
-                    </div>
-                `;
-                scrollIndicator.id = 'touch-scroll-indicator';
-                textContainer.appendChild(scrollIndicator);
-                
-                // 添加触摸调试信息
-                const debugInfo = document.createElement('div');
-                debugInfo.innerHTML = `
-                    <div style="
-                        position: absolute;
-                        bottom: 10px;
-                        left: 10px;
-                        background: rgba(0, 0, 0, 0.7);
-                        color: white;
-                        padding: 4px 8px;
-                        border-radius: 8px;
-                        font-size: 10px;
-                        font-family: monospace;
-                        z-index: 100;
-                        pointer-events: none;
-                        opacity: 0.6;
-                    ">
-                        触摸调试: 等待触摸...
-                    </div>
-                `;
-                debugInfo.id = 'touch-debug-info';
-                textContainer.appendChild(debugInfo);
-                
-                // 触摸时显示指示器
-                textContainer.addEventListener('touchstart', () => {
-                    const indicator = document.getElementById('touch-scroll-indicator');
-                    if (indicator) {
-                        indicator.style.opacity = '1';
-                    }
-                });
-                
-                // 触摸结束后隐藏指示器
-                textContainer.addEventListener('touchend', () => {
-                    const indicator = document.getElementById('touch-scroll-indicator');
-                    if (indicator) {
-                        setTimeout(() => {
-                            indicator.style.opacity = '0.8';
-                        }, 1000);
-                    }
-                });
             }
+
+            // 新增：智能滚动冲突处理
+            setupSmartScrollHandling();
 
             // 1. 首先执行加载数据和基础设置
             await loadAllSavedData();
@@ -17620,8 +17343,7 @@ ${eventTypeSpecificInput}
             setupDrawingBoardEvents();
             setupTarotCard();
 
-            // 新增：智能滚动冲突处理
-            setupSmartScrollHandling();
+
 
         });
         // ================== 页面加载完成后的总初始化 (修正版) END ==================
