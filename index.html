@@ -862,10 +862,8 @@
             display: block;
             margin: 0 auto 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            max-height: 600px;
-            width: 100%;
-            height: auto;
+            width: 400px;
+            height: 300px;
         }
 
         .drawing-tools {
@@ -1016,8 +1014,10 @@
             }
             
             #drawing-canvas {
-                max-width: 100%;
-                max-height: 250px;
+                width: 100%;
+                height: 75vw;
+                max-width: 300px;
+                max-height: 225px;
             }
             
             .drawing-tools {
@@ -1080,10 +1080,10 @@
             border-radius: 25px;
             padding: 0;
             max-width: 420px;
-            max-height: 680px;
+            max-height: 90vh;
             width: 90%;
             height: auto;
-            min-height: 520px;
+            min-height: 600px;
             overflow: hidden;
             box-shadow: 
                 0 25px 80px rgba(0, 0, 0, 0.8),
@@ -1091,8 +1091,7 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transform: scale(0.7) rotateY(-15deg);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid transparent;
-            background-clip: padding-box;
+            border: none;
             position: relative;
             box-sizing: border-box;
             margin: 0;
@@ -1105,36 +1104,32 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, 
-                transparent 0%, 
-                rgba(128, 128, 128, 0.1) 25%, 
-                rgba(64, 64, 64, 0.2) 50%, 
-                rgba(128, 128, 128, 0.1) 75%, 
-                transparent 100%);
+            background: none;
             border-radius: 25px;
-            animation: shimmer 3s ease-in-out infinite;
+            animation: none;
             pointer-events: none;
+            z-index: 1;
+            box-sizing: border-box;
         }
 
         .tarot-modal-content::after {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                #ffffff, #cccccc, #999999, #666666, #ffffff);
-            background-size: 400% 400%;
-            border-radius: 27px;
-            z-index: -1;
-            animation: borderGlow 4s ease-in-out infinite;
-            opacity: 0.5;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: none;
+            border-radius: 25px;
+            z-index: 0;
+            animation: none;
+            opacity: 0;
+            box-sizing: border-box;
         }
 
         @keyframes shimmer {
-            0%, 100% { opacity: 0.3; transform: translateX(-100%); }
-            50% { opacity: 0.8; transform: translateX(100%); }
+            0%, 100% { opacity: 0.2; transform: translateX(-100%); }
+            50% { opacity: 0.5; transform: translateX(100%); }
         }
 
         @keyframes borderGlow {
@@ -1156,6 +1151,8 @@
             border-radius: 25px 25px 0 0;
             position: relative;
             overflow: hidden;
+            z-index: 3;
+            margin: 0;
         }
 
         .tarot-modal-header::before {
@@ -1225,6 +1222,7 @@
             flex-direction: column;
             height: 100%;
             position: relative;
+            min-height: 400px;
         }
 
         .tarot-container::before {
@@ -1235,8 +1233,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(128, 128, 128, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(64, 64, 64, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 20%, rgba(128, 128, 128, 0.05) 0%, transparent 80%),
+                radial-gradient(circle at 80% 80%, rgba(64, 64, 64, 0.05) 0%, transparent 80%);
             pointer-events: none;
         }
 
@@ -1248,11 +1246,11 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 8px),
-                radial-gradient(circle at 75% 75%, rgba(128, 128, 128, 0.1) 0%, transparent 8px),
-                radial-gradient(circle at 50% 10%, rgba(64, 64, 64, 0.1) 0%, transparent 6px),
-                radial-gradient(circle at 10% 60%, rgba(255, 255, 255, 0.1) 0%, transparent 6px),
-                radial-gradient(circle at 90% 40%, rgba(128, 128, 128, 0.1) 0%, transparent 6px);
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 0%, transparent 25px),
+                radial-gradient(circle at 75% 75%, rgba(128, 128, 128, 0.05) 0%, transparent 25px),
+                radial-gradient(circle at 50% 10%, rgba(64, 64, 64, 0.05) 0%, transparent 20px),
+                radial-gradient(circle at 10% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 20px),
+                radial-gradient(circle at 90% 40%, rgba(128, 128, 128, 0.05) 0%, transparent 20px);
             animation: particleFloat 8s ease-in-out infinite;
             pointer-events: none;
         }
@@ -1260,19 +1258,19 @@
         @keyframes particleFloat {
             0%, 100% { 
                 transform: translateY(0px) rotate(0deg);
-                opacity: 0.3;
+                opacity: 0.2;
             }
             25% { 
-                transform: translateY(-10px) rotate(90deg);
-                opacity: 0.7;
+                transform: translateY(-8px) rotate(90deg);
+                opacity: 0.4;
             }
             50% { 
-                transform: translateY(-5px) rotate(180deg);
-                opacity: 0.5;
+                transform: translateY(-4px) rotate(180deg);
+                opacity: 0.3;
             }
             75% { 
-                transform: translateY(-15px) rotate(270deg);
-                opacity: 0.8;
+                transform: translateY(-12px) rotate(270deg);
+                opacity: 0.5;
             }
         }
 
@@ -1323,8 +1321,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 80%),
+                radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 80%);
             animation: cardGlow 3s ease-in-out infinite;
         }
 
@@ -1371,8 +1369,8 @@
         }
 
         @keyframes cardGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
 
         .tarot-card-back:hover {
@@ -1601,36 +1599,36 @@
             .tarot-modal-content {
                 margin: 15px;
                 max-width: calc(100% - 30px);
-                max-height: calc(100% - 30px);
+                max-height: 85vh;
                 width: calc(100% - 30px);
                 height: auto;
-                min-height: 450px;
-                transform: scale(0.8) rotateY(-10deg);
+                min-height: 500px;
+                transform: scale(0.9) rotateY(0deg);
             }
             
             .tarot-modal-overlay.visible .tarot-modal-content {
-                transform: scale(0.9) rotateY(0deg);
+                transform: scale(1) rotateY(0deg);
             }
             
             .tarot-card-back,
             .tarot-card-front {
-                width: 140px;
-                height: 210px;
+                width: 160px;
+                height: 240px;
             }
             
             .tarot-container {
-                padding: 15px;
+                padding: 20px;
             }
             
             .tarot-actions {
-                gap: 10px;
-                margin-top: 15px;
+                gap: 15px;
+                margin-top: 20px;
             }
             
             .tarot-btn {
-                padding: 10px 20px;
-                min-width: 100px;
-                font-size: 13px;
+                padding: 12px 24px;
+                min-width: 120px;
+                font-size: 14px;
             }
         }
 
@@ -1640,10 +1638,10 @@
             }
             
             .tarot-modal-content {
-                transform: scale(0.9) rotateY(0deg);
+                transform: scale(0.95) rotateY(0deg);
                 max-width: 95%;
-                max-height: 90vh;
-                min-height: auto;
+                max-height: 80vh;
+                min-height: 450px;
             }
             
             .tarot-modal-overlay.visible .tarot-modal-content {
@@ -1652,8 +1650,8 @@
             
             .tarot-card-back,
             .tarot-card-front {
-                width: 100px;
-                height: 150px;
+                width: 140px;
+                height: 200px;
             }
             
             .tarot-actions {
@@ -1663,21 +1661,21 @@
             
             .tarot-btn {
                 min-width: 100%;
-                padding: 12px 20px;
-                font-size: 14px;
+                padding: 14px 24px;
+                font-size: 15px;
             }
             
             .tarot-info {
-                margin: 15px 0;
-                padding: 15px;
+                margin: 20px 0;
+                padding: 18px;
             }
             
             .card-name {
-                font-size: 18px;
+                font-size: 19px;
             }
             
             .card-meaning {
-                font-size: 13px;
+                font-size: 14px;
             }
         }
         
@@ -1687,9 +1685,10 @@
             }
             
             .tarot-modal-content {
-                transform: scale(0.95) rotateY(0deg);
+                transform: scale(0.98) rotateY(0deg);
                 max-width: 98%;
-                max-height: 95vh;
+                max-height: 85vh;
+                min-height: 400px;
             }
             
             .tarot-modal-overlay.visible .tarot-modal-content {
@@ -1698,26 +1697,26 @@
             
             .tarot-card-back,
             .tarot-card-front {
-                width: 80px;
-                height: 120px;
+                width: 120px;
+                height: 180px;
             }
             
             .tarot-info {
-                margin: 10px 0;
-                padding: 10px;
+                margin: 15px 0;
+                padding: 15px;
             }
             
             .card-name {
-                font-size: 16px;
+                font-size: 17px;
             }
             
             .card-meaning {
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .tarot-btn {
-                padding: 10px 16px;
-                font-size: 13px;
+                padding: 12px 20px;
+                font-size: 14px;
             }
         }
         
@@ -1737,10 +1736,11 @@
             
             .tarot-modal-content {
                 position: relative !important;
-                transform: scale(0.9) rotateY(0deg) !important;
+                transform: scale(1) rotateY(0deg) !important;
                 max-width: 95vw !important;
-                max-height: 90vh !important;
+                max-height: 85vh !important;
                 margin: 0 auto !important;
+                min-height: 500px !important;
             }
             
             .tarot-modal-overlay.visible .tarot-modal-content {
@@ -1781,21 +1781,56 @@
         @media (max-width: 768px) {
             .tarot-modal-content {
                 max-height: 85vh !important;
+                min-height: 500px !important;
             }
         }
         
         @media (max-width: 480px) {
             .tarot-modal-content {
                 max-height: 80vh !important;
+                min-height: 450px !important;
             }
         }
         
         /* 更精确的垂直居中 */
         .tarot-modal-overlay.visible {
-            align-items: flex-start !important;
-            padding-top: 5vh !important;
-            padding-bottom: 5vh !important;
+            align-items: center !important;
+            padding-top: 2vh !important;
+            padding-bottom: 2vh !important;
             overflow-y: auto !important;
+        }
+        
+        /* 移动端塔罗牌卡片显示优化 */
+        @media (max-width: 768px) {
+            .tarot-card-display {
+                margin-bottom: 20px;
+            }
+            
+            .tarot-info {
+                margin: 20px 0;
+                padding: 20px;
+            }
+            
+            .tarot-actions {
+                margin-top: 25px;
+                padding-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tarot-card-display {
+                margin-bottom: 25px;
+            }
+            
+            .tarot-info {
+                margin: 25px 0;
+                padding: 22px;
+            }
+            
+            .tarot-actions {
+                margin-top: 30px;
+                padding-bottom: 15px;
+            }
         }
         
         /* 移动端更精确的垂直居中 */
@@ -6509,7 +6544,7 @@
                             </button>
                         </div>
                         <div class="drawing-board-container">
-                            <canvas id="drawing-canvas" width="800" height="1200"></canvas>
+                            <canvas id="drawing-canvas" width="400" height="300"></canvas>
                             <div class="drawing-tools">
                                 <div class="color-palette">
                                     <div class="color-swatch" data-color="#000000" style="background-color: #000000;"></div>
@@ -14215,10 +14250,20 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             });
             // 动态按钮事件监听器
             $('#wechat-new-moment-button').addEventListener('click', () => {
+                // 清空之前的內容和圖片
+                $('#moment-content-input').value = '';
+                $('#moment-image-label').textContent = '添加图片 (可选)';
+                tempMomentImage = null;
                 $('#post-moment-modal').classList.add('visible');
             });
             
-            $('#cancel-post-moment-btn').addEventListener('click', () => $('#post-moment-modal').classList.remove('visible'));
+            $('#cancel-post-moment-btn').addEventListener('click', () => {
+                // 清空圖片和輸入框
+                $('#moment-content-input').value = '';
+                $('#moment-image-label').textContent = '添加图片 (可选)';
+                tempMomentImage = null;
+                $('#post-moment-modal').classList.remove('visible');
+            });
             $('#confirm-post-moment-btn').addEventListener('click', () => {
                 // 用户只能发布自己的动态
                 const authorId = 'user';
@@ -14250,8 +14295,10 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 $('#post-moment-modal').classList.remove('visible');
                 showMessageBox('动态发布成功！');
                 
-                // [新代码] - 清空动态输入框
+                // [新代码] - 清空动态输入框和图片
                 $('#moment-content-input').value = '';
+                $('#moment-image-label').textContent = '添加图片 (可选)';
+                tempMomentImage = null;
             });
 
             // 日记本书架点击事件
