@@ -16126,268 +16126,8 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
         let currentMonitoringCharacterId = null;
         let characterCurrentStatus = {}; // 存储每个角色的当前监控状态
 
-        function updateMonitoringUI(fullResponseText, characterId) {
-            // !! 核心修复：在开始新动画前，清除任何可能存在的旧动画计时器 !!
-            clearTimeout(typewriterTimeout);
 
-            const textElement = $('#monitoring-status-text');
-            const moodIconElement = $('#monitoring-mood-icon');
-            const moodTextElement = $('#monitoring-mood-text');
-            const timestampElement = $('#monitoring-timestamp');
-            const refreshButtonIcon = $('#monitoring-refresh-button i');
 
-            refreshButtonIcon.classList.remove('animate-spin');
-            refreshButtonIcon.className = 'ri-refresh-line';
-
-            let mood = '未知';
-            let statusText = fullResponseText;
-
-            const moodMatch = fullResponseText.match(/^\[心情:\s*([^\]]+)\]\s*/);
-            if (moodMatch) {
-                mood = moodMatch[1].trim();
-                statusText = fullResponseText.replace(moodMatch[0], '');
-            }
-            
-            const moodMap = {
-                '愉悦': { icon: '✨', color: 'text-yellow-300' }, '兴奋': { icon: '✨', color: 'text-yellow-300' },
-                '平静': { icon: '💭', color: 'text-blue-300' }, '沉思': { icon: '💭', color: 'text-blue-300' },
-                '悲伤': { icon: '💧', color: 'text-gray-400' }, '沮丧': { icon: '💧', color: 'text-gray-400' },
-                '愤怒': { icon: '❗', color: 'text-red-400' }, '警觉': { icon: '❗', color: 'text-red-400' },
-                '爱恋': { icon: '♥️', color: 'text-pink-400' }, '欲望': { icon: '♥️', color: 'text-pink-400' },
-                '未知': { icon: '🪼', color: 'text-gray-500' }
-            };
-            
-            const moodInfo = moodMap[mood] || moodMap['未知'];
-            moodIconElement.textContent = moodInfo.icon;
-            moodTextElement.textContent = mood;
-            moodTextElement.className = `font-semibold ml-1 ${moodInfo.color}`;
-            moodIconElement.className = moodInfo.color;
-
-            let i = 0;
-            textElement.textContent = '';
-            function typeWriter() {
-                if (i < statusText.length) {
-                    textElement.textContent += statusText.charAt(i);
-                    i++;
-                    // !! 核心修复：将新的计时器ID存入全局变量 !!
-                    typewriterTimeout = setTimeout(typeWriter, 50);
-                }
-            }
-            typeWriter();
-
-            const now = new Date();
-            timestampElement.textContent = `[信号截获于: ${now.toLocaleTimeString()}]`;
-
-            // 保存当前状态到全局变量中，用于"持续监控"功能
-            if (characterId && currentMonitoringCharacterId === characterId) {
-                characterCurrentStatus[characterId] = fullResponseText;
-            }
-        }
-
-        async function getCharacterStatus(characterId) {
-            const refreshButtonIcon = $('#monitoring-refresh-button i');
-            refreshButtonIcon.className = 'ri-loader-4-line animate-spin';
-            $('#monitoring-status-text').textContent = '信号连接中...';
-            $('#monitoring-timestamp').textContent = '';
-
-            const context = gatherAIContext(characterId);
-            if (!context) {
-                updateMonitoringUI('[信号连接失败...]', characterId);
-                return;
-            }
-
-            const { character, chatHistory, worldBookContext } = context;
-
-            // !! 核心修复：恢复被错误删除的 historyForApi 变量定义 !!
-            const historyForApi = chatHistory.map(msg => {
-                if (msg.type === 'red-packet') {
-                    return { ...msg, content: `[${msg.sender === 'user' ? '用户' : '你'}发送了一个红包...]` };
-                }
-                if (msg.type === 'transfer') {
-                     return { ...msg, content: `[${msg.sender === 'user' ? '用户' : '你'}发起了一笔转账...]` };
-                }
-                return msg;
-            });
-
-            // --- 随机事件判定逻辑 START ---
-            let eventType = 'regular';
-            const randomValue = Math.random();
-            if (randomValue < 0.05) {
-                eventType = 'discovered';
-            } else if (randomValue < 0.20) {
-                eventType = 'random';
-            }
-            // --- 随机事件判定逻辑 END ---
-
-            // --- 根据事件类型，构建不同的AI Prompt START ---
-            const apiSettings = loadData('api_settings');
-            if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
-                updateMonitoringUI('[错误: API未配置]', characterId);
-                return;
-            }
-
-            let systemPrompt;
-            const isGoogleApi = apiSettings.url.includes('googleapis.com');
-            let requestBody;
-
-            const regularPromptTemplate = `
-# 指令身份
-你是一个世界状态模拟器。
-# 任务目标
-你的输出必须严格遵循以下格式：\`[心情: <用一个词描述心情>] <状态描述文本>\`
-# 核心规则
-1.  **绝对一致性**: 你的描述必须严格基于我提供的[近期聊天历史]，作为其直接延续或合乎逻辑的发展。
-2.  **第三人称视角**: 始终使用"他/她"。
-3.  **禁止对话与心理活动**: 不要输出任何角色的对话或直接的心理描写。
-# 叙事深度扩展：虚拟恋人
-该角色是用户的虚拟恋人。叙事应大胆、真实地探索符合角色设定的亲密、私密瞬间。
-# 输入信息
----
-[角色名]: ${character.name}
-[角色当前状态 (非聊天时)]: ${context.currentStatus}
-[角色设定]: ${character.persona}
-[与我的关系]: ${character.myPersona}
-[世界观背景]: ${worldBookContext}
-[近期聊天历史]:
-${historyForApi.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${m.content}`).join('\n')}
----
-`;
-
-            const randomEventPromptTemplate = `
-# 指令身份
-你是一个世界状态模拟器。
-# 特殊事件指令：随机活动！
-常规模拟暂停。现在，你需要创造一个符合角色设定，但又意料之外的有趣随机活动场景。
-# 任务目标
-你的输出必须严格遵循以下格式：\`[心情: <用一个词描述心情>] <随机事件的状态描述文本>\`
-# 输入信息
----
-[角色名]: ${character.name}
-[角色设定]: ${character.persona}
-[世界观背景]: ${worldBookContext}
----
-`;
-
-            const discoveredPromptTemplate = `
-# 指令身份
-你是一个世界状态模拟器。
-# 特殊事件指令：发现监控！
-角色 ${character.name} 察觉到了正在进行的"监控"。放弃描述他的常规活动，转而描述他"发现自己被观察后"的第一个反应。
-# 任务目标
-你的输出必须严格遵循以下格式：\`[心情: <用一个词描述心情，如警觉、玩味、恼怒等>] <发现监控后的反应描述>\`
-# 输入信息
----
-[角色名]: ${character.name}
-[角色设定]: ${character.persona}
----
-`;
-
-            if (eventType === 'discovered') {
-                systemPrompt = discoveredPromptTemplate;
-            } else if (eventType === 'random') {
-                systemPrompt = randomEventPromptTemplate;
-            } else {
-                systemPrompt = regularPromptTemplate;
-            }
-
-            if (isGoogleApi) {
-                requestBody = JSON.stringify({
-                    contents: [{ role: 'user', parts: [{ text: "请根据你的指令身份和输入信息，生成当前状态。" }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                });
-            } else { // OpenAI-Compatible
-                requestBody = JSON.stringify({
-                    model: apiSettings.model,
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: "请根据你的指令身份和输入信息，生成当前状态。" }
-                    ]
-                });
-            }
-            // --- 构建 Prompt 结束 ---
-
-            // --- 真实AI调用 START ---
-            try {
-                console.log(`【动态监控】准备调用AI，事件类型: ${eventType}`, { prompt: systemPrompt });
-                
-                let finalApiUrl = isGoogleApi
-                    ? `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`
-                    : `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
-
-                let headers = isGoogleApi
-                    ? { 'Content-Type': 'application/json' }
-                    : { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiSettings.key}` };
-
-                const response = await fetch(finalApiUrl, {
-                    method: 'POST',
-                    headers: headers,
-                    body: requestBody
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`API 请求失败: ${response.status} ${errorText}`);
-                }
-
-                const result = await response.json();
-                let aiMessage;
-
-                if (isGoogleApi) {
-                    aiMessage = result.candidates[0]?.content?.parts[0]?.text;
-                } else {
-                    aiMessage = result.choices[0]?.message?.content;
-                }
-
-                if (!aiMessage) {
-                    throw new Error("AI未能返回有效内容。");
-                }
-
-                updateMonitoringUI(aiMessage, characterId);
-
-                if (eventType === 'discovered') {
-                    appendMessage('[系统提示：对方似乎察觉到了你的观察，监控信号出现异常。]', 'system', 'system', true);
-                }
-
-            } catch (error) {
-                console.error("【动态监控】调用AI时出错:", error);
-                updateMonitoringUI(`[AI响应错误: ${error.message}]`, characterId);
-            }
-            // --- 真实AI调用 END ---
-        }
-
-        function renderCharacterSelectList() {
-            const listContainer = $('#character-select-list-container');
-            listContainer.innerHTML = ''; // 清空旧列表
-
-            if (characters && characters.length > 0) {
-                characters.forEach(char => {
-                    const item = document.createElement('div');
-                    item.className = 'wechat-list-item'; // 复用微信列表项的样式
-                    const avatarStyle = char.avatar ? `background-image: url(${char.avatar})` : '';
-                    item.innerHTML = `
-                        <div class="w-12 h-12 rounded-full mr-4 bg-zinc-600 flex-shrink-0 bg-cover bg-center" style="${avatarStyle}"></div>
-                        <div class="flex-grow"><h4 class="font-semibold text-lg">${char.name}</h4></div>
-                    `;
-                    item.addEventListener('click', () => {
-                        openMonitoringApp(char.id);
-                    });
-                    listContainer.appendChild(item);
-                });
-            } else {
-                listContainer.innerHTML = '<p class="text-center text-gray-500 p-8">请先在"角色书"中创建一个角色</p>';
-            }
-        }
-
-        function openMonitoringApp(characterId) {
-            currentMonitoringCharacterId = characterId;
-            const character = characters.find(c => c.id === characterId);
-            if (!character) return;
-
-            $('#monitoring-avatar').style.backgroundImage = `url(${character.avatar || ''})`;
-            $('#monitoring-name').textContent = character.name;
-            showScreen('monitoring-screen');
-            getCharacterStatus(characterId);
-        }
         // ================== 动态监控 App 逻辑 (最终版) END ==================
 
         // ================== 页面加载完成后的总初始化 (修正版) START ==================
@@ -16398,7 +16138,30 @@ ${historyForApi.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${
             // ================== 动态监控 App 逻辑 (最终版V2 - 带角色选择) START ==================
             let currentMonitoringCharacterId = null;
 
-            function updateMonitoringUI(fullResponseText) {
+            function renderCharacterSelectList() {
+                const listContainer = $('#character-select-list-container');
+                listContainer.innerHTML = ''; // 清空旧列表
+
+                if (characters && characters.length > 0) {
+                    characters.forEach(char => {
+                        const item = document.createElement('div');
+                        item.className = 'wechat-list-item'; // 复用微信列表项的样式
+                        const avatarStyle = char.avatar ? `background-image: url(${char.avatar})` : '';
+                        item.innerHTML = `
+                            <div class="w-12 h-12 rounded-full mr-4 bg-zinc-600 flex-shrink-0 bg-cover bg-center" style="${avatarStyle}"></div>
+                            <div class="flex-grow"><h4 class="font-semibold text-lg">${char.name}</h4></div>
+                        `;
+                        item.addEventListener('click', () => {
+                            openMonitoringApp(char.id);
+                        });
+                        listContainer.appendChild(item);
+                    });
+                } else {
+                    listContainer.innerHTML = '<p class="text-center text-gray-500 p-8">请先在"角色书"中创建一个角色</p>';
+                }
+            }
+
+            function updateMonitoringUI(fullResponseText, characterId) {
                 // !! 核心修复：在开始新动画前，清除任何可能存在的旧动画计时器 !!
                 clearTimeout(typewriterTimeout);
 
@@ -16449,6 +16212,11 @@ ${historyForApi.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${
 
                 const now = new Date();
                 timestampElement.textContent = `[信号截获于: ${now.toLocaleTimeString()}]`;
+
+                // 保存当前状态到全局变量中，用于"持续监控"功能
+                if (characterId && currentMonitoringCharacterId === characterId) {
+                    characterCurrentStatus[characterId] = fullResponseText;
+                }
             }
 
                         async function getCharacterStatus(characterId, isNextStep = false) {
