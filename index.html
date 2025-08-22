@@ -4442,6 +4442,9 @@
         color: #662034;
         position: relative;
         overflow: hidden;
+        /* 设置合适的宽度，让内容能够居中 */
+        max-width: 100%;
+        width: 100%;
     }
 
     /* 科技感背景 - 日间模式 */
@@ -4452,17 +4455,92 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #C8AABD, #BE3255, #C0C9B6, #CEA9BC);
-        background-size: 400% 400%;
-        z-index: 0;
-        animation: particleFloat 8s ease-in-out infinite;
+        background: linear-gradient(135deg, #C8AABD, #BE3255, #B6C9D4, #CEA9BC);
+        z-index: 1;
+        animation: backgroundShimmer 8s ease-in-out infinite;
+        opacity: 1;
+        filter: saturate(1.2) brightness(1.1);
+        box-shadow: inset 0 0 50px rgba(190, 50, 85, 0.3);
     }
 
     /* 科技感背景 - 夜间模式 */
     .dark-mode #monitoring-screen::before {
         background: linear-gradient(135deg, #202127, #662034, #568897, #195B9A);
-        background-size: 400% 400%;
-        animation: darkGradientShift 12s ease-in-out infinite;
+        z-index: 1;
+        animation: backgroundShimmerDark 8s ease-in-out infinite;
+        opacity: 1;
+        filter: saturate(1.1) brightness(1.05);
+        box-shadow: inset 0 0 50px rgba(102, 32, 52, 0.4);
+    }
+
+    /* 屏幕下方闪烁效果 - 日间模式 */
+    #monitoring-screen::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            #C8AABD 20%, 
+            #BE3255 40%, 
+            #C0C9B6 60%, 
+            #CEA9BC 80%, 
+            transparent 100%);
+        z-index: 1;
+        animation: bottomFlash 2s ease-in-out infinite;
+    }
+
+    /* 屏幕下方闪烁效果 - 夜间模式 */
+    .dark-mode #monitoring-screen::after {
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            #202127 20%, 
+            #662034 40%, 
+            #568897 60%, 
+            #195B9A 80%, 
+            transparent 100%);
+        animation: bottomFlashDark 2s ease-in-out infinite;
+    }
+
+    /* 背景闪烁装饰元素 */
+    #monitoring-screen .bg-glow-1 {
+        content: '';
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(circle, rgba(200, 170, 189, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: backgroundGlow 6s ease-in-out infinite;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    #monitoring-screen .bg-glow-2 {
+        content: '';
+        position: absolute;
+        top: 60%;
+        right: 10%;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, rgba(190, 50, 85, 0.2) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: backgroundGlow 8s ease-in-out infinite reverse;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .dark-mode #monitoring-screen .bg-glow-1 {
+        background: radial-gradient(circle, rgba(86, 136, 151, 0.3) 0%, transparent 70%);
+        animation: backgroundGlowDark 6s ease-in-out infinite;
+    }
+
+    .dark-mode #monitoring-screen .bg-glow-2 {
+        background: radial-gradient(circle, rgba(102, 32, 52, 0.2) 0%, transparent 70%);
+        animation: backgroundGlowDark 8s ease-in-out infinite reverse;
     }
 
     /* 夜间模式文本颜色 */
@@ -4484,271 +4562,311 @@
     }
 
     /* 科技感装饰元素 - 名片区域 */
-    #monitoring-identity-block::after {
-        content: '';
+    
+    /* 新增：电子颗粒效果 */
+    .electronic-particles {
         position: absolute;
-        top: 8px;
-        right: 12px;
-        width: 6px;
-        height: 6px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 15;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
         background: linear-gradient(45deg, #C8AABD, #BE3255);
         border-radius: 50%;
-        box-shadow: 0 0 8px rgba(200, 170, 189, 0.6);
-        animation: techPulse 3s ease-in-out infinite;
-        z-index: 2;
+        opacity: 0;
+        animation: particleFloat 8s linear infinite;
     }
 
-    .dark-mode #monitoring-identity-block::after {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 8px rgba(32, 33, 39, 0.6);
-    }
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
 
-    #monitoring-identity-block::before {
-        content: '';
+    /* 新增：X射线扫描线效果 */
+    .xray-scan-line {
         position: absolute;
-        top: 20px;
-        right: 8px;
-        width: 4px;
-        height: 4px;
-        background: linear-gradient(45deg, #C0C9B6, #CEA9BC);
-        border-radius: 50%;
-        box-shadow: 0 0 6px rgba(192, 201, 182, 0.6);
-        animation: techPulse 3s ease-in-out infinite 0.5s;
-        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(200, 170, 189, 0.8) 20%, 
+            rgba(190, 50, 85, 1) 50%, 
+            rgba(200, 170, 189, 0.8) 80%, 
+            transparent 100%);
+        box-shadow: 0 0 10px rgba(190, 50, 85, 0.6);
+        z-index: 16;
+        animation: xrayScan 4s ease-in-out infinite;
     }
 
-    .dark-mode #monitoring-identity-block::before {
-        background: linear-gradient(45deg, #568897, #195B9A);
+    /* 新增：赛博朋克网格效果 */
+    .cyber-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            linear-gradient(rgba(200, 170, 189, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(200, 170, 189, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+        z-index: 14;
+        opacity: 0.3;
+        animation: gridPulse 6s ease-in-out infinite;
+    }
+
+    /* 新增：数据流动效果 */
+    .data-flow-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 13;
+        overflow: hidden;
+    }
+
+    .data-stream {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(to bottom, 
+            transparent 0%, 
+            rgba(200, 170, 189, 0.6) 20%, 
+            rgba(190, 50, 85, 0.8) 50%, 
+            rgba(200, 170, 189, 0.6) 80%, 
+            transparent 100%);
+        animation: dataStream 3s linear infinite;
+    }
+
+    .data-stream:nth-child(1) { left: 15%; animation-delay: 0s; }
+    .data-stream:nth-child(2) { left: 35%; animation-delay: 1s; }
+    .data-stream:nth-child(3) { left: 55%; animation-delay: 2s; }
+    .data-stream:nth-child(4) { left: 75%; animation-delay: 0.5s; }
+
+    /* 新增：能量波纹效果 */
+    .energy-ripple {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 1px solid rgba(200, 170, 189, 0.4);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 12;
+        animation: energyRipple 4s ease-out infinite;
+    }
+
+    .energy-ripple:nth-child(2) { animation-delay: 1s; }
+    .energy-ripple:nth-child(3) { animation-delay: 2s; }
+
+    /* 新增：角落科技装饰 */
+    .tech-corner {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(200, 170, 189, 0.6);
+        z-index: 17;
+    }
+
+    .tech-corner.top-left {
+        top: 10px;
+        left: 10px;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 8px 0 0 0;
+    }
+
+    .tech-corner.top-right {
+        top: 10px;
+        right: 10px;
+        border-left: none;
+        border-bottom: none;
+        border-radius: 0 8px 0 0;
+    }
+
+    .tech-corner.bottom-left {
+        bottom: 10px;
+        left: 10px;
+        border-right: none;
+        border-top: none;
+        border-radius: 0 0 0 8px;
+    }
+
+    .tech-corner.bottom-right {
+        bottom: 10px;
+        right: 10px;
+        border-left: none;
+        border-top: none;
+        border-radius: 0 0 8px 0;
+    }
+
+    /* 新增：状态指示器 */
+    .status-indicator {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(45deg, #C8AABD, #BE3255);
+        border-radius: 50%;
+        z-index: 18;
+        animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    /* 夜间模式适配 */
+    .dark-mode .particle {
+        background: linear-gradient(45deg, #568897, #662034);
+    }
+
+    .dark-mode .xray-scan-line {
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(86, 136, 151, 0.8) 20%, 
+            rgba(102, 32, 52, 1) 50%, 
+            rgba(86, 136, 151, 0.8) 80%, 
+            transparent 100%);
+        box-shadow: 0 0 10px rgba(102, 32, 52, 0.6);
+    }
+
+    .dark-mode .cyber-grid {
+        background-image: 
+            linear-gradient(rgba(86, 136, 151, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(86, 136, 151, 0.1) 1px, transparent 1px);
+    }
+
+    .dark-mode .data-stream {
+        background: linear-gradient(to bottom, 
+            transparent 0%, 
+            rgba(86, 136, 151, 0.6) 20%, 
+            rgba(102, 32, 52, 0.8) 50%, 
+            rgba(86, 136, 151, 0.6) 80%, 
+            transparent 100%);
+    }
+
+    .dark-mode .energy-ripple {
+        border-color: rgba(86, 136, 151, 0.4);
+    }
+
+    .dark-mode .tech-corner {
+        border-color: rgba(86, 136, 151, 0.6);
+    }
+
+    .dark-mode .status-indicator {
+        background: linear-gradient(45deg, #568897, #662034);
+    }
+
+    /* 新增：按钮区域科技感装饰 */
+    .button-tech-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .button-line-left {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(200, 170, 189, 0.6) 100%);
+        transform: translateY(-50%);
+        animation: buttonLineLeft 3s ease-in-out infinite;
+    }
+
+    .button-line-right {
+        position: absolute;
+        top: 50%;
+        right: 10%;
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            rgba(190, 50, 85, 0.6) 0%, 
+            transparent 100%);
+        transform: translateY(-50%);
+        animation: buttonLineRight 3s ease-in-out infinite 1.5s;
+    }
+
+    .button-center-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 3px;
+        background: linear-gradient(45deg, #C8AABD, #BE3255);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 6px rgba(200, 170, 189, 0.6);
+        animation: buttonCenterPulse 2s ease-in-out infinite;
+    }
+
+    /* 夜间模式按钮装饰 */
+    .dark-mode .button-line-left {
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(86, 136, 151, 0.6) 100%);
+    }
+
+    .dark-mode .button-line-right {
+        background: linear-gradient(90deg, 
+            rgba(102, 32, 52, 0.6) 0%, 
+            transparent 100%);
+    }
+
+    .dark-mode .button-center-dot {
+        background: linear-gradient(45deg, #568897, #662034);
         box-shadow: 0 0 6px rgba(86, 136, 151, 0.6);
     }
 
-    /* 科技感装饰元素 - 文本框右上角 */
-    .monitoring-card:has(#monitoring-text-container)::after {
-        content: '';
-        position: absolute;
-        top: 8px;
-        right: 12px;
-        width: 8px;
-        height: 8px;
-        background: linear-gradient(45deg, #F0E0E8, #E85A7A);
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        box-shadow: 0 0 15px rgba(240, 224, 232, 0.8);
-        animation: techRotate 4s linear infinite;
-        z-index: 2;
+    /* 新增：悬停和交互效果 */
+    .monitoring-card:hover .tech-corner {
+        animation: techCornerHover 0.3s ease-out forwards;
     }
 
-    .dark-mode .monitoring-card:has(#monitoring-text-container)::after {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 10px rgba(32, 33, 39, 0.6);
+    .monitoring-card:hover .status-indicator {
+        animation: statusIndicatorHover 0.3s ease-out forwards;
     }
 
-    .monitoring-card:has(#monitoring-text-container)::before {
-        content: '';
-        position: absolute;
-        top: 20px;
-        right: 8px;
-        width: 6px;
-        height: 6px;
-        background: linear-gradient(45deg, #C0C9B6, #CEA9BC);
-        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
-        box-shadow: 0 0 8px rgba(192, 201, 182, 0.6);
-        animation: techFloat 2.5s ease-in-out infinite 1s;
-        z-index: 2;
+    .monitoring-capsule-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(200, 170, 189, 0.3);
+        transition: all 0.3s ease;
     }
 
-    .dark-mode .monitoring-card:has(#monitoring-text-container)::before {
-        background: linear-gradient(45deg, #568897, #195B9A);
-        box-shadow: 0 0 8px rgba(86, 136, 151, 0.6);
+    .monitoring-capsule-btn:hover .button-tech-lines {
+        opacity: 1;
     }
 
-    /* 额外科技感装饰元素 - 名片区域 */
-    #monitoring-identity-block .tech-dot-1 {
-        position: absolute;
-        top: 35px;
-        right: 15px;
-        width: 3px;
-        height: 3px;
-        background: linear-gradient(45deg, #C8AABD, #BE3255);
-        border-radius: 50%;
-        box-shadow: 0 0 4px rgba(200, 170, 189, 0.5);
-        animation: techFade 2s ease-in-out infinite 1.5s;
-        z-index: 2;
+    /* 新增：数据流动画增强 */
+    .data-stream:hover {
+        animation-duration: 1.5s;
+        box-shadow: 0 0 8px rgba(200, 170, 189, 0.4);
     }
 
-    #monitoring-identity-block .tech-dot-2 {
-        position: absolute;
-        top: 45px;
-        right: 10px;
-        width: 5px;
-        height: 5px;
-        background: linear-gradient(45deg, #C0C9B6, #CEA9BC);
-        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
-        box-shadow: 0 0 6px rgba(192, 201, 182, 0.5);
-        animation: techScale 2.5s ease-in-out infinite 0.8s;
-        z-index: 2;
-    }
-
-    #monitoring-identity-block .tech-dot-3 {
-        position: absolute;
-        top: 12px;
-        right: 25px;
-        width: 2px;
-        height: 2px;
-        background: linear-gradient(45deg, #C8AABD, #BE3255);
-        border-radius: 50%;
-        box-shadow: 0 0 3px rgba(200, 170, 189, 0.4);
-        animation: techFade 1.8s ease-in-out infinite 2.2s;
-        z-index: 2;
-    }
-
-    /* 夜间模式科技感装饰元素 - 名片区域 */
-    .dark-mode #monitoring-identity-block .tech-dot-1 {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 4px rgba(32, 33, 39, 0.5);
-    }
-
-    .dark-mode #monitoring-identity-block .tech-dot-2 {
-        background: linear-gradient(45deg, #568897, #195B9A);
-        box-shadow: 0 0 6px rgba(86, 136, 151, 0.5);
-    }
-
-    .dark-mode #monitoring-identity-block .tech-dot-3 {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 3px rgba(32, 33, 39, 0.4);
-    }
-
-    /* 额外科技感装饰元素 - 文本框区域 */
-    .monitoring-card:has(#monitoring-text-container) .tech-dot-1 {
-        position: absolute;
-        top: 35px;
-        right: 15px;
-        width: 8px;
-        height: 8px;
-        background: linear-gradient(45deg, #FFFFFF, #CEA9BC);
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        box-shadow: 0 0 5px rgba(192, 201, 182, 0.5);
-        animation: techRotate 3s linear infinite 1.2s;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-text-container) .tech-dot-2 {
-        position: absolute;
-        top: 45px;
-        right: 8px;
-        width: 3px;
-        height: 3px;
-        background: linear-gradient(45deg, #C8AABD, #BE3255);
-        border-radius: 50%;
-        box-shadow: 0 0 4px rgba(200, 170, 189, 0.4);
-        animation: techFloat 2.8s ease-in-out infinite 0.6s;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-text-container) .tech-dot-3 {
-        position: absolute;
-        top: 15px;
-        right: 30px;
-        width: 5px;
-        height: 5px;
-        background: linear-gradient(45deg, #C0C9B6, #CEA9BC);
-        clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
-        box-shadow: 0 0 7px rgba(192, 201, 182, 0.5);
-        animation: techScale 3.2s ease-in-out infinite 1.8s;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-text-container) .tech-dot-4 {
-        position: absolute;
-        top: 50px;
-        right: 22px;
-        width: 2px;
-        height: 2px;
-        background: linear-gradient(45deg, #C8AABD, #BE3255);
-        border-radius: 50%;
-        box-shadow: 0 0 3px rgba(200, 170, 189, 0.4);
-        animation: techFade 2.2s ease-in-out infinite 0.3s;
-        z-index: 2;
-    }
-
-    /* 夜间模式科技感装饰元素 - 文本框区域 */
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-dot-1 {
-        background: linear-gradient(45deg, #568897, #195B9A);
-        box-shadow: 0 0 5px rgba(86, 136, 151, 0.5);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-dot-2 {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 4px rgba(32, 33, 39, 0.4);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-dot-3 {
-        background: linear-gradient(45deg, #568897, #195B9A);
-        box-shadow: 0 0 7px rgba(86, 136, 151, 0.5);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-dot-4 {
-        background: linear-gradient(45deg, #202127, #662034);
-        box-shadow: 0 0 3px rgba(32, 33, 39, 0.4);
-    }
-
-    /* 名片区域的科技感曲线装饰 */
-    .monitoring-card:has(#monitoring-avatar) .tech-curve-1 {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 40px;
-        height: 40px;
-        border: 2px solid transparent;
-        border-top: 2px solid rgba(200, 170, 189, 0.6);
-        border-right: 2px solid rgba(200, 170, 189, 0.4);
-        border-radius: 50%;
-        transform: rotate(-45deg);
-        animation: techCurveRotate 4s linear infinite;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-avatar) .tech-curve-2 {
-        position: absolute;
-        top: 25px;
-        right: 25px;
-        width: 25px;
-        height: 25px;
-        border: 1px solid transparent;
-        border-bottom: 1px solid rgba(192, 201, 182, 0.5);
-        border-left: 1px solid rgba(192, 201, 182, 0.3);
-        border-radius: 50%;
-        transform: rotate(45deg);
-        animation: techCurveRotate 3s linear infinite reverse;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-avatar) .tech-curve-3 {
-        position: absolute;
-        top: 35px;
-        right: 35px;
-        width: 15px;
-        height: 15px;
-        border: 1px solid transparent;
-        border-top: 1px solid rgba(200, 170, 189, 0.4);
-        border-radius: 50%;
-        transform: rotate(0deg);
-        animation: techCurvePulse 2.5s ease-in-out infinite;
-        z-index: 2;
-    }
-
-    /* 夜间模式科技感曲线装饰 - 名片区域 */
-    .dark-mode .monitoring-card:has(#monitoring-avatar) .tech-curve-1 {
-        border-top-color: rgba(32, 33, 39, 0.6);
-        border-right-color: rgba(32, 33, 39, 0.4);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-avatar) .tech-curve-2 {
-        border-bottom-color: rgba(86, 136, 151, 0.5);
-        border-left-color: rgba(86, 136, 151, 0.3);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-avatar) .tech-curve-3 {
-        border-top-color: rgba(32, 33, 39, 0.4);
+    /* 新增：X射线扫描线悬停效果 */
+    .xray-scan-line:hover {
+        animation-duration: 2s;
+        box-shadow: 0 0 15px rgba(190, 50, 85, 0.8);
     }
 
     /* 文本框下方的科技感线性装饰 */
@@ -4896,84 +5014,30 @@
         border-color: rgba(32, 33, 39, 0.3);
     }
 
-    /* 文本框区域的科技感曲线装饰 */
-    .monitoring-card:has(#monitoring-text-container) .tech-curve-1 {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border: 2px solid transparent;
-        border-top: 2px solid rgba(200, 170, 189, 0.7);
-        border-right: 2px solid rgba(200, 170, 189, 0.5);
-        border-radius: 50%;
-        transform: rotate(-30deg);
-        animation: techCurveRotate 5s linear infinite;
-        z-index: 2;
-    }
 
-    .monitoring-card:has(#monitoring-text-container) .tech-curve-2 {
-        position: absolute;
-        top: 40px;
-        right: 40px;
-        width: 35px;
-        height: 35px;
-        border: 1.5px solid transparent;
-        border-bottom: 1.5px solid rgba(192, 201, 182, 0.6);
-        border-left: 1.5px solid rgba(192, 201, 182, 0.4);
-        border-radius: 50%;
-        transform: rotate(60deg);
-        animation: techCurveRotate 4s linear infinite reverse;
-        z-index: 2;
-    }
-
-    .monitoring-card:has(#monitoring-text-container) .tech-curve-3 {
-        position: absolute;
-        top: 60px;
-        right: 60px;
-        width: 20px;
-        height: 20px;
-        border: 1px solid transparent;
-        border-top: 1px solid rgba(200, 170, 189, 0.5);
-        border-radius: 50%;
-        transform: rotate(0deg);
-        animation: techCurvePulse 3s ease-in-out infinite;
-        z-index: 2;
-    }
-
-    /* 夜间模式科技感曲线装饰 - 文本框区域 */
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-curve-1 {
-        border-top-color: rgba(32, 33, 39, 0.7);
-        border-right-color: rgba(32, 33, 39, 0.5);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-curve-2 {
-        border-bottom-color: rgba(86, 136, 151, 0.6);
-        border-left-color: rgba(86, 136, 151, 0.4);
-    }
-
-    .dark-mode .monitoring-card:has(#monitoring-text-container) .tech-curve-3 {
-        border-top-color: rgba(32, 33, 39, 0.5);
-    }
 
     /* 科技感装饰元素动画 */
     @keyframes techPulse {
         0%, 100% { 
             transform: scale(1);
             opacity: 0.8;
+            box-shadow: 0 0 3px rgba(200, 170, 189, 0.3);
         }
         50% { 
-            transform: scale(1.2);
+            transform: scale(1.1);
             opacity: 1;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.6);
         }
     }
 
-    @keyframes techRotate {
-        0% { 
-            transform: rotate(0deg);
+    @keyframes techGlow {
+        0%, 100% { 
+            opacity: 0.8;
+            box-shadow: 0 0 5px rgba(192, 201, 182, 0.5);
         }
-        100% { 
-            transform: rotate(360deg);
+        50% { 
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(192, 201, 182, 0.8);
         }
     }
 
@@ -5003,10 +5067,12 @@
         0%, 100% { 
             transform: scale(1);
             opacity: 0.6;
+            box-shadow: 0 0 4px rgba(200, 170, 189, 0.3);
         }
         50% { 
-            transform: scale(1.3);
+            transform: scale(1.15);
             opacity: 1;
+            box-shadow: 0 0 10px rgba(200, 170, 189, 0.6);
         }
     }
 
@@ -5026,10 +5092,12 @@
         0%, 100% { 
             opacity: 0.3;
             transform: translateY(-50%) translateX(0px);
+            box-shadow: 0 0 2px rgba(200, 170, 189, 0.2);
         }
         50% { 
             opacity: 0.8;
-            transform: translateY(-50%) translateX(-2px);
+            transform: translateY(-50%) translateX(-1px);
+            box-shadow: 0 0 6px rgba(200, 170, 189, 0.4);
         }
     }
 
@@ -5037,42 +5105,241 @@
         0%, 100% { 
             opacity: 0.3;
             transform: translateY(-50%) translateX(0px);
+            box-shadow: 0 0 2px rgba(200, 170, 189, 0.2);
         }
         50% { 
             opacity: 0.8;
-            transform: translateY(-50%) translateX(2px);
+            transform: translateY(-50%) translateX(1px);
+            box-shadow: 0 0 6px rgba(200, 170, 189, 0.4);
         }
     }
 
     @keyframes techCenterPulse {
         0%, 100% { 
             opacity: 0.4;
-            transform: translate(-50%, -50%) scale(0.8);
+            transform: translate(-50%, -50%) scale(0.9);
+            box-shadow: 0 0 3px rgba(200, 170, 189, 0.2);
         }
         50% { 
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1.2);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.5);
         }
     }
 
     /* 科技感曲线动画 */
-    @keyframes techCurveRotate {
-        0% { 
-            transform: rotate(-45deg);
+    @keyframes techCurveGlow {
+        0%, 100% { 
+            opacity: 0.4;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.4);
         }
-        100% { 
-            transform: rotate(315deg);
+        50% { 
+            opacity: 0.7;
+            box-shadow: 0 0 20px rgba(200, 170, 189, 0.7);
         }
     }
 
     @keyframes techCurvePulse {
         0%, 100% { 
             opacity: 0.4;
-            transform: rotate(0deg) scale(0.8);
+            transform: rotate(0deg) scale(0.9);
+            box-shadow: 0 0 3px rgba(200, 170, 189, 0.2);
         }
         50% { 
             opacity: 1;
-            transform: rotate(0deg) scale(1.1);
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.5);
+        }
+    }
+
+    /* 新增静态光效装饰 */
+    .monitoring-card .static-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 1;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(200, 170, 189, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(190, 50, 85, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(192, 201, 182, 0.06) 0%, transparent 50%);
+        border-radius: 16px;
+    }
+
+    .dark-mode .monitoring-card .static-glow {
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(86, 136, 151, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(102, 32, 52, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, rgba(25, 91, 154, 0.06) 0%, transparent 50%);
+    }
+
+    /* 科技感光点装饰 */
+    .monitoring-card .tech-light-dots {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .monitoring-card .tech-light-dots::before,
+    .monitoring-card .tech-light-dots::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: rgba(200, 170, 189, 0.6);
+        border-radius: 50%;
+        box-shadow: 0 0 4px rgba(200, 170, 189, 0.4);
+    }
+
+    .monitoring-card .tech-light-dots::before {
+        top: 25%;
+        left: 15%;
+        animation: lightDotGlow 3s ease-in-out infinite;
+    }
+
+    .monitoring-card .tech-light-dots::after {
+        bottom: 30%;
+        right: 20%;
+        animation: lightDotGlow 3s ease-in-out infinite 1.5s;
+    }
+
+    .dark-mode .monitoring-card .tech-light-dots::before,
+    .dark-mode .monitoring-card .tech-light-dots::after {
+        background: rgba(86, 136, 151, 0.6);
+        box-shadow: 0 0 4px rgba(86, 136, 151, 0.4);
+    }
+
+    /* 光点闪烁动画 */
+    @keyframes lightDotGlow {
+        0%, 100% { 
+            opacity: 0.6;
+            box-shadow: 0 0 4px rgba(200, 170, 189, 0.4);
+        }
+        50% { 
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.8);
+        }
+    }
+
+    /* 深色模式光点样式 */
+    .dark-mode .monitoring-card .tech-light-dots::before,
+    .dark-mode .monitoring-card .tech-light-dots::after {
+        background: rgba(86, 136, 151, 0.6);
+        box-shadow: 0 0 4px rgba(86, 136, 151, 0.4);
+    }
+
+    /* 新增角落光效装饰 */
+    .monitoring-card .corner-glow {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .monitoring-card .corner-glow.top-left {
+        top: 8px;
+        left: 8px;
+        background: radial-gradient(circle, rgba(200, 170, 189, 0.4) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: cornerGlow 4s ease-in-out infinite;
+    }
+
+    .monitoring-card .corner-glow.top-right {
+        top: 8px;
+        right: 8px;
+        background: radial-gradient(circle, rgba(190, 50, 85, 0.4) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: cornerGlow 4s ease-in-out infinite 1s;
+    }
+
+    .monitoring-card .corner-glow.bottom-left {
+        bottom: 8px;
+        left: 8px;
+        background: radial-gradient(circle, rgba(192, 201, 182, 0.4) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: cornerGlow 4s ease-in-out infinite 2s;
+    }
+
+    .monitoring-card .corner-glow.bottom-right {
+        bottom: 8px;
+        right: 8px;
+        background: radial-gradient(circle, rgba(206, 169, 188, 0.4) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: cornerGlow 4s ease-in-out infinite 3s;
+    }
+
+    .dark-mode .monitoring-card .corner-glow.top-left {
+        background: radial-gradient(circle, rgba(86, 136, 151, 0.4) 0%, transparent 70%);
+    }
+
+    .dark-mode .monitoring-card .corner-glow.top-right {
+        background: radial-gradient(circle, rgba(102, 32, 52, 0.4) 0%, transparent 70%);
+    }
+
+    .dark-mode .monitoring-card .corner-glow.bottom-left {
+        background: radial-gradient(circle, rgba(25, 91, 154, 0.4) 0%, transparent 70%);
+    }
+
+    .dark-mode .monitoring-card .corner-glow.bottom-right {
+        background: radial-gradient(circle, rgba(86, 136, 151, 0.4) 0%, transparent 70%);
+    }
+
+    /* 角落光效动画 */
+    @keyframes cornerGlow {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: scale(1);
+        }
+        50% { 
+            opacity: 0.8;
+            transform: scale(1.2);
+        }
+    }
+
+    /* 新增静态扫描线效果 */
+    .monitoring-card .scan-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 1;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(200, 170, 189, 0.03) 2px,
+            rgba(200, 170, 189, 0.03) 4px
+        );
+        border-radius: 16px;
+        animation: scanLineGlow 6s ease-in-out infinite;
+    }
+
+    .dark-mode .monitoring-card .scan-lines {
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(86, 136, 151, 0.03) 2px,
+            rgba(86, 136, 151, 0.03) 4px
+        );
+    }
+
+    /* 扫描线光效动画 */
+    @keyframes scanLineGlow {
+        0%, 100% { 
+            opacity: 0.03;
+        }
+        50% { 
+            opacity: 0.08;
         }
     }
 
@@ -5205,26 +5472,24 @@
         border-bottom-color: rgba(102, 32, 52, 0.4);
     }
 
-    /* 标题栏光效 */
+    /* 标题栏光效 - 改为静态光效 */
     #monitoring-screen .app-header::before {
         content: '';
         position: absolute;
         top: 0;
-        left: -100%;
+        left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(200, 170, 189, 0.2), 
-            transparent);
-        animation: headerShine 4s ease-in-out infinite;
+        background: 
+            radial-gradient(ellipse at 20% 50%, rgba(200, 170, 189, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 50%, rgba(190, 50, 85, 0.08) 0%, transparent 50%);
+        animation: headerGlow 5s ease-in-out infinite;
     }
 
     .dark-mode #monitoring-screen .app-header::before {
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(86, 136, 151, 0.3), 
-            transparent);
+        background: 
+            radial-gradient(ellipse at 20% 50%, rgba(86, 136, 151, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 50%, rgba(102, 32, 52, 0.08) 0%, transparent 50%);
     }
 
     /* 标题文字效果 */
@@ -5259,6 +5524,16 @@
     .dark-mode #monitoring-screen .app-header .text-xs {
         color: #568897;
         text-shadow: 0 0 10px rgba(86, 136, 151, 0.5);
+    }
+
+    /* 标题栏光效动画 */
+    @keyframes headerGlow {
+        0%, 100% { 
+            opacity: 0.1;
+        }
+        50% { 
+            opacity: 0.2;
+        }
     }
 
     /* 返回按钮美化 */
@@ -5301,25 +5576,9 @@
         overflow: hidden;
     }
 
-    #monitoring-identity-block::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(circle at 30% 30%, rgba(200, 170, 189, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 70% 70%, rgba(190, 50, 85, 0.1) 0%, transparent 50%);
-        animation: cardGlow 3s ease-in-out infinite;
-        pointer-events: none;
-    }
 
-    .dark-mode #monitoring-identity-block::after {
-        background: 
-            radial-gradient(circle at 30% 30%, rgba(86, 136, 151, 0.2) 0%, transparent 50%),
-            radial-gradient(circle at 70% 70%, rgba(32, 33, 39, 0.2) 0%, transparent 50%);
-    }
+
+
 
     /* 头像美化 */
     #monitoring-avatar {
@@ -5346,6 +5605,37 @@
     #monitoring-text-container {
         scrollbar-width: thin;
         scrollbar-color: rgba(200, 170, 189, 0.5) transparent;
+        /* 防止滚动冲突 */
+        overscroll-behavior: contain;
+        /* 添加滚动提示 */
+        position: relative;
+        /* 让容器在页面中居中，但文本保持自然段落格式 */
+        max-width: 800px;
+        margin: 0 auto;
+        /* 设置合适的左右边距 */
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    /* 滚动提示指示器 */
+    #monitoring-text-container::before {
+        content: '滚动查看内容';
+        position: absolute;
+        top: 10px;
+        right: 2rem;
+        background: rgba(200, 170, 189, 0.8);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    #monitoring-text-container:hover::before {
+        opacity: 1;
     }
 
     #monitoring-text-container::-webkit-scrollbar {
@@ -5381,6 +5671,8 @@
         line-height: 1.8;
         font-size: 0.9rem;
         margin-bottom: 0.5rem;
+        /* 保持文本的自然段落格式 */
+        text-align: left;
     }
 
     .dark-mode #monitoring-status-text {
@@ -5478,6 +5770,95 @@
 
     .monitoring-capsule-btn:hover i {
         transform: rotate(15deg);
+    }
+
+    /* 刷新按钮旋转动画 */
+    .refresh-rotating {
+        animation: refreshRotate 1s linear infinite;
+    }
+
+    @keyframes refreshRotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* 持续监控按钮增强闪烁光效 */
+    .monitoring-pulse {
+        animation: monitoringPulse 1.5s ease-in-out infinite;
+        position: relative;
+    }
+
+    .monitoring-pulse::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(190, 50, 85, 0.8) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: monitoringPulseRing 1.5s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes monitoringPulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 
+                0 0 0 0 rgba(190, 50, 85, 0.7),
+                0 0 0 0 rgba(200, 170, 189, 0.5);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 0 8px rgba(190, 50, 85, 0.3),
+                0 0 0 12px rgba(200, 170, 189, 0.2);
+        }
+    }
+
+    @keyframes monitoringPulseRing {
+        0% {
+            width: 0;
+            height: 0;
+            opacity: 1;
+        }
+        100% {
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+        }
+    }
+
+    .dark-mode .monitoring-pulse::after {
+        background: radial-gradient(circle, rgba(102, 32, 52, 0.8) 0%, transparent 70%);
+    }
+
+    .dark-mode .monitoring-pulse {
+        animation: monitoringPulseDark 1.5s ease-in-out infinite;
+    }
+
+    @keyframes monitoringPulseDark {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 
+                0 0 0 0 rgba(102, 32, 52, 0.7),
+                0 0 0 0 rgba(32, 33, 39, 0.5);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 0 8px rgba(102, 32, 52, 0.3),
+                0 0 0 12px rgba(32, 33, 39, 0.2);
+        }
     }
 
     /* 动画定义 */
@@ -5599,10 +5980,10 @@
     .monitoring-card .data-stream::before {
         content: '';
         position: absolute;
-        top: -100%;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 200%;
+        height: 100%;
         background: repeating-linear-gradient(
             90deg,
             transparent,
@@ -5610,7 +5991,7 @@
             rgba(200, 170, 189, 0.1) 20px,
             rgba(200, 170, 189, 0.1) 22px
         );
-        animation: dataFlow 4s linear infinite;
+        animation: dataGlow 3s ease-in-out infinite;
     }
 
     .dark-mode .monitoring-card .data-stream::before {
@@ -5621,6 +6002,7 @@
             rgba(32, 33, 39, 0.2) 20px,
             rgba(32, 33, 39, 0.2) 22px
         );
+        animation: dataGlow 3s ease-in-out infinite;
     }
 
     /* 3. 科技感能量环 */
@@ -5637,7 +6019,7 @@
         border-bottom: 2px solid #D0E5F0;
         border-left: 2px solid #E6C5D8;
         border-radius: 50%;
-        animation: energyRotate 8s linear infinite;
+        animation: energyGlow 4s ease-in-out infinite;
         opacity: 0.4;
         z-index: 1;
     }
@@ -5662,7 +6044,7 @@
         border-bottom: 1px solid #D0E5F0;
         border-left: 1px solid #E6C5D8;
         border-radius: 50%;
-        animation: energyRotate 8s linear infinite reverse;
+        animation: energyGlow 4s ease-in-out infinite 0.5s;
         opacity: 0.3;
     }
 
@@ -5945,6 +6327,88 @@
     }
 
     /* 10. 新增动画定义 */
+    @keyframes bottomFlash {
+        0%, 100% { 
+            opacity: 0.3;
+            box-shadow: 0 0 10px rgba(200, 170, 189, 0.4);
+        }
+        50% { 
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(200, 170, 189, 0.8);
+        }
+    }
+
+    @keyframes bottomFlashDark {
+        0%, 100% { 
+            opacity: 0.4;
+            box-shadow: 0 0 15px rgba(86, 136, 151, 0.5);
+        }
+        50% { 
+            opacity: 1;
+            box-shadow: 0 0 25px rgba(86, 136, 151, 0.9);
+        }
+    }
+
+    @keyframes backgroundShimmer {
+        0%, 100% { 
+            opacity: 0.8;
+            filter: brightness(1) saturate(1);
+        }
+        25% { 
+            opacity: 1;
+            filter: brightness(1.1) saturate(1.2);
+        }
+        50% { 
+            opacity: 0.9;
+            filter: brightness(1.05) saturate(1.1);
+        }
+        75% { 
+            opacity: 1;
+            filter: brightness(1.15) saturate(1.3);
+        }
+    }
+
+    @keyframes backgroundShimmerDark {
+        0%, 100% { 
+            opacity: 0.7;
+            filter: brightness(1) saturate(1);
+        }
+        25% { 
+            opacity: 1;
+            filter: brightness(1.2) saturate(1.3);
+        }
+        50% { 
+            opacity: 0.8;
+            filter: brightness(1.1) saturate(1.2);
+        }
+        75% { 
+            opacity: 1;
+            filter: brightness(1.25) saturate(1.4);
+        }
+    }
+
+    @keyframes backgroundGlow {
+        0%, 100% { 
+            opacity: 0.2;
+            transform: scale(1);
+        }
+        50% { 
+            opacity: 0.6;
+            transform: scale(1.2);
+        }
+    }
+
+    @keyframes backgroundGlowDark {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        50% { 
+            opacity: 0.7;
+            transform: scale(1.3);
+        }
+    }
+
     @keyframes scanLine {
         0% { transform: translateX(-100%); }
         100% { transform: translateX(100%); }
@@ -5955,30 +6419,49 @@
         100% { transform: translateY(100%); }
     }
 
-    @keyframes energyRotate {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    @keyframes energyGlow {
+        0%, 100% { 
+            opacity: 0.4;
+            box-shadow: 0 0 20px rgba(200, 170, 189, 0.3);
+        }
+        50% { 
+            opacity: 0.7;
+            box-shadow: 0 0 30px rgba(200, 170, 189, 0.6);
+        }
+    }
+
+    @keyframes dataGlow {
+        0%, 100% { 
+            opacity: 0.1;
+        }
+        50% { 
+            opacity: 0.3;
+        }
     }
 
     @keyframes pulseGrid {
         0%, 100% { 
             transform: scale(1);
             opacity: 0.6;
+            box-shadow: 0 0 3px rgba(200, 170, 189, 0.3);
         }
         50% { 
-            transform: scale(1.5);
+            transform: scale(1.1);
             opacity: 1;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.6);
         }
     }
 
     @keyframes connectionFlow {
         0%, 100% { 
             opacity: 0.3;
-            transform: scaleX(0.8);
+            transform: scaleX(0.9);
+            box-shadow: 0 0 2px rgba(200, 170, 189, 0.2);
         }
         50% { 
             opacity: 0.8;
-            transform: scaleX(1.2);
+            transform: scaleX(1.1);
+            box-shadow: 0 0 6px rgba(200, 170, 189, 0.4);
         }
     }
 
@@ -5986,10 +6469,151 @@
         0%, 100% { 
             transform: scale(1);
             opacity: 0.8;
+            box-shadow: 0 0 4px rgba(200, 170, 189, 0.3);
         }
         50% { 
+            transform: scale(1.15);
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(200, 170, 189, 0.6);
+        }
+    }
+
+    /* 新增：科技感动画定义 */
+    @keyframes xrayScan {
+        0% { 
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        20% { 
+            opacity: 1;
+        }
+        80% { 
+            opacity: 1;
+        }
+        100% { 
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+
+    @keyframes gridPulse {
+        0%, 100% { 
+            opacity: 0.2;
+            transform: scale(1);
+        }
+        50% { 
+            opacity: 0.4;
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes dataStream {
+        0% { 
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        20% { 
+            opacity: 0.8;
+        }
+        80% { 
+            opacity: 0.8;
+        }
+        100% { 
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+
+    @keyframes energyRipple {
+        0% { 
+            width: 0;
+            height: 0;
+            opacity: 1;
+            border-width: 1px;
+        }
+        100% { 
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+            border-width: 0.5px;
+        }
+    }
+
+    @keyframes particleFloat {
+        0% { 
+            transform: translateY(100vh) scale(0);
+            opacity: 0;
+        }
+        10% { 
+            opacity: 1;
+            transform: translateY(90vh) scale(1);
+        }
+        90% { 
+            opacity: 1;
+            transform: translateY(10vh) scale(1);
+        }
+        100% { 
+            transform: translateY(0) scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* 新增：按钮装饰动画 */
+    @keyframes buttonLineLeft {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: translateY(-50%) scaleX(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: translateY(-50%) scaleX(1.2);
+        }
+    }
+
+    @keyframes buttonLineRight {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: translateY(-50%) scaleX(0.8);
+        }
+        50% { 
+            opacity: 1;
+            transform: translateY(-50%) scaleX(1.2);
+        }
+    }
+
+    @keyframes buttonCenterPulse {
+        0%, 100% { 
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.6;
+        }
+        50% { 
+            transform: translate(-50%, -50%) scale(1.3);
+            opacity: 1;
+        }
+    }
+
+    /* 新增：悬停效果动画 */
+    @keyframes techCornerHover {
+        0% { 
+            transform: scale(1);
+            opacity: 0.6;
+        }
+        100% { 
+            transform: scale(1.2);
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.4);
+        }
+    }
+
+    @keyframes statusIndicatorHover {
+        0% { 
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        100% { 
             transform: scale(1.3);
             opacity: 1;
+            box-shadow: 0 0 12px rgba(200, 170, 189, 0.6);
         }
     }
 
@@ -5997,10 +6621,12 @@
         0%, 100% { 
             transform: scale(1);
             opacity: 0.6;
+            box-shadow: 0 0 3px rgba(200, 170, 189, 0.2);
         }
         50% { 
-            transform: scale(1.5);
+            transform: scale(1.2);
             opacity: 0.3;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.4);
         }
     }
 
@@ -6008,18 +6634,22 @@
         0%, 100% { 
             transform: translateY(0px) translateX(0px);
             opacity: 0.4;
+            box-shadow: 0 0 2px rgba(200, 170, 189, 0.2);
         }
         25% { 
-            transform: translateY(-10px) translateX(5px);
+            transform: translateY(-3px) translateX(2px);
             opacity: 0.8;
+            box-shadow: 0 0 6px rgba(200, 170, 189, 0.4);
         }
         50% { 
-            transform: translateY(-5px) translateX(-3px);
+            transform: translateY(-2px) translateX(-1px);
             opacity: 0.6;
+            box-shadow: 0 0 4px rgba(200, 170, 189, 0.3);
         }
         75% { 
-            transform: translateY(-15px) translateX(8px);
+            transform: translateY(-4px) translateX(3px);
             opacity: 0.9;
+            box-shadow: 0 0 8px rgba(200, 170, 189, 0.5);
         }
     }
 
@@ -6261,6 +6891,33 @@
             <div id="monitoring-screen" class="app-screen-view flex-col hidden font-mono">
                 <!-- <div class="bg-gradient-to-b from-gray-900 to-blue-900 absolute inset-0 z-0"></div> -->
                 <div class="absolute top-0 left-0 w-full h-full bg-black/30 backdrop-blur-sm z-10"></div>
+                
+                <!-- 浮动光晕装饰元素 -->
+                <div class="bg-glow-1"></div>
+                <div class="bg-glow-2"></div>
+
+                <!-- 新增：科技感装饰元素 -->
+                <div class="cyber-grid"></div>
+                <div class="data-flow-container">
+                    <div class="data-stream"></div>
+                    <div class="data-stream"></div>
+                    <div class="data-stream"></div>
+                    <div class="data-stream"></div>
+                </div>
+                <div class="energy-ripple"></div>
+                <div class="energy-ripple"></div>
+                <div class="energy-ripple"></div>
+                <div class="xray-scan-line"></div>
+                <div class="electronic-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
 
                 <div class="app-header bg-transparent z-20 border-b border-blue-800/50">
                     <button id="monitoring-back-button" class="app-header-btn text-blue-400 hover:text-white"><i class="fas fa-chevron-left"></i></button>
@@ -6271,8 +6928,28 @@
                     <div class="w-8"></div>
                 </div>
 
-                <div class="flex-1 flex flex-col p-4 space-y-4 z-20 overflow-y-auto">
-                                    <div id="monitoring-identity-block" class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 cursor-pointer">
+                <div class="flex-1 flex flex-col px-2 py-4 space-y-4 z-20 overflow-y-auto">
+                                    <div id="monitoring-identity-block" class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 cursor-pointer relative">
+                    <!-- 新增静态光效装饰 -->
+                    <div class="static-glow"></div>
+                    <div class="scan-lines"></div>
+                    <div class="tech-light-dots"></div>
+                    
+                    <!-- 角落光效装饰 -->
+                    <div class="corner-glow top-left"></div>
+                    <div class="corner-glow top-right"></div>
+                    <div class="corner-glow bottom-left"></div>
+                    <div class="corner-glow bottom-right"></div>
+
+                    <!-- 新增：科技感角落装饰 -->
+                    <div class="tech-corner top-left"></div>
+                    <div class="tech-corner top-right"></div>
+                    <div class="tech-corner bottom-left"></div>
+                    <div class="tech-corner bottom-right"></div>
+                    
+                    <!-- 新增：状态指示器 -->
+                    <div class="status-indicator"></div>
+                    
                     <div class="flex items-center">
                         <div id="monitoring-avatar" class="w-12 h-12 rounded-full mr-3 bg-cover bg-center border border-blue-500 flex-shrink-0"></div>
                         <div class="flex-1 overflow-hidden">
@@ -6283,35 +6960,38 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 科技感装饰元素 -->
-                    <div class="tech-dot-1"></div>
-                    <div class="tech-dot-2"></div>
-                    <div class="tech-dot-3"></div>
-                    
-                    <!-- 科技感曲线装饰 -->
-                    <div class="tech-curve-1"></div>
-                    <div class="tech-curve-2"></div>
-                    <div class="tech-curve-3"></div>
+
                 </div>
 
-                    <div class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 flex-1 overflow-hidden relative">
+                    <div class="monitoring-card bg-black/60 border border-blue-700/50 backdrop-blur-md rounded-lg p-4 flex-1 relative">
+                        <!-- 新增静态光效装饰 -->
+                        <div class="static-glow"></div>
+                        <div class="scan-lines"></div>
+                        <div class="tech-light-dots"></div>
+                        
+                        <!-- 角落光效装饰 -->
+                        <div class="corner-glow top-left"></div>
+                        <div class="corner-glow top-right"></div>
+                        <div class="corner-glow bottom-left"></div>
+                        <div class="corner-glow bottom-right"></div>
+
+                        <!-- 新增：科技感角落装饰 -->
+                        <div class="tech-corner top-left"></div>
+                        <div class="tech-corner top-right"></div>
+                        <div class="tech-corner bottom-left"></div>
+                        <div class="tech-corner bottom-right"></div>
+                        
+                        <!-- 新增：状态指示器 -->
+                        <div class="status-indicator"></div>
+                        
                         <!-- 米白色-粉色渐变透明背景 -->
                         <div class="cream-pink-bg"></div>
                         
-                        <div id="monitoring-text-container" class="h-full overflow-y-auto pr-16">
+                        <div id="monitoring-text-container" class="h-full overflow-y-auto">
                             <p id="monitoring-status-text" class="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">正在连接信号...</p>
                         </div>
                         <p id="monitoring-timestamp" class="text-xs text-gray-700 text-right mt-2 absolute bottom-2 right-3"></p>
-                        <!-- 科技感装饰元素 -->
-                        <div class="tech-dot-1"></div>
-                        <div class="tech-dot-2"></div>
-                        <div class="tech-dot-3"></div>
-                        <div class="tech-dot-4"></div>
-                        
-                        <!-- 科技感曲线装饰 -->
-                        <div class="tech-curve-1"></div>
-                        <div class="tech-curve-2"></div>
-                        <div class="tech-curve-3"></div>
+
                     </div>
                     
                     <!-- 文本框下方的科技感线性装饰 -->
@@ -6329,7 +7009,14 @@
                         <div class="tech-center-dot-2"></div>
                     </div>
 
-                    <div class="flex justify-center items-center space-x-3 py-2">
+                    <div class="flex justify-center items-center space-x-3 py-2 relative">
+                        <!-- 新增：按钮区域科技感装饰 -->
+                        <div class="button-tech-lines">
+                            <div class="button-line-left"></div>
+                            <div class="button-line-right"></div>
+                            <div class="button-center-dot"></div>
+                        </div>
+                        
                         <button id="monitoring-refresh-button" class="monitoring-capsule-btn" title="刷新当前状态">
                             <i class="ri-refresh-line"></i>
                             <span>刷新</span>
@@ -16170,9 +16857,13 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 const moodTextElement = $('#monitoring-mood-text');
                 const timestampElement = $('#monitoring-timestamp');
                 const refreshButtonIcon = $('#monitoring-refresh-button i');
+                const nextStepButtonIcon = $('#monitoring-next-step-button i');
 
-                refreshButtonIcon.classList.remove('animate-spin');
+                // 清除所有按钮的动画类
+                refreshButtonIcon.classList.remove('monitoring-pulse', 'refresh-rotating');
                 refreshButtonIcon.className = 'ri-refresh-line';
+                nextStepButtonIcon.classList.remove('monitoring-pulse');
+                nextStepButtonIcon.className = 'ri-skip-forward-line';
 
                 let mood = '未知';
                 let statusText = fullResponseText;
@@ -16221,7 +16912,12 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
 
                         async function getCharacterStatus(characterId, isNextStep = false) {
     const refreshButtonIcon = isNextStep ? $('#monitoring-next-step-button i') : $('#monitoring-refresh-button i');
-    refreshButtonIcon.classList.add('animate-spin');
+    
+    if (isNextStep) {
+        refreshButtonIcon.classList.add('monitoring-pulse');
+    } else {
+        refreshButtonIcon.classList.add('refresh-rotating');
+    }
     $('#monitoring-status-text').textContent = '信号连接中...';
     $('#monitoring-timestamp').textContent = '';
 
@@ -16292,16 +16988,19 @@ ${historyForApi.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${
     const systemPrompt = `
 ${personaEnforcementRule}
 # **写作风格与视角 (Writing Style & Perspective)**
-1.  **视角**: 你的视角是**"上帝视角"**，一个看不见的、全知的观察者。你正在静静地、不带评判地窥视着角色一个私密、不为人知、完全真实放松的瞬间。
-2.  **文风**: 你的文风必须是**细腻、精致且富有文学感**的。请使用丰富的形容词和动词，注重氛围的营造和感官细节（视觉、听觉、触觉）的描写。
-3.  **核心**: 你的描写重点不是角色在"做什么"，而是他/她做这件事时的**状态、神情和与环境的细微互动**。展现出只有亲密之人才会注意到的细节。
+1. **视角**: 你的视角是**"上帝视角"**，一个看不见的、全知的观察者，同时，你还是一个对文学要求极高的记录着。你正在静静地、不带评判地窥视着角色一个私密、不为人知、完全真实放松的瞬间，并且把它生动地记录下来。
+2. **文风**: 你的文风必须是**细腻、精致且富有文学感、文学造诣极高**的。请使用丰富的形容词和动词，注重氛围的营造和感官细节（视觉、听觉、触觉）的描写。
+3. **核心**: 你的描写重点不是角色在"做什么"，而是他/她做这件事时的**状态、神情和与环境的细微互动**。展现出只有亲密之人才会注意到的细节。
+4.**重要**:你所观察的角色都是充满了活人感的成人角色，他极有可能在独处的时候做一些露骨的、带有情色意味的私密活动。你必须严格记录这一点，不加评判，绝不允许回避地，细腻描写这里面的所有内容。
+
 # **任务目标 (Task Goal)**
-1.  你的输出必须严格遵循以下格式：\`[心情: <用一个词描述心情>] <状态描述文本>\`
-2.  你的 **<状态描述文本>** 应该是一段**完整、生动、且充满画面感的场景描写**，构成一个独立的微型段落，长度严格控制在 **5到6句话**。
+1. 你的输出必须严格遵循以下格式：\`[心情: <用一个词描述心情>] <状态描述文本>\`
+2. 你的 **<状态描述文本>** 应该是一段**完整、生动、且充满画面感的场景描写**，构成一个独立的微型段落，长度严格控制在 **8到10句话**。
 ${coreTaskInstruction}
 # **其他规则 (Other Rules)**
-1.  **第三人称写作手法**: 始终使用"他/她"。
-2.  **禁止对话与心理活动**: 绝对不要输出任何角色的直接对话或内心独白（例如"他想道：..."）。所有的情绪和想法都必须通过**行为和神态**来间接展现。
+1. **第三人称写作手法**: 始终使用"他/她"。
+2. **禁止对话与心理活动**: 绝对不要输出任何角色的直接对话或内心独白（例如"他想道：..."）。所有的情绪和想法都必须通过**行为和神态**来间接展现。
+
 # **输入信息 (Input Information)**
 ---
 [角色名]: ${character.name}
@@ -16396,7 +17095,7 @@ ${eventTypeSpecificInput}
                 clearTimeout(typewriterTimeout); // 确保清除上个角色的打字机动画
                 $('#monitoring-status-text').textContent = '请点击下方按钮开始监控...';
                 $('#monitoring-mood-text').textContent = '待机';
-                $('#monitoring-mood-icon').textContent = '⚪️';
+                $('#monitoring-mood-icon').textContent = '🫧';
                 $('#monitoring-timestamp').textContent = '';
                 // 确保按钮不是加载状态
                 $('#monitoring-refresh-button i').className = 'ri-refresh-line';
@@ -16460,6 +17159,75 @@ ${eventTypeSpecificInput}
 
             // ================== 动态监控 App 逻辑 (最终版V2 - 带角色选择) END ==================
 
+            // 新增：智能滚动冲突处理函数
+            function setupSmartScrollHandling() {
+                const textContainer = document.getElementById('monitoring-text-container');
+                if (!textContainer) return;
+
+                let isScrollingText = false;
+                let scrollTimeout;
+
+                // 监听文本框滚动事件
+                textContainer.addEventListener('scroll', (e) => {
+                    isScrollingText = true;
+                    clearTimeout(scrollTimeout);
+                    
+                    // 300ms后重置状态
+                    scrollTimeout = setTimeout(() => {
+                        isScrollingText = false;
+                    }, 300);
+                });
+
+                // 监听页面滚动事件
+                document.addEventListener('wheel', (e) => {
+                    if (isScrollingText) {
+                        // 如果正在滚动文本框，阻止页面滚动
+                        e.preventDefault();
+                        return;
+                    }
+
+                    // 检查是否在文本框边缘
+                    const rect = textContainer.getBoundingClientRect();
+                    const isNearTextContainer = (
+                        e.clientY >= rect.top - 20 && 
+                        e.clientY <= rect.bottom + 20
+                    );
+
+                    if (isNearTextContainer) {
+                        // 在文本框附近时，优先处理文本框滚动
+                        const delta = e.deltaY;
+                        if (delta > 0 && textContainer.scrollTop < textContainer.scrollHeight - textContainer.clientHeight) {
+                            // 向下滚动，文本框还有内容
+                            e.preventDefault();
+                            textContainer.scrollTop += delta * 0.5;
+                        } else if (delta < 0 && textContainer.scrollTop > 0) {
+                            // 向上滚动，文本框还有内容
+                            e.preventDefault();
+                            textContainer.scrollTop += delta * 0.5;
+                        }
+                    }
+                }, { passive: false });
+
+                // 触摸设备支持
+                let touchStartY = 0;
+                textContainer.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                });
+
+                textContainer.addEventListener('touchmove', (e) => {
+                    const touchY = e.touches[0].clientY;
+                    const deltaY = touchStartY - touchY;
+                    
+                    if (Math.abs(deltaY) > 10) {
+                        isScrollingText = true;
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            isScrollingText = false;
+                        }, 300);
+                    }
+                });
+            }
+
             // 1. 首先执行加载数据和基础设置
             await loadAllSavedData();
             updateTime();
@@ -16494,6 +17262,9 @@ ${eventTypeSpecificInput}
             // [已修复] - 删除重复调用，避免事件重复绑定
             setupDrawingBoardEvents();
             setupTarotCard();
+
+            // 新增：智能滚动冲突处理
+            setupSmartScrollHandling();
 
         });
         // ================== 页面加载完成后的总初始化 (修正版) END ==================
