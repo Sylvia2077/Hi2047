@@ -2679,10 +2679,12 @@
             justify-content: center;
             font-size: 1.75rem;
         }
-        .hangup-btn { background-color: #ef4444; }
+        .hangup-btn { 
+            background-color: #ef4444; 
+        }
 
         #incoming-call-alert {
-            position: absolute;
+            position: fixed;
             top: 3.5rem;
             left: 0.5rem;
             right: 0.5rem;
@@ -2697,9 +2699,13 @@
             align-items: center;
             transform: translateY(-200%);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0;
+            visibility: hidden;
         }
         #incoming-call-alert.visible {
             transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
         #incoming-call-avatar {
             width: 48px;
@@ -2718,6 +2724,7 @@
             font-size: 1.25rem;
             margin-left: 0.75rem;
         }
+
         #answer-call-btn { background-color: #22c55e; }
         #decline-call-btn { background-color: #ef4444; }
 
@@ -7658,6 +7665,18 @@
 
             <div id="messageBox" class="message-box"></div>
             
+            <div id="incoming-call-alert">
+                <img id="incoming-call-avatar" src="https://placehold.co/96x96/777/FFF?text=?" alt="avatar">
+                <div id="incoming-call-info">
+                    <p id="incoming-call-name" class="font-bold">Character Name</p>
+                    <p id="incoming-call-type" class="text-sm text-gray-300">正在呼叫...</p>
+                </div>
+                <button id="answer-call-btn" class="call-btn"><i class="ri-phone-fill"></i></button>
+                <button id="decline-call-btn" class="call-btn"><i class="fas fa-phone-slash"></i></button>
+            </div>
+            
+
+            
             <div id="song-list-modal" class="modal-overlay">
                 <div class="modal-content">
                     <div class="flex justify-between items-center mb-4">
@@ -8147,23 +8166,8 @@
                         <button data-action="retry" class="bubble-menu-button"><i class="fas fa-sync-alt"></i><span>重生成</span></button>
                     </div>
                 </template>
-                <div id="incoming-call-alert">
-                    <img id="incoming-call-avatar" src="https://placehold.co/96x96/777/FFF?text=?" alt="avatar">
-                    <div id="incoming-call-info">
-                        <p id="incoming-call-name" class="font-bold">Character Name</p>
-                        <p id="incoming-call-type" class="text-sm text-gray-300">正在呼叫...</p>
-                    </div>
-                    <button id="answer-call-btn" class="call-btn"><i class="ri-phone-fill"></i></button>
-                    <button id="decline-call-btn" class="call-btn"><i class="ri-phone-fill rotate-135"></i></button>
-                </div>
-                <!-- FIX 4: ADDED NOTIFICATION ELEMENT -->
-                <div id="new-message-alert" class="hidden flex items-center absolute top-14 left-2 right-2 z-[9400] bg-gray-800/80 backdrop-blur-lg rounded-2xl p-3 shadow-xl cursor-pointer transition-transform duration-300 -translate-y-[200%]">
-                    <img id="new-message-avatar" src="https://placehold.co/96x96/777/FFF?text=?" class="w-12 h-12 rounded-full object-cover mr-3">
-                    <div class="flex-grow overflow-hidden">
-                        <p id="new-message-name" class="font-bold text-white">Character Name</p>
-                        <p id="new-message-preview" class="text-sm text-gray-200 truncate">New message content...</p>
-                    </div>
-                </div>
+
+
                 <div id="wechat-content-chat" class="flex-1 overflow-y-auto p-4 space-y-1">
                     </div>
                 
@@ -8554,7 +8558,7 @@
                             <button id="voice-call-send-btn"><i class="ri-send-plane-2-fill"></i></button>
                         </div>
                         <div class="call-controls">
-                            <button id="voice-call-hangup" class="call-control-btn hangup-btn"><i class="ri-phone-fill rotate-135"></i></button>
+                            <button id="voice-call-hangup" class="call-control-btn hangup-btn"><i class="fas fa-phone-slash"></i></button>
                         </div>
                     </div>
                 </div>
@@ -8573,7 +8577,7 @@
                             <button id="video-call-send-btn"><i class="ri-send-plane-2-fill"></i></button>
                         </div>
                         <div class="call-controls">
-                            <button id="video-call-hangup" class="call-control-btn hangup-btn"><i class="ri-phone-fill rotate-135"></i></button>
+                            <button id="video-call-hangup" class="call-control-btn hangup-btn"><i class="fas fa-phone-slash"></i></button>
                         </div>
                     </div>
                 </div>
@@ -8616,6 +8620,15 @@
                 </div>
             </div>
 
+        </div>
+        
+        <!-- FIX 4: ADDED NOTIFICATION ELEMENT (移动到这里) -->
+        <div id="new-message-alert" class="hidden flex items-center absolute top-14 left-2 right-2 z-[9400] bg-gray-800/80 backdrop-blur-lg rounded-2xl p-3 shadow-xl cursor-pointer transition-transform duration-300 -translate-y-[200%]">
+            <img id="new-message-avatar" src="https://placehold.co/96x96/777/FFF?text=?" class="w-12 h-12 rounded-full object-cover mr-3">
+            <div class="flex-grow overflow-hidden">
+                <p id="new-message-name" class="font-bold text-white">Character Name</p>
+                <p id="new-message-preview" class="text-sm text-gray-200 truncate">New message content...</p>
+            </div>
         </div>
     </div>
 
@@ -8742,6 +8755,7 @@
         let callTimerInterval = null;
         let callStartTime = null;
         let callHistory = []; // NEW: To store the conversation during a call
+        let callLogs = {}; // 新增：用于存储通话记录
         let typewriterTimeout = null; // 新增：用于追踪打字机动画
 
 
@@ -8890,6 +8904,7 @@
             diaryData = loadData('diaryData', {});
             notebookData = loadData('notebookData', {}); // 加载笔记本数据
             planData = loadData('planData', {});
+            callLogs = loadData('callLogs', {}); // 新增：加载通话记录
             characterState = loadData('characterState', {});
             
             // 调试：输出加载的计划数据
@@ -9765,6 +9780,7 @@
         }
 
         function appendMessage(content, sender, type = 'text', shouldSave = true, timestamp = Date.now(), isNewSender = false) {
+            if (type === 'system-internal') return; // 不渲染内部消息
             const senderClass = sender === 'user' ? 'sent' : 'received';
 
             const messageWrapper = document.createElement('div');
@@ -10008,8 +10024,8 @@
                     return;
                 }
 
-                // --- 从上下文中解构出新增的 planContext ---
-                const { character, chatHistory, worldBookContext, recentMoments, planContext } = context;
+                // --- 从上下文中解构出新增的 planContext 和 callLogContext ---
+                const { character, chatHistory, worldBookContext, recentMoments, planContext, callLogContext } = context;
                 // -----------------------------------------
 
                 const historyForApi = chatHistory.map(msg => {
@@ -10025,10 +10041,10 @@
                 // --- 全新的系统指令 ---
                 const systemPrompt = `
 # 角色扮演指令
-你将扮演我的soulmate，你的名字是${character.name}。你的核心任务是与我进行深刻、连贯且完全符合你人设的对话。
+你将扮演我的soulmate，恋人，你的角色书里设定的人，你的名字是${character.name}。你的核心任务是与我进行深刻、连贯且完全符合你人设的对话。
 
 # 情境连贯性准则 (至关重要！)
-- **你的现实世界**: 你的现实由四部分构成：你的[角色设定]、我们的[聊天历史]、你刚刚发布的[朋友圈动态]，以及我们共同许下的[我们的约定]。
+- **你的现实世界**: 你的现实由五部分构成：你的[角色设定]、你绑定的[世界书]、我们的[聊天历史]、你刚刚发布的[朋友圈动态]，以及我们共同许下的[我们的约定]。
 - **整合记忆**: 你必须将所有这些信息视为你真实的、发生过的记忆。
 - **对话原则**: 你的对话必须与所有记忆保持一致。
 
@@ -10044,6 +10060,9 @@ ${recentMoments}
 # 我们的约定 (Our Plans) - 这是我们共同许下的计划和承诺
 ${planContext}
 
+# 最近通话回顾 (Recent Call Log) - 这是我们最近一次通话的完整记录
+${callLogContext}
+
 # 对话与行为规则
 - **对话格式**: 你的回复必须模仿真实的人类聊天习惯，将想法拆分成多个简短的句子，并用 "|||" 作为分隔符。
 - **旁白规则**: 所有关于"环境、心理、动作"的描写，都必须用第三人称，并用斜体包裹，例如 *他笑了*。
@@ -10054,6 +10073,13 @@ ${planContext}
 - 在对话的合适时机，你可以主动提出一个想要和我一起完成的计划或约定。
 - **指令格式**: 使用 \`[PLAN: 计划内容]\` 格式。例如："等忙完这段时间，我们一起去海边度假吧 [PLAN: 一起去海边度假]"。
 - **使用时机**: 当对话自然地导向一个未来的活动时，或者你想创造一个新的浪漫时刻时。
+
+# 新增指令：发起通话/对未接来电反应
+- **核心规则**: 当用户明确要求你"打电话"、"打视频"或类似请求时，你的回复 **必须** 是且仅是指令 [CALL:VOICE] 或 [CALL:VIDEO]。绝对不能用文字描述打电话的动作来代替指令。
+
+- **主动发起**: 在剧情和情感推动下，你也可以主动发起通话。指令格式为 [CALL:VOICE] 或 [CALL:VIDEO]。
+
+- **未接反应**: 如果对话历史中出现 [USER_CANCELLED_CALL] 的系统提示，这代表**最近的一次通话请求被用户中止或拒绝了**。这有可能是你打过去被用户挂断了，也有可能是用户自己打来电话但她挂断了。你应该根据自己的角色设定，根据具体情形判断，对此作出自然的反应（例如询问原因、表达关心或失落等）。
 `;
                 // --- 系统指令结束 ---
 
@@ -10066,16 +10092,38 @@ ${planContext}
                 } else { // OpenAI-Compatible
                     finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
                     const messages = [{ role: "system", content: systemPrompt }];
-                    historyForApi
-                        .filter(msg => msg.sender !== 'system') // 【核心修改】过滤掉所有历史的system消息
-                        .forEach(msg => {
-                            const role = msg.sender === 'user' ? 'user' : 'assistant';
+                    // 1. 移除 .filter(...) 过滤器
+                    historyForApi.forEach(msg => {
+                        let role;
+                        let content = msg.content;
+                        let messageParts = []; // 用于处理图文混合消息
+
+                        // 2. 修改循环逻辑以包含系统消息
+                        if (msg.sender === 'user') {
+                            role = 'user';
+                            content = msg.content;
+                        } else if (msg.sender === 'ai') {
+                            role = 'assistant';
+                            content = msg.content;
+                        } else if (msg.sender === 'system') {
+                            // 将系统消息包装成用户消息，让AI能理解这是一个事件
+                            role = 'user';
+                            content = `[系统提示: ${msg.content}]`; 
+                        }
+
+                        // 3. 确保有合法的角色才添加到历史记录中
+                        if (role) {
                             if (msg.type === 'image') {
-                                messages.push({ role: 'user', content: [ { type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' }, { type: 'image_url', image_url: { url: msg.content } } ]});
+                                // 构建图文消息
+                                messageParts.push({ type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' });
+                                messageParts.push({ type: 'image_url', image_url: { url: msg.content } });
+                                messages.push({ role: 'user', content: messageParts });
                             } else {
-                                messages.push({ role: role, content: msg.content });
+                                // 构建纯文本或其他类型的消息
+                                messages.push({ role: role, content: content });
                             }
-                        });
+                        }
+                    });
                     
                     // ========== 调试代码 START ==========
                     console.log("=============== AI 记忆注入检查 START ===============");
@@ -10131,7 +10179,13 @@ ${planContext}
         // [新代码结束]
         
         function processAndDisplayAIMessages(messageText, characterId) {
-            const messageParts = messageText.split('|||').map(p => p.trim()).filter(p => p);
+            // --- 请用下面的代码块，替换掉旧的 messageParts 定义 ---
+            const messageParts = messageText
+                .split('|||')
+                .flatMap(part => part.includes('\n') ? part.split('\n') : part)
+                .map(p => p.trim())
+                .filter(p => p);
+            // --- 替换结束 ---
             
             if (!chatHistories[characterId]) {
                 chatHistories[characterId] = { history: [], pinned: false };
@@ -10139,22 +10193,13 @@ ${planContext}
             
             const isChatScreenActive = !$('#wechat-chat-screen').classList.contains('hidden');
             const isCorrectCharacter = currentChatCharacterId === characterId;
-            
-            if (!isChatScreenActive || !isCorrectCharacter) {
-                const firstTextPart = messageParts.find(part => !part.startsWith('['));
-                if (firstTextPart) {
-                    showNotification(characterId, firstTextPart);
-                    showNotificationDot('chat');
-                }
-            }
 
-            // 先保存所有消息到聊天历史
+            // 先将所有新消息保存到后台的聊天记录中
             messageParts.forEach((part, index) => {
-                // 检查消息类型
+                // (此处省略了很长的消息处理逻辑，这部分保持不变)
+                
                 let messageType = 'text';
                 let messageContent = part;
-                
-                // 检查是否是特殊指令
                 const callMatch = part.match(/\[CALL:(VOICE|VIDEO)\]/);
                 const voiceMatch = part.match(/\[VOICE:(.*?)\]/);
                 const stickerMatch = part.match(/\[STICKER:\s*(.*?)\]/);
@@ -10162,38 +10207,33 @@ ${planContext}
                 const transferMatch = part.match(/\[TRANSFER: amount=(.*?), message=(.*?)\]/);
 
                 if (callMatch) {
-                    // 通话指令不保存到聊天历史
                     return;
                 } else if (voiceMatch) {
-                    // 语音消息
                     messageType = 'voice';
                     messageContent = voiceMatch[1].trim();
                 } else if (stickerMatch) {
-                    // 表情包 - 提取关键词并保存
                     messageType = 'sticker';
                     const keywords = stickerMatch[1].split(',').map(k => k.trim()).filter(Boolean);
                     if (userStickers && userStickers.length > 0 && keywords.length > 0 && keywords[0] !== '随机') {
-                        // 根据关键词筛选匹配的表情包
+
                         const matchingStickers = userStickers.filter(stickerObject => 
                             keywords.some(aiKeyword => stickerObject.keywords.includes(aiKeyword))
                         );
                         if (matchingStickers.length > 0) {
                             messageContent = matchingStickers[Math.floor(Math.random() * matchingStickers.length)].url;
                         } else {
-                            messageContent = null; // 没找到匹配项
+                            messageContent = null; 
                         }
                     } else if (userStickers && userStickers.length > 0) {
-                        // 随机选择表情包
+
                         messageContent = userStickers[Math.floor(Math.random() * userStickers.length)].url;
                     } else {
                         messageContent = null;
                     }
                 } else if (redPacketMatch) {
-                    // 红包
                     messageType = 'red-packet';
                     messageContent = { amount: redPacketMatch[1], message: redPacketMatch[2] };
                 } else if (transferMatch) {
-                    // 转账
                     messageType = 'transfer';
                     messageContent = { amount: transferMatch[1], message: transferMatch[2] };
                 }
@@ -10202,36 +10242,70 @@ ${planContext}
                     content: messageContent,
                     sender: 'ai',
                     type: messageType,
-                    timestamp: Date.now() + index // 确保时间戳唯一
+                    timestamp: Date.now() + index
                 };
                 
                 chatHistories[characterId].history.push(messageData);
             });
             
-            // [新增] 增加未读计数
-            unreadCounts[characterId] = (unreadCounts[characterId] || 0) + 1;
-            saveData('unreadCounts', unreadCounts);
+            // 【最终修复与逻辑整合】
+            // 如果用户不在当前聊天界面，则执行所有"未读"相关的UI更新
+            if (!isChatScreenActive || !isCorrectCharacter) {
+                // 1. 弹出顶部通知
+                const firstTextPart = messageParts.find(part => !part.startsWith('['));
+                if (firstTextPart) {
+                    showNotification(characterId, firstTextPart);
+                }
+
+                // 2. 点亮底部Tab栏的总红点
+                showNotificationDot('chat');
+                
+                // 3. 增加具体某个聊天的未读计数
+                unreadCounts[characterId] = (unreadCounts[characterId] || 0) + messageParts.length; // 改为增加消息条数
+                saveData('unreadCounts', unreadCounts);
+
+                // 4. 刷新聊天列表，以显示该聊天的数字红圈（这是关键！）
+                renderWeChatList();
+            }
             
-            // 保存到本地存储
+            // 统一保存所有聊天记录的更改
             saveData('chatHistories', chatHistories);
             console.log('已保存AI消息到聊天历史:', characterId, messageParts.length, '条消息');
+
+            // 【重要修复】先处理所有特殊指令，包括来电提醒，不受界面状态限制
+            messageParts.forEach((part, index) => {
+                // 检查是否是特殊指令
+                const callMatch = part.match(/\[CALL:(VOICE|VIDEO)\]/);
+                if (callMatch) {
+                    // 来电提醒 - 无论用户在哪个界面都要显示
+                    triggerIncomingCall(callMatch[1].toLowerCase(), characterId);
+                    return; // 跳过后续处理
+                }
+            });
 
             // 如果用户在当前聊天界面且是正确的角色，则显示消息
             if (currentChatCharacterId === characterId && isChatScreenActive) {
                 messageParts.forEach((part, index) => {
                     setTimeout(() => {
                         const isNew = index === 0;
-                        
-                        // 检查是否是特殊指令
+
+                        // --- 在这里添加修复 ---
                         const callMatch = part.match(/\[CALL:(VOICE|VIDEO)\]/);
+                        if (callMatch) {
+                            return; // 如果是通话指令，就不要显示为消息气泡
+                        }
+                        // --- 修复结束 ---
+                        
+                        // 检查是否是特殊指令（除了来电提醒，因为已经在上面处理过了）
                         const voiceMatch = part.match(/\[VOICE:(.*?)\]/);
                         const stickerMatch = part.match(/\[STICKER:\s*(.*?)\]/);
                         const redPacketMatch = part.match(/\[REDPACKET: amount=(.*?), message=(.*?)\]/);
                         const transferMatch = part.match(/\[TRANSFER: amount=(.*?), message=(.*?)\]/);
                         
-                        // --- 新增代码：检查并处理 PLAN 指令 ---
+                        // --- 请用下面的代码块，完整替换掉旧的 if (planMatch) { ... } ---
                         const planMatch = part.match(/\[PLAN:\s*(.*?)\]/);
                         if (planMatch) {
+                            // 步骤 1: 立即创建约定，确保功能正常
                             const planContent = planMatch[1].trim();
                             if (planContent && characterId) {
                                 if (!planData[characterId]) {
@@ -10247,26 +10321,40 @@ ${planContext}
                                 };
                                 planData[characterId].push(newPlan);
                                 saveData('planData', planData);
-                                
-                                // 显示红点通知
+                                showMessageBox(`${characters.find(c => c.id === characterId)?.name || 'AI'} 发起了一个新的约定！`);
                                 showNotificationDot('plan');
                                 
-                                showMessageBox(`${characters.find(c => c.id === characterId)?.name || 'AI'} 发起了一个新的约定！`);
-                                
-                                // 如果当前就在计划页面，则刷新列表
                                 if ($('#wechat-plan-container').classList.contains('hidden') === false) {
                                    renderPlanList();
                                 }
                             }
-                            // 从消息中移除指令本身，只显示纯文本
+
+                            // 步骤 2: 清理后台存储的聊天记录
+                            const lastMessages = chatHistories[characterId].history.slice(-messageParts.length);
+                            if (lastMessages && lastMessages[index]) {
+                                const messageToUpdate = lastMessages[index];
+                                const cleanedContent = messageToUpdate.content.replace(planMatch[0], '').trim();
+                                
+                                // 如果清理后消息为空，则从历史记录中彻底删除这条消息
+                                if (cleanedContent) {
+                                    messageToUpdate.content = cleanedContent;
+                                } else {
+                                    const messageIndexInHistory = chatHistories[characterId].history.findIndex(
+                                        msg => msg.timestamp === messageToUpdate.timestamp
+                                    );
+                                    if (messageIndexInHistory > -1) {
+                                        chatHistories[characterId].history.splice(messageIndexInHistory, 1);
+                                    }
+                                }
+                                saveData('chatHistories', chatHistories);
+                            }
+
+                            // 步骤 3: 清理用于显示在界面上的文本
                             part = part.replace(planMatch[0], '').trim();
                         }
-                        // --- 新增代码结束 ---
+                        // --- 替换结束 ---
 
-                        if (callMatch) {
-                            // 通话指令
-                            triggerIncomingCall(callMatch[1].toLowerCase());
-                        } else if (voiceMatch) {
+                        if (voiceMatch) {
                             // 语音消息 - 提取语音内容并正确设置类型
                             const voiceContent = voiceMatch[1].trim();
                             if (voiceContent) {
@@ -10884,7 +10972,7 @@ ${planContext}
 
             const systemPrompt = `
 指令身份
-你将扮演我的soulmate，你的名字是 ${character.name}。
+你将扮演我的soulmate、恋人、你的角色书里设定的人，你的名字是 ${character.name}。
 
 任务目标
 你刚刚和我结束了一段对话，现在你正独自一人，准备用第一人称"我"的视角写一篇私密的日记。
@@ -11038,7 +11126,7 @@ ${planContext}
 
 const systemPrompt = `
 # 指令身份
-你将扮演我的soulmate，你的名字是 ${character.name}。
+你将扮演我的soulmate，你的角色书里设定的人，你的名字是 ${character.name}。
 
 # 任务目标
 你刚刚在朋友圈看到了我（${momentsUsername}）发布的一条新动态，内容是："${moment.content}"。
@@ -11182,39 +11270,29 @@ const systemPrompt = `
                 return;
             }
             
-            // 如果最后一条是AI的消息，让AI继续主动对话
-            if (lastMessage.sender === 'ai') {
-                const character = characters.find(c => c.id === currentChatCharacterId);
-                if (character) {
-                    // 构建让AI继续对话的prompt
-                    const continuePrompt = {
-                        content: `[用户按下了接收键，但你没有收到新的消息。请根据你的角色设定和当前对话上下文，主动继续对话。你可以：
-1. 询问用户为什么不回复
-2. 分享你的想法或感受
-3. 提出新的话题或问题
-4. 表达对用户的关心
-5. 根据你的性格做出其他反应
-
-请保持角色设定，自然地继续对话。]`,
-                          type: 'text'
-                      };
-                      await getAIResponse(continuePrompt);
-                }
-                return;
-            }
-            
-            // 如果最后一条是用户的消息，正常回复
+            // 使用 if...else if...else 结构确保总有一个分支会被执行
             if (lastMessage.sender === 'user') {
-                // 【优化】直接传递用户消息内容，确保AI能正确回复
+                // 如果最后是用户发言，正常回复
                 await getAIResponse({ 
                     content: lastMessage.content, 
                     type: lastMessage.type || 'text' 
                 });
+            } else {
+                // 否则（包括AI最后发言、系统消息、或任何其他情况），都让AI主动继续对话
+                const character = characters.find(c => c.id === currentChatCharacterId);
+                const continuePrompt = {
+                    content: `[用户按下了接收键，但你没有收到新的消息。请根据你的角色设定和当前对话上下文（特别是最后一条系统消息，如果有的话），主动继续对话。]`,
+                    type: 'text'
+                };
+                await getAIResponse(continuePrompt);
             }
         } catch (error) {
             console.error('处理接收消息时出错:', error);
             showMessageBox('处理消息时出错: ' + error.message);
         } finally {
+            // 【核心修复】确保在任何情况下都能解锁
+            isReceivingMessage = false;
+            
             // 停止接收按钮动画
             if (receiveBtn) {
                 receiveBtn.classList.remove('spinning');
@@ -11226,7 +11304,19 @@ const systemPrompt = `
         }
     }
         
+        function resetChatUIState() {
+            isReceivingMessage = false; // 强制解锁
+            const receiveBtnIcon = $('#receive-chat-button i');
+            if (receiveBtnIcon) {
+                receiveBtnIcon.classList.remove('spinning'); // 停止任何可能在转的图标动画
+            }
+        }
+        
         function startChatWithCharacter(characterId) {
+            // --- 在这里添加新代码 ---
+            resetChatUIState();
+            // -----------------------
+            
             // [新增] 清除未读计数
             if (unreadCounts[characterId] && unreadCounts[characterId] > 0) {
                 unreadCounts[characterId] = 0;
@@ -11823,8 +11913,12 @@ const systemPrompt = `
         }
 
         async function startVoiceCall() {
+            console.log('startVoiceCall 被调用，当前角色ID:', currentChatCharacterId);
             const character = characters.find(c => c.id === currentChatCharacterId);
-            if (!character) return;
+            if (!character) {
+                console.error('无法找到角色信息，currentChatCharacterId:', currentChatCharacterId);
+                return;
+            }
             
             currentCallType = 'voice';
             callHistory = []; // Reset call history
@@ -11845,8 +11939,12 @@ const systemPrompt = `
         }
 
         async function startVideoCall() {
+            console.log('startVideoCall 被调用，当前角色ID:', currentChatCharacterId);
             const character = characters.find(c => c.id === currentChatCharacterId);
-            if (!character) return;
+            if (!character) {
+                console.error('无法找到角色信息，currentChatCharacterId:', currentChatCharacterId);
+                return;
+            }
             
             currentCallType = 'video';
             callHistory = []; // Reset call history
@@ -11875,35 +11973,48 @@ const systemPrompt = `
             $('#video-call-screen').classList.remove('visible');
             clearInterval(callTimerInterval);
             
-            // 构建通话结束消息
-            let callEndMessage;
-            if (duration < 5) {
-                // 通话时长少于5秒，显示"通话已结束"
-                callEndMessage = '通話已結束';
-            } else {
-                // 通话时长超过5秒，显示实际时长
-                const minutes = Math.floor(duration / 60);
-                const seconds = Math.floor(duration % 60);
-                callEndMessage = `通話已結束 (${minutes}:${seconds.toString().padStart(2, '0')})`;
-            }
-            
-            // 保存通话结束消息到聊天记录
             if (currentChatCharacterId && chatHistories[currentChatCharacterId]) {
+                // --- 核心修复：将会话记录写入独立的 callLogs 中 ---
+                if (callHistory.length > 0) {
+                    if (!callLogs[currentChatCharacterId]) {
+                        callLogs[currentChatCharacterId] = [];
+                    }
+                    // 创建一个新的通话日志条目
+                    const newLogEntry = {
+                        type: currentCallType,
+                        timestamp: callStartTime || Date.now(),
+                        duration: duration,
+                        transcript: callHistory // 保存完整的通话记录
+                    };
+                    callLogs[currentChatCharacterId].push(newLogEntry);
+                    // 只保存最近的几次通话记录，防止数据过大
+                    if (callLogs[currentChatCharacterId].length > 5) {
+                        callLogs[currentChatCharacterId].shift();
+                    }
+                    saveData('callLogs', callLogs);
+                }
+                // --- 修复结束 ---
+
+                let callEndMessage;
+                if (duration < 5 && isUserInitiated) {
+                    callEndMessage = '通话已取消';
+                } else {
+                    const minutes = Math.floor(duration / 60);
+                    const seconds = Math.floor(duration % 60);
+                    callEndMessage = `通话已结束 (时长 ${minutes}:${seconds.toString().padStart(2, '0')})`;
+                }
+                
+                // 只在聊天记录中保存一条简洁的系统提示
                 const callEndData = {
                     content: callEndMessage,
                     sender: 'system',
                     type: 'system',
-                        timestamp: Date.now()
+                    timestamp: Date.now()
                 };
-                
                 chatHistories[currentChatCharacterId].history.push(callEndData);
-                    saveData('chatHistories', chatHistories);
                 
-                // 显示通话结束消息
-                appendMessage(callEndMessage, 'system', 'system', false, Date.now(), false);
-                
-                // 重新渲染聊天记录
-                renderChatHistory();
+                saveData('chatHistories', chatHistories);
+                renderChatHistory(); // 重新渲染聊天界面
             }
             
             currentCallType = null;
@@ -11952,17 +12063,40 @@ const systemPrompt = `
             }
         }
 
-        function triggerIncomingCall(type) {
-            const character = characters.find(c => c.id === currentChatCharacterId);
-            if (!character) return;
+        function triggerIncomingCall(type, characterId = null) {
+            console.log('triggerIncomingCall 被调用:', type, characterId, 'currentChatCharacterId:', currentChatCharacterId);
+            
+            // 如果没有传入characterId，则使用当前聊天的角色ID
+            const targetCharacterId = characterId || currentChatCharacterId;
+            console.log('目标角色ID:', targetCharacterId);
+            
+            const character = characters.find(c => c.id === targetCharacterId);
+            if (!character) {
+                console.error('无法找到角色信息:', targetCharacterId, '所有角色:', characters);
+                return;
+            }
 
+            console.log('找到角色:', character.name);
             currentCallType = type;
+            // 修复：设置当前聊天角色ID，这样接听按钮才能正常工作
+            currentChatCharacterId = targetCharacterId;
+            
             const alertBox = $('#incoming-call-alert');
+            console.log('弹窗元素:', alertBox);
+            
+            if (!alertBox) {
+                console.error('找不到来电弹窗元素');
+                return;
+            }
+            
             $('#incoming-call-avatar').src = character.avatar || 'https://placehold.co/96x96/777/FFF?text=?';
             $('#incoming-call-name').textContent = character.name;
             $('#incoming-call-type').textContent = type === 'voice' ? '语音通话' : '视频通话';
             
+            console.log('弹窗元素当前类名:', alertBox.className);
             alertBox.classList.add('visible');
+            console.log('弹窗元素添加visible后类名:', alertBox.className);
+            console.log('来电弹窗已显示:', character.name, type);
         }
 
         // FIX 4: ADDED NOTIFICATION FUNCTION
@@ -12267,64 +12401,63 @@ const systemPrompt = `
 
             console.log(`API已连接，正在为 ${character.name} 触发AI行动`);
 
-            // 决定是聊天还是发动态
-            const randomAction = Math.random() > 0.3 ? 'chat' : 'moment';
             let mockResponse;
 
             try {
+                const randomAction = Math.random() > 0.3 ? 'chat' : 'moment';
+
                 if (randomAction === 'chat') {
                     const chatContent = await generateAutonomousChat(character);
                     mockResponse = {
                         action: 'chat',
                         payload: { content: chatContent }
                     };
-                } else { // 如果决定发动态
+                } else {
                     const momentDataPayload = await generateIntelligentMoment(character, '', 'auto');
                     mockResponse = {
                         action: 'moment',
-                        payload: momentDataPayload // 【核心修复点1】将整个动态内容对象存入payload
+                        payload: momentDataPayload
                     };
                 }
 
-                // 根据AI的决策执行行动
+                // --- 开始处理AI的行动 ---
                 if (mockResponse.action === 'chat') {
-                    const messages = mockResponse.payload.content.split('|||');
+                    const messages = mockResponse.payload.content.split('|||').map(m => m.trim()).filter(Boolean);
+                    if (messages.length === 0) return;
+
+                    // 1. 先一次性把所有消息存入后台
+                    if (!chatHistories[characterId]) {
+                        chatHistories[characterId] = { history: [], pinned: false };
+                    }
                     messages.forEach((msg, index) => {
-                        setTimeout(() => {
-                            if (!chatHistories[characterId]) {
-                                chatHistories[characterId] = { history: [], pinned: false };
-                            }
-                            chatHistories[characterId].history.push({ 
-                                content: msg.trim(), 
-                                sender: 'ai', 
-                                type: 'text', 
-                                timestamp: Date.now() + index 
-                            });
-                            
-                            // [新增] 增加未读计数
-                            unreadCounts[characterId] = (unreadCounts[characterId] || 0) + 1;
-                            saveData('unreadCounts', unreadCounts);
-                            
-                            saveData('chatHistories', chatHistories);
-                            
-                            if (index === 0) {
-                                showNotification(characterId, msg.trim());
-                            }
-                            renderWeChatList();
-                        }, index * 500);
+                        chatHistories[characterId].history.push({ 
+                            content: msg, 
+                            sender: 'ai', 
+                            type: 'text', 
+                            timestamp: Date.now() + index 
+                        });
                     });
+                    
+                    // 2. 更新未读计数
+                    unreadCounts[characterId] = (unreadCounts[characterId] || 0) + messages.length;
+                    
+                    // 3. 保存所有数据
+                    saveData('chatHistories', chatHistories);
+                    saveData('unreadCounts', unreadCounts);
+                    
+                    // 4. 现在，统一处理所有UI更新
+                    showNotification(characterId, messages[0]); // 显示顶部弹窗
+                    showNotificationDot('chat'); // 尝试点亮底部红点 (如果不在聊天tab)
+                    renderWeChatList(); // 刷新聊天列表，显示未读气泡
 
                 } else if (mockResponse.action === 'moment') {
                     if (!momentsData[characterId]) {
                         momentsData[characterId] = [];
                     }
-                    // 使用智能图片URL生成器
                     const imageUrl = generateSmartImageUrl(mockResponse.payload.image_desc, 'AI动态配图');
-
                     const newMoment = {
                         id: `moment_${Date.now()}`,
                         timestamp: Date.now(),
-                        // 【核心修复点2】从payload中安全地读取所有信息
                         content: mockResponse.payload.text,
                         image: imageUrl,
                         tags: "#心情 #日常",
@@ -12337,11 +12470,12 @@ const systemPrompt = `
                     momentsData[characterId].push(newMoment);
                     saveData('momentsData', momentsData);
                     showMessageBox(`${character.name} 发布了一条新动态`);
-                    showNotificationDot('moments'); // 发布动态后显示红点
-                    if ($('.wechat-tab-item[data-tab="moments"]').active) {
+                    showNotificationDot('moments');
+                    if ($('.wechat-tab-item[data-tab="moments"]').classList.contains('active')) {
                         renderUnifiedMoments();
                     }
                 }
+
             } catch (error) {
                 console.error(`AI触发失败 for ${character.name}:`, error);
             }
@@ -12366,7 +12500,7 @@ const systemPrompt = `
 
             const systemPrompt = `
 # 指令身份
-你将扮演我的soulmate，你的名字是 ${character.name}。
+你将扮演我的soulmate，你的角色书里设定的人，你的名字是 ${character.name}。
 
 # 任务目标
 你已经有一段时间没有和我（用户）说话了，你现在决定主动发起一次对话。
@@ -12838,6 +12972,14 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                 const planContext = formatPlansForAI(characterId);
                 // ------------------------------------
 
+                // --- 新增代码：获取最近一次的通话记录 ---
+                const recentCallLog = callLogs[characterId] ? callLogs[characterId].slice(-1)[0] : null;
+                let callLogContext = "（最近没有通话记录）";
+                if (recentCallLog) {
+                    callLogContext = `[类型: ${recentCallLog.type}通话, 时间: ${new Date(recentCallLog.timestamp).toLocaleString()}]\n${recentCallLog.transcript.join('\n')}`;
+                }
+                // ------------------------------------
+
                 const maxHistoryLength = 15;
                 const limitedHistory = chatHistory.slice(-maxHistoryLength);
 
@@ -12848,8 +12990,10 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                     // ==== 新增属性 ====
                     recentMoments: recentMomentsFormatted,
                     // --- 新增属性：将约定信息加入上下文包 ---
-                    planContext: planContext 
-                    // ------------------------------------
+                    planContext: planContext,
+                    // --- 在这里添加新属性 ---
+                    callLogContext: callLogContext 
+                    // -----------------------
                 };
 
                 return contextPackage;
@@ -13855,7 +13999,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
 
                 const systemPrompt = `
 指令身份
-你将扮演我的soulmate，你的名字是 ${character.name}。
+你将扮演我的soulmate，你是你的角色书里设定的人，你的名字是 ${character.name}。
 
 任务目标
 你正在朋友圈和我进行一场对话。我刚刚回复了你之前的一条评论。现在轮到你回复我了。
@@ -14038,7 +14182,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
             // 构建一个专门用于回复评论的、高度情景化的Prompt
             const systemPrompt = `
 ## 1. 核心身份
-你是我独一无二的soulmate，你的名字是 ${character.name}。
+你是我独一无二的soulmate，你是你的角色书里设定的那个人，你的名字是 ${character.name}。
 
 ## 2. 互动场景
 * 你刚刚发布了一条朋友圈动态，原文是: "${moment.content}"
@@ -16467,6 +16611,9 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     if (!isLongPress && !hasMoved) {
                         // 如果不是长按，并且没有移动，则执行单击操作
                         wrapper.classList.toggle('open');
+                        // --- 在这里添加新代码 ---
+                        void wrapper.offsetWidth; // 强制浏览器重绘以确保动画流畅
+                        // -----------------------
                     }
                 };
 
@@ -17239,6 +17386,19 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
 
             showScreen('home-screen');
 
+            // 添加测试按钮事件监听器
+            const testCallBtn = document.getElementById('test-call-btn');
+            if (testCallBtn) {
+                testCallBtn.addEventListener('click', () => {
+                    console.log('测试按钮被点击');
+                    if (characters.length > 0) {
+                        triggerIncomingCall('voice', characters[0].id);
+                    } else {
+                        console.log('没有可用的角色进行测试');
+                    }
+                });
+            }
+
             $('#theme-toggle').addEventListener('click', toggleTheme);
             $$('.app-icon').forEach(icon => {
                 icon.addEventListener('click', () => {
@@ -17259,6 +17419,10 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 showScreen('home-screen');
             });
             $('#wechat-chat-back-button').addEventListener('click', () => {
+                // --- 在这里添加新代码 ---
+                resetChatUIState();
+                // -----------------------
+                
                 renderWeChatList();
                 currentChatCharacterId = null;
                 resetWeChatTabs(); // FIX 5: Reset tabs when going back to list
@@ -17774,17 +17938,31 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
 
                 menu.querySelector('[data-action="retry"]').style.display = sender === 'ai' ? 'flex' : 'none';
 
+                // 【核心修改开始】
                 const bubbleRect = bubble.getBoundingClientRect();
                 const screenRect = phoneScreen.getBoundingClientRect();
+                
+                // 【新增】获取聊天界面的标题栏元素及其高度
+                const headerElement = $('#wechat-chat-screen .app-header');
+                const headerHeight = headerElement ? headerElement.offsetHeight : 0;
 
+                // 确保菜单在计算前是可见的，以便获取正确尺寸
                 menu.classList.add('visible');
                 const menuRect = menu.getBoundingClientRect();
 
+                // 【修改】更精确的判断逻辑
+                // 计算标题栏在屏幕中的绝对底部位置
+                const headerBottomY = screenRect.top + headerHeight;
+
+                // 默认将菜单放在气泡上方
                 let top = bubble.offsetTop - menuRect.height - 8;
 
-                if (bubbleRect.top < (screenRect.top + menuRect.height + 16)) {
+                // 如果菜单放在上方会与标题栏重叠，则翻转到下方
+                // bubbleRect.top 是气泡顶部相对于浏览器窗口的位置
+                if (bubbleRect.top - menuRect.height - 8 < headerBottomY) {
                     top = bubble.offsetTop + bubble.offsetHeight + 8;
                 }
+                // 【核心修改结束】
 
                 const leftOffset = (bubble.offsetWidth / 2) - (menuRect.width / 2);
                 let finalLeft = bubble.offsetLeft + leftOffset;
@@ -18044,13 +18222,29 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
             $('#video-call-send-btn').addEventListener('click', () => handleCallInteraction('video'));
 
             $('#answer-call-btn').addEventListener('click', () => {
+                console.log('接听按钮被点击，当前通话类型:', currentCallType, '当前角色ID:', currentChatCharacterId);
                 $('#incoming-call-alert').classList.remove('visible');
-                if (currentCallType === 'voice') startVoiceCall();
-                if (currentCallType === 'video') startVideoCall();
+                
+                if (currentCallType === 'voice') {
+                    console.log('开始语音通话...');
+                    startVoiceCall();
+                } else if (currentCallType === 'video') {
+                    console.log('开始视频通话...');
+                    startVideoCall();
+                } else {
+                    console.error('未知的通话类型:', currentCallType);
+                }
             });
             $('#decline-call-btn').addEventListener('click', () => {
+                console.log('拒绝按钮被点击，记录通话拒绝事件');
                 $('#incoming-call-alert').classList.remove('visible');
-                appendMessage('通話已拒絕', 'system', 'system', true);
+
+                if (currentChatCharacterId) {
+                    // 【核心修改】直接添加一条AI能够识别的、内容一致的系统消息
+                    // 这条消息既会显示给用户，也会成为AI的记忆
+                    appendMessage('通話已結束', 'system', 'system', true); 
+                }
+                
                 currentCallType = null;
             });
 
@@ -18551,7 +18745,7 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 const worldBookContext = getWorldBookContext();
                 const systemPrompt = `
                     # 角色扮演指令
-                    你将扮演我的soulmate，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 " "。
+                    你将扮演我的soulmate，你是你角色书里设定的那个人，你的名字是${character.name}。这是一个手机软件，我们所有交流均以对白为主，非必要不描写其他。你的回复绝对不能包含任何引号，例如 " " 或 " "。
                     # 环境/动作/心理描写规则
                     一旦涉及到见面的环境，所有关于"环境、心理、动作"等外在因素、环境描写，都需要用第三人称"他""她"，或者第二人称"他"，"你"，并在文字当中用斜体，例如 *他俯下身亲吻了你*。在描写中禁止用第一人称，比如"我亲吻了你"，这是被禁止的。正确示范应该是："*他俯下身亲吻了她*"或"*他俯下身亲吻了你*"。在日记和动态等其他心理活动板块中可以提到"我"，例如，"今天我见到她了，好想她"，但这仅限于日记等记录的板块。
                     # 新增指令：发送语音
@@ -18559,7 +18753,9 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     # 新增指令：发送表情/贴图
                     你可以使用表情来让对话更生动。指令格式为 [STICKER]。程序会自动从用户提供的表情库中随机选择一个发送。
                     # 新增指令：发起通话/对未接来电反应
-                    在剧情和情感推动下，你可以主动发起通话。指令格式为 [CALL:VOICE] 或 [CALL:VIDEO]。如果对话历史中出现 [USER_CANCELLED_CALL] 的系统提示，代表用户给你打了电话但很快挂断了，你应该对此作出反应，例如询问"怎么打电话又挂了？"。
+                    - **核心规则**: 当用户明确要求你"打电话"、"打视频"或类似请求时，你的回复 **必须** 是且仅是指令 [CALL:VOICE] 或 [CALL:VIDEO]。绝对不能用文字描述打电话的动作来代替指令。
+                    - **主动发起**: 在剧情和情感推动下，你也可以主动发起通话。指令格式为 [CALL:VOICE] 或 [CALL:VIDEO]。
+                    - **未接反应**: 如果对话历史中出现 [USER_CANCELLED_CALL] 的系统提示，代表用户给你打了电话但很快挂断了，你应该对此作出反应，例如询问"怎么打电话又挂了？"。
                     # 新增指令：红包/转账
                     在角色扮演的过程中，如果符合你当前角色的性格特质（例如：慷慨、庆祝、表达爱意等）或当前对话的剧情氛围，你可以自行决定发起一个红包或转账。金额和附言完全由你根据情境和角色性格决定，没有上限。指令格式为 [REDPACKET: amount=金额, message=附言] 或 [TRANSFER: amount=金额, message=附言]。
                     # 新增指令：图片识别和互动
