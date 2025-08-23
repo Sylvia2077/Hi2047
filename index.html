@@ -8331,6 +8331,7 @@
                         </div>
                     </div>
                     <div id="change-user-video-image-option" class="list-item">设置对方的视频照片</div>
+                    <div id="clear-chat-history-option" class="list-item text-red-500">清空聊天记录</div>
                     <div id="delete-chat-option" class="list-item text-red-500 mt-4">删除此对话</div>
                 </div>
             </div>
@@ -8711,6 +8712,7 @@
         let myVideoImages = {};
         let currentChatCharacterId = null;
         let currentWeChatCharacterId = null; // V7.0: Track character for non-chat tabs
+        let isReceivingMessage = false; // 用于防止重复点击接收按钮
 
         // [新增] 未读消息计数器
         let unreadCounts = loadData('unreadCounts') || {};
@@ -10121,6 +10123,9 @@ ${planContext}
                 }
             } finally {
                 receiveBtnIcon.classList.remove('spinning');
+                // --- 在这里添加新代码 ---
+                isReceivingMessage = false; // 解锁，允许下一次请求
+                // -----------------------
             }
         }
         // [新代码结束]
@@ -11108,7 +11113,18 @@ const systemPrompt = `
         // [新代码结束]
         
         async function handleReceiveMessage() {
-            if (!currentChatCharacterId) return showMessageBox("请先选择聊天对象");
+            // --- 在这里添加新代码 ---
+            if (isReceivingMessage) {
+                console.log("正在接收消息，请稍候...");
+                return;
+            }
+            isReceivingMessage = true;
+            // -----------------------
+
+            if (!currentChatCharacterId) {
+                isReceivingMessage = false; // 如果没有角色，需要解锁
+                return showMessageBox("请先选择聊天对象");
+            }
 
             // 开始接收按钮动画
             const receiveBtn = document.querySelector('#receive-chat-button');
@@ -11659,6 +11675,14 @@ const systemPrompt = `
                     exitMultiSelectMode();
                 } 
                 // --- 在这里添加新代码 ---
+                else if (type === 'clear-chat') {
+                    if (chatHistories[id]) {
+                        chatHistories[id].history = []; // 清空历史记录数组
+                        saveData('chatHistories', chatHistories);
+                        renderChatHistory(); // 重新渲染聊天界面
+                        showMessageBox('聊天记录已清空');
+                    }
+                }
                 else if (type === 'plan') {
                     deletePlan(id); // 调用我们新创建的函数
                 }
@@ -16954,6 +16978,14 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     }
                 });
             }
+
+            // 为"清空聊天记录"按钮添加事件
+            $('#clear-chat-history-option').addEventListener('click', () => {
+                if (currentChatCharacterId) {
+                    const characterName = characters.find(c => c.id === currentChatCharacterId)?.name;
+                    showDeleteConfirmation('clear-chat', currentChatCharacterId, `与 ${characterName} 的聊天记录`);
+                }
+            });
         }
 
         // 设置笔记本相关事件监听器
