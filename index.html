@@ -16640,13 +16640,18 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     clearTimeout(pressTimer);
                 };
 
-                const endPress = () => {
+                const endPress = (event) => { // 1. 接收 event 对象
+                    // 2. 阻止"幽灵点击"：这行代码是本次修复的关键
+                    // 它告诉浏览器，触摸事件已处理，无需再模拟后续的鼠标点击
+                    if (event) {
+                        event.preventDefault();
+                    }
+                    
                     clearTimeout(pressTimer);
                     if (!isLongPress && !hasMoved) {
                         // 如果不是长按，并且没有移动，则执行单击操作
                         
-                        // 使用 requestAnimationFrame 来确保动画在下一帧触发。
-                        // 这是解决移动端触摸事件导致CSS动画失效问题的最可靠方法。
+                        // (保留之前的修复) 使用 requestAnimationFrame 确保动画流畅触发
                         requestAnimationFrame(() => {
                             wrapper.classList.toggle('open');
                         });
