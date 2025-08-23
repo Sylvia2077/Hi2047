@@ -10682,7 +10682,7 @@ ${callLogContext}
 * **任务**：严格基于你在上一步决策出的风格组合，以第一人称"我"的视角，写一篇关于今天与用户互动的日记。
 * **核心**：深入挖掘互动中你的内心活动、情绪波动和深刻思考。
 * **篇幅**：100-200字。
-* **严格禁止**：正文中禁止出现任何日期、星期、年份、引号或特殊格式。不要有任何开场白或落款。
+* **格式与日期 (绝对禁止)**：你的任务只是书写日记的**正文内容**。绝对禁止在正文中包含任何日期、星期、年份。UI界面会自动处理日期，如果你写入日期会造成格式混乱和信息错误。不要有任何开场白或落款。
 
 # 4. 文风总库 (Style Library)
 * **基础风格**：意识流、细腻感性、简洁干练、口语随性、忧郁内省
@@ -10810,6 +10810,9 @@ ${callLogContext}
                     requestBody = JSON.stringify({ model: apiSettings.model, messages });
                 }
 
+                // --- 探针#1：打印发送给AI的完整指令 ---
+                console.log("--- DEBUG: 发送给AI的日记指令 ---", { systemPrompt, userMessage });
+
                 const response = await fetch(finalApiUrl, {
                     method: 'POST',
                     headers: headers,
@@ -10821,6 +10824,10 @@ ${callLogContext}
                 }
 
                 const result = await response.json();
+
+                // --- 探针#2：打印从AI收到的原始回复 ---
+                console.log("--- DEBUG: 从AI收到的原始日记回复 ---", result);
+
                 let diaryContent;
 
                 if (isGoogleApi) {
@@ -10828,6 +10835,8 @@ ${callLogContext}
                 } else {
                     diaryContent = result.choices[0].message.content;
                 }
+
+
 
                 // 创建日记对象
                 const diary = {
@@ -13851,22 +13860,18 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
 
         // 朋友圈事件监听器现在直接在HTML中绑定
 
-        // 删除朋友圈动态
+        // 删除朋友圈动态 (V2 - 已加固)
         function deleteMoment(momentId) {
-            // 找到要删除的动态信息
             let momentToDelete = null;
             let authorName = '未知';
             
             Object.keys(momentsData).forEach(authorId => {
-                const moment = momentsData[authorId].find(m => m.id === momentId);
+                const moment = momentsData[authorId]?.find(m => m.id === momentId);
                 if (moment) {
                     momentToDelete = moment;
-                    if (authorId === 'user') {
-                        authorName = loadData('moments_username') || '我';
-                    } else {
-                        const character = characters.find(c => c.id === authorId);
-                        authorName = character ? character.name : '未知';
-                    }
+                    authorName = (authorId === 'user')
+                        ? (loadData('moments_username') || '我')
+                        : (characters.find(c => c.id === authorId)?.name || '未知角色');
                 }
             });
             
@@ -13875,21 +13880,23 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                 return;
             }
             
-            // 显示删除确认
-            const confirmMessage = `确定要删除 ${authorName} 的这条动态吗？\n\n"${momentToDelete.content.substring(0, 50)}${momentToDelete.content.length > 50 ? '...' : ''}"\n\n删除后无法恢复！`;
+            // --- 核心修复：在这里增加安全检查 ---
+            // 检查 content 是否存在，如果不存在，则使用一个备用文本
+            const contentPreview = (momentToDelete.content || '(这条动态内容已损坏)').substring(0, 50);
+            const isLongContent = momentToDelete.content && momentToDelete.content.length > 50;
+            // --- 修复结束 ---
+            
+            const confirmMessage = `确定要删除 ${authorName} 的这条动态吗？\n\n"${contentPreview}${isLongContent ? '...' : ''}"\n\n删除后无法恢复！`;
             
             if (confirm(confirmMessage)) {
-                // 从所有角色的动态中删除
                 Object.keys(momentsData).forEach(authorId => {
-                    momentsData[authorId] = momentsData[authorId].filter(m => m.id !== momentId);
+                    if (momentsData[authorId]) { // 确保作者ID有效
+                        momentsData[authorId] = momentsData[authorId].filter(m => m.id !== momentId);
+                    }
                 });
                 
-                // 保存数据
                 saveData('momentsData', momentsData);
-                
-                // 刷新显示
                 renderUnifiedMoments();
-                
                 showMessageBox(`已删除 ${authorName} 的动态`);
             }
         }
@@ -19531,7 +19538,7 @@ ${eventTypeSpecificInput}
             setupPlanModalEffects();
 
             // 启动AI心跳，让角色可以自主行动
-            setInterval(systemHeartbeat, 1 * 60 * 1000); // 每1分钟检查一次
+            setInterval(systemHeartbeat, 15 * 60 * 1000); // 每15分钟检查一次
 
         });
 
