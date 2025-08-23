@@ -10752,17 +10752,33 @@ ${callLogContext}
 ---
 请根据以上所有指令，直接开始书写日记正文。`;
 
+                // --- 核心修复 V3：明确定义对话者，并加入高级写作指南 ---
+                const characterName = context.character.name;
+                const userName = "他/她"; // AI需要根据用户的设定和聊天历史来判断并使用正确的第三人称
+
                 // 构建用户消息
                 const userMessage = `
                     请根据以下信息写一篇日记：
+
+                    # **写作指南 (Writing Guidelines)**
                     
-                    最近的聊天记录：
-                    ${context.recentChat.map(msg => `${msg.sender === 'user' ? '用户' : '我'}: ${msg.content}`).join('\n')}
+                    **1. 写作情境 (场景)**：
+                    不要总是假设日记是在"深夜"写的。写作的"虚拟时间"应与触发日记的聊天内容和情绪相关。可能是在办公室沉思的午后，也可能是在看到某样东西时瞬间的感慨。让场景服务于情感。
+
+                    **2. 指代用户的人称 (关键规则)**：
+                    - **主要人称 (默认)**：在日记的大部分内容中，请使用第三人称 **"他"或"她"** 来指代用户。这体现了你作为记录者，在对你们的故事进行反思和观察。
+                    - **特殊人称 (情感高点)**：当情感达到顶峰，思念或爱意满溢，内心独白强烈到仿佛在直接与对方说话时，**可以偶尔切换到第二人称"你"**。这个切换应该是一个有力的、标志着情感爆发的写作手法。
+                    - **示例**："今天他笑了，阳光很好。……（此处省略多句描述）……我多想告诉你，那一刻，**你**就是我的全世界。" (在这个例子中，大部分是第三人称，最后一句情感爆发时切换为"你")
+
+                    # **参考信息 (Context)**
+
+                    ## **最近的聊天记录 (你的名字是'${characterName}', 用户的名字是'${userName}')**
+                    ${context.recentChat.map(msg => `${msg.sender === 'user' ? userName : characterName}: ${msg.content}`).join('\n')}
                     
-                    最近的朋友圈动态：
+                    ## **你最近的朋友圈动态**
                     ${context.recentMoments.map(moment => moment.content).join('\n')}
                     
-                    最近的日记：
+                    ## **你之前的日记**
                     ${context.recentDiaries.map(diary => diary.content).join('\n')}
                 `;
 
@@ -11801,14 +11817,29 @@ const systemPrompt = `
         async function getAICallResponse(callType, isContinuation = false, userInput = '') {
             const apiSettings = loadData('api_settings');
             if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
-                return "API未配置，无法连接。";
+                return "连接失败: API未配置";
             }
             
             try {
-                const character = characters.find(c => c.id === currentChatCharacterId);
-                const linkedBooks = worldBooks.filter(wb => character.linkedWorldBookIds.includes(wb.id));
-                const worldBookContext = linkedBooks.map(wb => `[${wb.title}]\n${wb.content}`).join('\n\n');
-                const planContext = formatPlansForAI(character.id);
+                // --- 核心修复：调用 gatherAIContext 来获取所有需要的变量 ---
+                const context = gatherAIContext(currentChatCharacterId);
+                if (!context) {
+                    throw new Error("无法为通话获取角色上下文。");
+                }
+                
+                // 从 context 对象中解构出所有需要的变量
+                const {
+                    character,
+                    chatHistory,
+                    worldBookContext,
+                    recentMoments,
+                    planContext,
+                    callLogContext
+                } = context;
+
+                // 将最近的聊天记录格式化为字符串，以供 prompt 使用
+                const chatContext = chatHistory.map(m => `${m.sender === 'user' ? '用户' : character.name}: ${m.content}`).join('\n');
+                // --- 修复结束 ---
 
                 let prompt;
                 if (isContinuation) {
@@ -12512,7 +12543,8 @@ const systemPrompt = `
                 return "在想你。"; // 返回备用语
             }
 
-            const { chatHistory, worldBookContext, recentMoments } = context;
+            // --- 核心修复：在这里添加了被遗漏的 planContext 和 callLogContext ---
+            const { chatHistory, worldBookContext, recentMoments, planContext, callLogContext } = context;
 
             const systemPrompt = `
 # 指令身份
@@ -12610,8 +12642,16 @@ ${chatHistory.map(m => `${m.sender === 'user' ? '用户' : '你'}: ${m.content}`
 
         // 构建朋友圈Prompt
         function buildMomentsPrompt(character, chatContext, triggerType) {
+            // --- 核心修复：在这里调用 gatherAIContext 来获取所有需要的上下文变量 ---
+            const fullContext = gatherAIContext(character.id);
+            if (!fullContext) {
+                console.error("buildMomentsPrompt 无法获取上下文，已终止。");
+                return null; // 返回null以防止后续错误
+            }
+            const { worldBookContext, recentMoments, planContext, callLogContext } = fullContext;
+            // --- 修复结束 ---
+
             const currentTime = new Date().toLocaleString('zh-CN');
-            const worldBookContext = getWorldBookContext();
             
             let triggerDescription = '';
             if (triggerType === 'chat') {
@@ -12657,8 +12697,8 @@ ${triggerDescription}
 3.  **情感真实**: 表达有层次感的情感，而不是简单标签化的"开心"或"难过"。
 4.  **发布意图**: 思考角色发布这条动态的潜在意图：是为了记录，分享，获得你的关注，还是仅仅是自我表达？
 
-# 输出格式
-请严格按照以下JSON格式输出，不要有任何多余的文字，用[MOMENT_POST]标签包裹。
+# 输出格式 (必须严格遵守！)
+你的回复**必须且只能是**一个被 \`[MOMENT_POST]\` 标签包裹的JSON对象。**除此之外，绝对不能有任何其他文字**。
 
 [MOMENT_POST]
 {
@@ -12688,7 +12728,7 @@ ${triggerDescription}
 [触发类型]: ${triggerType}
 ---
 
-请生成一条自然、真实且充满魅力的朋友圈动态。`;
+**请严格遵照以上所有规则，直接开始生成被[MOMENT_POST]标签包裹的JSON内容，不要有任何开场白或解释。**`;
         }
 
         // 调用AI生成动态
@@ -19487,7 +19527,7 @@ ${eventTypeSpecificInput}
             setupPlanModalEffects();
 
             // 启动AI心跳，让角色可以自主行动
-            setInterval(systemHeartbeat, 5 * 60 * 1000); // 每5分钟检查一次
+            setInterval(systemHeartbeat, 1 * 60 * 1000); // 每1分钟检查一次
 
         });
 
