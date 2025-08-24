@@ -10661,30 +10661,39 @@ ${callLogContext}
                     throw new Error('API设置未配置');
                 }
 
-                // 构建系统提示词
+                // 【核心修正】在这里定义清晰、无歧义的对话者名称
+                const characterName = context.character.name;
+                const userNameForLog = "用户"; // 在日志中使用"用户"这一明确标签
+
+                // 构建系统提示词 (这是给AI的底层指令)
                 const systemPrompt = `# 指令：你现在是一个有着极强文学性、极高文学造诣的作家。你现在应该作为角色撰写一篇日记。
 
-# 1. 基础信息
-* **扮演角色**：${context.character.name}
-* **角色设定**：${context.character.persona}
-* **互动对象（用户）**：${context.character.myPersona}
-* **所在世界**：${context.worldBook}
-* **今日互动摘要**：[这里可以简要输入今天聊天的核心内容或氛围，例如："和用户进行了一场关于生命意义的严肃讨论"或"和用户开了一些轻松的玩笑"]
+1. 基础信息
+扮演角色：${context.character.name}
 
-# 2. 核心决策指令 (AI wewnętrzna analiza)
-1.  **分析角色基调**：首先，基于我的"角色设定"，深度分析我的"角色设定"，确定我的核心人格是什么，思考并确定我的**核心写作风格**是什么。从下面的"文风库"中选择1-2个最能代表我日常状态的风格作为基准。
-2.  **分析当日情境**：然后，分析"今日互动摘要"的内容和情感氛围。这次互动是深刻的、悲伤的、快乐的、还是荒诞的？是温暖、伤感、戏谑、荒诞，还是引人深思？
-3.  **动态选择风格**：将以上两点结合。为今天的日记，从"文风总库"中最终选择1-2个最恰当的文风进行组合。选择应优先保证角色的连贯性！但当互动带来强烈情绪冲击时，允许在基准风格上做出合理的、甚至是大胆的调整。
-    * **保持基调**：如果互动内容很符合我的常态，就直接使用核心写作风格。
-    * **风格微调**：如果互动引发了我不同寻常的情绪，可以在核心风格的基础上，增加或替换一个更能体现这种情绪的风格。
+角色设定：${context.character.persona}
 
-# 3. 任务要求
-* **任务**：严格基于你在上一步决策出的风格组合，以第一人称"我"的视角，写一篇关于今天与用户互动的日记。
-* **核心**：深入挖掘互动中你的内心活动、情绪波动和深刻思考。
-* **篇幅**：100-200字。
-* **格式与日期 (绝对禁止)**：你的任务只是书写日记的**正文内容**。绝对禁止在正文中包含任何日期、星期、年份。UI界面会自动处理日期，如果你写入日期会造成格式混乱和信息错误。不要有任何开场白或落款。
+互动对象（用户）：${context.character.myPersona}
 
-# 4. 文风总库 (Style Library)
+所在世界：${context.worldBook || '（无特定世界观）'}
+
+2. 核心决策指令 (AI内部思考流程)
+分析角色基调：首先，基于我的"角色设定"，深度分析我的核心人格，确定我的核心写作风格。从下面的"文风库"中选择1-2个最能代表我日常状态的风格作为基准。
+
+分析当日情境：然后，分析"今日互动摘要"的内容和情感氛围。这次互动是深刻的、悲伤的、快乐的、还是荒诞的？
+
+动态选择风格：将以上两点结合，为今天的日记从"文风总库"中最终选择1-2个最恰当的文风进行组合，优先保证角色连贯性。
+
+3. 任务要求
+任务：严格基于你在上一步决策出的风格组合，以第一人称"我"的视角，写一篇关于今天与用户互动的日记。
+
+核心：深入挖掘互动中你的内心活动、情绪波动和深刻思考。
+
+篇幅：100-200字。
+
+格式与日期 (绝对禁止)：你的任务只是书写日记的正文内容。绝对禁止在正文中包含任何日期、星期、年份。UI界面会自动处理日期。不要有任何开场白或落款。
+
+4. 文风总库 (Style Library)
 * **基础风格**：意识流、细腻感性、简洁干练、口语随性、忧郁内省
 * **文学风格**：存在主义极简、哥特式浪漫、感觉主义印象派、古典哲思、奇幻现实、都市独白、丧感文学、影视化叙事、镜头感、非虚构诗歌、散文诗
 * **中国近现代作家风格**：
@@ -10752,39 +10761,42 @@ ${callLogContext}
 余华式 (Yu Hua-esque)
 特点：以一种极度冷静和克制的笔调，讲述极度残酷或温情的故事，形成巨大的情感张力。他的语言简洁、精准、有力，像是在用钝器一下下敲打读者的心脏。早期作品冷酷到底，后期则在巨大的悲悯中展现出坚韧的生命力。
 关键词：冷静克制 暴力与温情 情感张力 简洁有力 宿命感
+`;
 
----
-请根据以上所有指令，直接开始书写日记正文。`;
-
-                // --- 核心修复 V3：明确定义对话者，并加入高级写作指南 ---
-                const characterName = context.character.name;
-                const userName = "他/她"; // AI需要根据用户的设定和聊天历史来判断并使用正确的第三人称
-
-                // 构建用户消息
+                // 构建用户消息 (这是AI需要处理的具体任务)
                 const userMessage = `
-                    请根据以下信息写一篇日记：
+写作指南 (Writing Guidelines)
+1. 写作情境 (场景)：
+不要总是假设日记是在"深夜"写的。写作的"虚拟时间"应与触发日记的聊天内容和情绪相关。
 
-                    # **写作指南 (Writing Guidelines)**
-                    
-                    **1. 写作情境 (场景)**：
-                    不要总是假设日记是在"深夜"写的。写作的"虚拟时间"应与触发日记的聊天内容和情绪相关。可能是在办公室沉思的午后，也可能是在看到某样东西时瞬间的感慨。让场景服务于情感。
+2. 关键规则：正确区分对话者 (至关重要！)
 
-                    **2. 指代用户的人称 (关键规则)**：
-                    - **主要人称 (默认)**：在日记的大部分内容中，请使用第三人称 **"他"或"她"** 来指代用户。这体现了你作为记录者，在对你们的故事进行反思和观察。
-                    - **特殊人称 (情感高点)**：当情感达到顶峰，思念或爱意满溢，内心独白强烈到仿佛在直接与对方说话时，**可以偶尔切换到第二人称"你"**。这个切换应该是一个有力的、标志着情感爆发的写作手法。
-                    - **示例**："今天他笑了，阳光很好。……（此处省略多句描述）……我多想告诉你，那一刻，**你**就是我的全世界。" (在这个例子中，大部分是第三人称，最后一句情感爆发时切换为"你")
+在下方提供的[最近的聊天记录]中：
 
-                    # **参考信息 (Context)**
+标记为 "${characterName}" 的发言，是你自己说的话。
 
-                    ## **最近的聊天记录 (你的名字是'${characterName}', 用户的名字是'${userName}')**
-                    ${context.recentChat.map(msg => `${msg.sender === 'user' ? userName : characterName}: ${msg.content}`).join('\n')}
-                    
-                    ## **你最近的朋友圈动态**
-                    ${context.recentMoments.map(moment => moment.content).join('\n')}
-                    
-                    ## **你之前的日记**
-                    ${context.recentDiaries.map(diary => diary.content).join('\n')}
-                `;
+标记为 "${userNameForLog}" 的发言，是对方说的话。
+
+写日记时，你必须从自己的视角出发，正确地回忆和描述这场对话。绝对不能把对方的话当成是自己说的。
+
+3. 指代用户的人称 (关键规则)：
+
+主要人称 (默认)：在日记的大部分内容中，请使用第三人称 "他"或"她" 来指代用户。
+
+特殊人称 (情感高点)：当情感达到顶峰，思念或爱意满溢时，可以偶尔切换到第二人称"你"。
+
+示例："今天他笑了，阳光很好。……我多想告诉你，那一刻，你就是我的全世界。"
+
+参考信息 (Context)
+最近的聊天记录 (你的名字是'${characterName}')
+${context.recentChat.map(msg => `${msg.sender === 'user' ? userNameForLog : characterName}: ${msg.content}`).join('\n')}
+
+你最近的朋友圈动态
+${context.recentMoments.map(moment => moment.content).join('\n')}
+
+你之前的日记
+${context.recentDiaries.map(diary => diary.content).join('\n')}
+`;
 
                 // 调用API生成日记
                 const isGoogleApi = apiSettings.url.includes('googleapis.com');
@@ -10792,7 +10804,7 @@ ${callLogContext}
                 let headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiSettings.key}` };
 
                 if (isGoogleApi) {
-                    // Google API 逻辑（简化版）
+                    // Google API 逻辑
                     finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/${apiSettings.model}:generateContent?key=${apiSettings.key}`;
                     headers = { 'Content-Type': 'application/json' };
                     
@@ -10810,9 +10822,6 @@ ${callLogContext}
                     requestBody = JSON.stringify({ model: apiSettings.model, messages });
                 }
 
-                // --- 探针#1：打印发送给AI的完整指令 ---
-                console.log("--- DEBUG: 发送给AI的日记指令 ---", { systemPrompt, userMessage });
-
                 const response = await fetch(finalApiUrl, {
                     method: 'POST',
                     headers: headers,
@@ -10824,10 +10833,6 @@ ${callLogContext}
                 }
 
                 const result = await response.json();
-
-                // --- 探针#2：打印从AI收到的原始回复 ---
-                console.log("--- DEBUG: 从AI收到的原始日记回复 ---", result);
-
                 let diaryContent;
 
                 if (isGoogleApi) {
@@ -10836,9 +10841,6 @@ ${callLogContext}
                     diaryContent = result.choices[0].message.content;
                 }
 
-
-
-                // 创建日记对象
                 const diary = {
                     id: Date.now().toString(),
                     content: diaryContent.trim(),
@@ -19538,7 +19540,7 @@ ${eventTypeSpecificInput}
             setupPlanModalEffects();
 
             // 启动AI心跳，让角色可以自主行动
-            setInterval(systemHeartbeat, 15 * 60 * 1000); // 每15分钟检查一次
+            setInterval(systemHeartbeat, 60 * 60 * 1000); // 每1小时检查一次
 
         });
 
