@@ -225,9 +225,13 @@
 
         /* 字体大小调整 */
         #phone-screen {
+            /* V36.0 新增：定义一个CSS变量用于自定义字体 */
+            --custom-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Noto Serif SC', 'Inter', sans-serif;
+
             font-size: 15px; /* 中 (默认) */
             transition: font-size 0.2s ease-in-out;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Noto Serif SC', 'Inter', sans-serif;
+            /* V36.0 修改：使用变量来设置字体 */
+            font-family: var(--custom-font);
         }
         #phone-screen.text-size-small {
             font-size: 13.5px; /* 小 */
@@ -7782,6 +7786,75 @@
         display: block; /* 确保它是个块级元素 */
     }
 
+    /* V33.0 新增：日记本更新辉光效果 */
+    @keyframes diary-glow-pulse {
+        0% {
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(253, 124, 159, 0.3); /* 粉红色光晕 #FD7C9F */
+            transform: translateY(0) rotate(0) scale(1);
+        }
+        50% {
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.4),
+                0 0 10px 4px rgba(253, 124, 159, 0.5); /* 光晕扩大 */
+            transform: translateY(-2px) rotate(0.5deg) scale(1.01); /* 轻微浮动 */
+        }
+        100% {
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(253, 124, 159, 0.3);
+            transform: translateY(0) rotate(0) scale(1);
+        }
+    }
+
+    .diary-book-item.new-entry {
+        animation: diary-glow-pulse 2.5s infinite ease-in-out;
+        border-color: rgba(253, 124, 159, 0.4); /* 边框也带上微光 */
+    }
+
+    /* 日间模式下的辉光适配 */
+    .light-mode .diary-book-item.new-entry {
+         animation: diary-glow-pulse-light 2.5s infinite ease-in-out;
+         border-color: rgba(187, 44, 87, 0.4); /* 粉红色光晕 */
+    }
+
+    @keyframes diary-glow-pulse-light {
+        0% {
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 0 0 0 rgba(187, 44, 87, 0.2);
+        }
+        50% {
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.2),
+                0 0 10px 4px rgba(187, 44, 87, 0.3);
+        }
+        100% {
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 0 0 0 rgba(187, 44, 87, 0.2);
+        }
+    }
+
+    /* V36.1 终极版：强制保护所有图标，确保万无一失 */
+    .fab, .fa-brands {
+        font-family: "Font Awesome 6 Brands" !important;
+        font-weight: 400;
+    }
+    .fas, .fa-solid {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 900;
+    }
+    .far, .fa-regular {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 400;
+    }
+    [class^="ri-"] {
+        font-family: "RemixIcon" !important;
+        font-weight: normal; /* RemixIcon 通常使用 normal 权重 */
+    }
+
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen dark-mode">
@@ -10714,6 +10787,8 @@ if (type === 'image') {
                     })
                     .join('\n');
                 const sharedAssetsContext = sharedAssetsContent.trim() ? sharedAssetsContent.trim() : "无";
+                // V23.0 新增：获取并格式化当前时间
+                const currentTimeString = new Date().toLocaleString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
                 const systemPrompt = `
 # 角色扮演指令
@@ -10766,6 +10841,7 @@ if (type === 'image') {
     - 如果历史记录出现 [USER_CANCELLED_CALL]，代表用户挂断了电话，你应该对此作出自然反应。
 
 # 你的记忆与素材库
+- **当前时间**: ${currentTimeString}。你必须意识到这是现在的真实时间，并让你的对话与这个时间点（例如，是早上、下午还是深夜）的氛围相匹配。
 - **你的角色设定**: ${character.persona}
 - **我（用户）的角色设定**: ${character.myPersona}
 - **我们的世界观背景**: ${worldviewContext || "无"}
@@ -11245,9 +11321,14 @@ ${moduleStyleContext || "无"}
 
 核心：深入挖掘互动中你的内心活动、情绪波动和深刻思考。
 
-篇幅：100-200字。
+篇幅：100-300字。
 
-格式与日期 (绝对禁止)：你的任务只是书写日记的正文内容。绝对禁止在正文中包含任何日期、星期、年份。UI界面会自动处理日期。不要有任何开场白或落款。
+【【格式天条 (ABSOLUTELY FORBIDDEN)】】
+- **你的唯一任务**：只输出日记的【正文内容】。
+- **【【绝对禁止！！！！】】**：在你的回复中，**绝对禁止、绝对不能、绝对不可以** 包含任何形式的【日期、时间、星期、年份】,不然我就会死。
+- **原因**：UI界面会自动添加日期，任何由你添加的日期都会造成格式严重错误。
+- **输出前最终检查**：在生成最终回复前，你必须在内部检查一遍，确保没有任何日期或时间信息。如果检查发现有，必须删除它们。
+
 
 4. 文风总库 (Style Library)
 * **基础风格**：意识流、细腻感性、简洁干练、口语随性、忧郁内省
@@ -11628,6 +11709,13 @@ ${context.recentDiaries.map(diary => diary.content).join('\n')}
                     diaryData[characterId].push(newDiaryEntry);
                     saveData('diaryData', diaryData);
                     showNotificationDot('diary'); // 【新增】显示日记红点
+                    
+                    // V33.0 新增：记录日记更新状态
+                    let updatedDiaries = loadData('updatedDiaries', []);
+                    if (!updatedDiaries.includes(characterId)) {
+                        updatedDiaries.push(characterId);
+                        saveData('updatedDiaries', updatedDiaries);
+                    }
                     
                     showMessageBox(`嘘... ${character.name} 好像刚刚写了些什么。`);
                     console.log(`【AI日记系统】：${character.name} 的新日记已保存。`);
@@ -12406,7 +12494,7 @@ const systemPrompt = `
             updateSongListUI();
         }
 
-        // 字体设置
+        // V36.0 字体与图标共存最终版
         function applyFont(url) {
             const styleId = 'custom-font-style';
             let styleElement = document.getElementById(styleId);
@@ -12415,13 +12503,23 @@ const systemPrompt = `
                 styleElement.id = styleId;
                 document.head.appendChild(styleElement);
             }
-            styleElement.innerHTML = `
-                @font-face {
-                    font-family: 'CustomFont';
-                    src: url('${url}');
-                }
-            `;
-            phoneScreen.style.fontFamily = 'CustomFont, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif';
+
+            // 【核心修改】
+            // 我们现在只更新CSS变量的值，而不是用!important去覆盖所有东西
+            if (url) {
+                // 如果有URL，就加载并应用自定义字体
+                styleElement.innerHTML = `
+                    @font-face {
+                        font-family: 'CustomFont';
+                        src: url('${url}');
+                    }
+                `;
+                document.documentElement.style.setProperty('--custom-font', `'CustomFont', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Noto Serif SC', 'Inter', sans-serif`);
+            } else {
+                // 如果URL为空，就恢复默认字体
+                styleElement.innerHTML = ''; // 清空@font-face规则
+                document.documentElement.style.setProperty('--custom-font', `-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Noto Serif SC', 'Inter', sans-serif`);
+            }
         }
 
         function setFontSize(size) {
@@ -13047,7 +13145,21 @@ const systemPrompt = `
             console.log('准备显示通知:', character.name, messagePreview);
 
             // 1. 填充应用内通知弹窗内容
-            $('#new-message-avatar').src = character.avatar || 'https://placehold.co/96x96/777/FFF?text=?';
+            // V22.0 修复：异步从IndexedDB加载通知头像
+            const notificationAvatar = $('#new-message-avatar');
+            if (character.avatar) {
+                getImageFromDB(character.avatar).then(blob => {
+                    if (blob) {
+                        notificationAvatar.src = URL.createObjectURL(blob);
+                    } else {
+                        // 如果数据库中没有找到对应的blob，也使用默认头像
+                        notificationAvatar.src = 'https://placehold.co/96x96/777/FFF?text=?';
+                    }
+                });
+            } else {
+                // 如果角色本身没有设置头像，使用默认头像
+                notificationAvatar.src = 'https://placehold.co/96x96/777/FFF?text=?';
+            }
             $('#new-message-name').textContent = character.name;
             $('#new-message-preview').textContent = messagePreview;
 
@@ -13311,7 +13423,7 @@ const systemPrompt = `
 [我们的约定]:${planContext}
 [最近通话回顾]:${callLogContext}
 [我们最近的聊天回顾]:
-${chatHistory.map(m => `${m.sender === 'user' ? '用户' : '你'}: ${m.content}`).join('\n')}
+${chatHistory.map(m => `${m.sender === 'user' ? '[对方]' : '[我]'}: ${m.content}`).join('\n')}
 ---
 `;
 
@@ -13592,6 +13704,41 @@ ${triggerDescription}
             }
         }
 
+        // V30.1 升级：智能判断大图弹窗的图片来源
+        function openMomentImageWithId(momentId) {
+            let momentToOpen = null;
+            // 遍历所有作者的动态，找到匹配的moment对象
+            for (const authorId in momentsData) {
+                const foundMoment = momentsData[authorId].find(m => m.id === momentId);
+                if (foundMoment) {
+                    momentToOpen = foundMoment;
+                    break;
+                }
+            }
+
+            if (!momentToOpen || !momentToOpen.image) {
+                return showMessageBox('该动态没有图片或图片信息已丢失。');
+            }
+
+            // 智能判断是外部链接还是数据库ID
+            if (typeof momentToOpen.image === 'string' && momentToOpen.image.startsWith('http')) {
+                // 如果是http链接，直接用它打开弹窗
+                openMomentImage(momentToOpen.image, momentToOpen.image_desc || '动态配图');
+            } else {
+                // 否则，认为是ID，从数据库获取后再打开弹窗
+                getImageFromDB(momentToOpen.image).then(blob => {
+                    if (blob) {
+                        const objectURL = URL.createObjectURL(blob);
+                        openMomentImage(objectURL, momentToOpen.image_desc || '动态配图');
+                    } else {
+                        showMessageBox('无法从数据库加载图片。');
+                    }
+                }).catch(error => {
+                    console.error('加载动态大图失败:', error);
+                    showMessageBox('加载图片失败。');
+                });
+            }
+        }
 
 
         // 测试图片URL生成功能 - 用于调试
@@ -15287,7 +15434,7 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                         <div class="flex-grow">
                             <p class="font-bold text-blue-400">${author.name}</p>
                             <p class="mt-2 whitespace-pre-wrap">${moment.content}</p>
-                            ${moment.image ? `<div class="moment-image mt-3 cursor-pointer hover:opacity-90 transition-opacity" id="moment-image-${moment.id}" onclick="openMomentImage('${moment.image}', '${moment.image_desc || '动态配图'}')" title="点击查看大图"></div>` : ''}
+                            ${moment.image ? `<div class="moment-image mt-3 cursor-pointer hover:opacity-90 transition-opacity" id="moment-image-${moment.id}" onclick="openMomentImageWithId('${moment.id}')" title="点击查看大图"></div>` : ''}
                             
                             <!-- 点赞和评论统计 -->
                             <div class="mt-3 flex items-center space-x-4 text-sm text-gray-500">
@@ -15357,17 +15504,27 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                     }
                 }
                 
-                // 异步加载动态配图
+                // V30.1 升级：智能判断动态配图来源
                 if (moment.image) {
-                    getImageFromDB(moment.image).then(blob => {
-                        if (blob) {
-                            const imageElement = $(`#moment-image-${moment.id}`);
-                            if (imageElement) {
-                                const objectURL = URL.createObjectURL(blob);
-                                imageElement.style.backgroundImage = `url(${objectURL})`;
-                            }
+                    const imageElement = document.querySelector(`#moment-image-${moment.id}`);
+                    if (imageElement) {
+                        // 判断是外部链接还是数据库ID
+                        if (typeof moment.image === 'string' && moment.image.startsWith('http')) {
+                            // 如果是http链接，直接使用
+                            imageElement.style.backgroundImage = `url(${moment.image})`;
+                        } else {
+                            // 否则，认为是ID，从数据库获取
+                            getImageFromDB(moment.image).then(blob => {
+                                if (blob) {
+                                    const objectURL = URL.createObjectURL(blob);
+                                    imageElement.style.backgroundImage = `url(${objectURL})`;
+                                } else {
+                                    // 如果数据库找不到，显示加载失败
+                                    imageElement.innerHTML = `<div class="flex items-center justify-center h-full bg-gray-800 text-gray-400 text-xs text-center p-2 rounded-lg">无法从数据库加载图片</div>`;
+                                }
+                            });
                         }
-                    });
+                    }
                 }
             });
             
@@ -15543,8 +15700,13 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
                     });
                 }
 
+                // V33.0 新增：检查并应用辉光效果
+                const updatedDiaries = loadData('updatedDiaries', []);
+                const hasNewEntry = updatedDiaries.includes(id);
+                const newEntryClass = hasNewEntry ? ' new-entry' : '';
+
                 return `
-                    <div class="diary-book-item" style="${itemStyle}" id="${uniqueBookId}" onclick="openDiaryBook('${id}')">
+                    <div class="diary-book-item${newEntryClass}" style="${itemStyle}" id="${uniqueBookId}" onclick="openDiaryBook('${id}')">
                         <span class="diary-book-item-title" onclick="editDiaryTitle(event, '${type}', '${id}')">${title}</span>
                         <span class="diary-book-item-author">${author}</span>
                         <button class="diary-cover-edit-btn" onclick="changeDiaryCover(event, '${id}')"><i class="ri-image-edit-line"></i></button>
@@ -15594,6 +15756,18 @@ ${moment.image ? `配图描述: ${moment.image_desc}` : ''}
 
         // [AI, 请用这个版本完整替换现有的 openDiaryBook 函数]
         function openDiaryBook(ownerId) {
+            // V33.0 新增：打开日记本时，移除更新提示
+            let updatedDiaries = loadData('updatedDiaries', []);
+            if (updatedDiaries.includes(ownerId)) {
+                updatedDiaries = updatedDiaries.filter(id => id !== ownerId);
+                saveData('updatedDiaries', updatedDiaries);
+                // 实时移除书架上对应日记本的辉光class
+                const bookOnShelf = document.querySelector(`.diary-book-item[onclick="openDiaryBook('${ownerId}')"]`);
+                if (bookOnShelf) {
+                    bookOnShelf.classList.remove('new-entry');
+                }
+            }
+            
             let ownerName;
             const addPageBtn = $('#add-page-btn');
             const prevPageBtn = $('#prev-page-btn');
@@ -17637,12 +17811,29 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                 tempMomentImage = null;
                 $('#post-moment-modal').classList.remove('visible');
             });
-            $('#confirm-post-moment-btn').addEventListener('click', () => {
-                // 用户只能发布自己的动态
-                const authorId = 'user';
+            // V30.2 修复用户本地上传图片逻辑
+            $('#confirm-post-moment-btn').addEventListener('click', async () => {
+                const authorId = 'user'; // 用户只能发布自己的动态
                 const content = $('#moment-content-input').value.trim();
 
-                if (!content) return showMessageBox("动态内容不能为空");
+                if (!content && !tempMomentImage) {
+                    return showMessageBox("动态内容和图片至少要有一个");
+                }
+
+                // --- 核心修复逻辑开始 ---
+                let imageId = null;
+                // 如果有临时图片文件(来自本地上传)，则先将其保存到数据库
+                if (tempMomentImage) {
+                    try {
+                        // 使用我们已有的图片处理和保存函数，它会返回一个ID
+                        imageId = await handleImageUpload({ files: [tempMomentImage] }, null, `moment_user_${Date.now()}`);
+                    } catch (error) {
+                        console.error("保存用户动态图片到DB时失败:", error);
+                        showMessageBox("图片保存失败，请重试。");
+                        return; // 保存失败则终止发布
+                    }
+                }
+                // --- 核心修复逻辑结束 ---
 
                 if (!momentsData[authorId]) {
                     momentsData[authorId] = [];
@@ -17651,24 +17842,23 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                     id: `moment_${Date.now()}`,
                     timestamp: Date.now(),
                     content: content,
-                    image: tempMomentImage, // 可能为 null
-                    authorId: authorId, // 明确指定作者ID
-                    tags: "#日常 #分享", // 添加默认标签
+                    image: imageId, // 存储的是从数据库返回的ID
+                    authorId: authorId,
                     likes: { count: 0, users: [] },
                     comments: []
                 };
+                
                 momentsData[authorId].push(newMoment);
                 saveData('momentsData', momentsData);
 
-                // [新代码开始] - 触发AI角色智能评论系统
+                // 触发AI角色的智能评论
                 triggerAICharacterComments(newMoment);
-                // [新代码结束]
 
                 renderUnifiedMoments();
                 $('#post-moment-modal').classList.remove('visible');
                 showMessageBox('动态发布成功！');
                 
-                // [新代码] - 清空动态输入框和图片
+                // 重置输入框和临时图片
                 $('#moment-content-input').value = '';
                 $('#moment-image-label').textContent = '添加图片 (可选)';
                 tempMomentImage = null;
