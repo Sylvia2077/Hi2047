@@ -10530,7 +10530,15 @@ if (type === 'image') {
             if (type === 'image') {
                 messageBubble.className = `chat-message ${senderClass} image-message`;
                 const img = document.createElement('img');
-                img.src = content;
+                // **核心修复**：我们现在传递的是imageId，需要从数据库异步获取图片Blob
+                getImageFromDB(content).then(blob => {
+                    if (blob) {
+                        img.src = URL.createObjectURL(blob);
+                    } else {
+                        img.src = 'https://placehold.co/150x200/ff0000/ffffff?text=Image+Error'; // 图片加载失败的占位符
+                        console.error('无法从数据库加载图片ID:', content);
+                    }
+                });
                 messageBubble.appendChild(img);
             }
             // 表情包逻辑现在是独立的，不再嵌套
@@ -10873,38 +10881,46 @@ ${moduleStyleContext || "无"}
                 } else { // OpenAI-Compatible
                     finalApiUrl = `${apiSettings.url.replace(/\/+$/, '')}/chat/completions`;
                     const messages = [{ role: "system", content: systemPrompt }];
-                    // 1. 移除 .filter(...) 过滤器
-                    historyForApi.forEach(msg => {
-                        let role;
-                        let content = msg.content;
-                        let messageParts = []; // 用于处理图文混合消息
 
-                        // 2. 修改循环逻辑以包含系统消息
-                        if (msg.sender === 'user') {
-                            role = 'user';
-                            content = msg.content;
-                        } else if (msg.sender === 'ai') {
-                            role = 'assistant';
-                            content = msg.content;
-                        } else if (msg.sender === 'system') {
-                            // 将系统消息包装成用户消息，让AI能理解这是一个事件
-                            role = 'user';
-                            content = `[系统提示: ${msg.content}]`; 
-                        }
-
-                        // 3. 确保有合法的角色才添加到历史记录中
-                        if (role) {
-                            if (msg.type === 'image') {
-                                // 构建图文消息
-                                messageParts.push({ type: 'text', text: '我发了一张图片，请你根据图片内容进行回应。' });
-                                messageParts.push({ type: 'image_url', image_url: { url: msg.content } });
-                                messages.push({ role: 'user', content: messageParts });
+                    // **V12.1 核心修复：异步处理聊天记录，正确打包图片**
+                    const processedHistory = await Promise.all(historyForApi.map(async (msg) => {
+                        let role = msg.sender === 'user' ? 'user' : 'assistant';
+                        
+                        // 如果是用户发送的图片消息
+                        if (msg.sender === 'user' && msg.type === 'image') {
+                            const imageBlob = await getImageFromDB(msg.content); // 从数据库异步获取图片
+                            if (imageBlob) {
+                                const base64Image = await blobToBase64(imageBlob); // 用新工具打包图片
+                                // 返回API要求的标准图文格式
+                                return {
+                                    role: 'user',
+                                    content: [
+                                        { type: 'text', text: '[用户发送了一张图片，请你对此进行回应]' },
+                                        { type: 'image_url', image_url: { url: base64Image } }
+                                    ]
+                                };
                             } else {
-                                // 构建纯文本或其他类型的消息
-                                messages.push({ role: role, content: content });
+                                // 如果图片加载失败，只发送一条文本消息
+                                return { role: 'user', content: '[用户发送了一张图片，但图片已丢失]' };
                             }
                         }
-                    });
+                        
+                        // 处理其他所有类型的文本消息
+                        let content = msg.content;
+                        if (msg.sender === 'system') {
+                            role = 'user';
+                            content = `[系统提示: ${msg.content}]`;
+                        }
+                        
+                        return { role, content };
+                    }));
+
+                    messages.push(...processedHistory);
+                    
+                    // 将最后的用户消息（如果是文本）也加入
+                    if (typeof lastUserMessage === 'string') {
+                        messages.push({ role: 'user', content: lastUserMessage });
+                    }
                     
                     // ========== 调试代码 START ==========
                     console.log("=============== AI 记忆注入检查 START ===============");
@@ -11796,7 +11812,7 @@ ${context.recentDiaries.map(diary => diary.content).join('\n')}
          * @param {object} moment - 需要被评论的动态对象。
          * @param {object} character - 发表评论的角色对象。
          */
-        async function generateAndAddAIComment(moment, character) {
+         async function generateAndAddAIComment(moment, character) {
             const apiSettings = loadData('api_settings');
             if (!apiSettings || !apiSettings.url || !apiSettings.key || !apiSettings.model) {
                 console.warn(`【AI评论系统】：API未配置，角色 ${character.name} 无法评论。`);
@@ -19550,7 +19566,6 @@ ${isReversed ? '🔄 逆位' : '✅ 正位'}
                         const isNewSender = chatHistories[currentChatCharacterId]?.history.length === 0 || chatHistories[currentChatCharacterId].history.slice(-1)[0].sender !== 'user';
                         const timestamp = Date.now();
                         appendMessage(imageId, 'user', 'image', true, timestamp, isNewSender);
-                        await getAIResponse({ content: imageId, type: 'image' });
                     }
                     toggleFeaturesPanel();
                     e.target.value = '';
@@ -21026,6 +21041,19 @@ ${eventTypeSpecificInput}
             });
         }
 
+    // --- V12.1 新增：图片文件转Base64辅助函数 ---
+    function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // reader.result 包含 "data:image/jpeg;base64," 前缀，正是API需要的格式
+                resolve(reader.result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+    
     </script>
 </body>
 </html>
