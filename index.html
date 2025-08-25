@@ -10530,15 +10530,26 @@ if (type === 'image') {
             if (type === 'image') {
                 messageBubble.className = `chat-message ${senderClass} image-message`;
                 const img = document.createElement('img');
-                // **核心修复**：我们现在传递的是imageId，需要从数据库异步获取图片Blob
-                getImageFromDB(content).then(blob => {
-                    if (blob) {
-                        img.src = URL.createObjectURL(blob);
-                    } else {
-                        img.src = 'https://placehold.co/150x200/ff0000/ffffff?text=Image+Error'; // 图片加载失败的占位符
-                        console.error('无法从数据库加载图片ID:', content);
-                    }
-                });
+                
+                // --- 核心修复：智能判断图片来源 ---
+                // 如果 content 是一个 data URL (画板) 或 http 链接，直接使用
+                if (content.startsWith('data:image') || content.startsWith('http')) {
+                    img.src = content;
+                } 
+                // 否则，认为它是一个数据库ID (聊天识图上传的本地图片)
+                else {
+                    getImageFromDB(content).then(blob => {
+                        if (blob) {
+                            img.src = URL.createObjectURL(blob);
+                        } else {
+                            // 如果数据库中也找不到，显示错误占位符
+                            img.src = 'https://placehold.co/150x200/ff0000/ffffff?text=Image+Error';
+                            console.error('无法从数据库加载图片ID:', content);
+                        }
+                    });
+                }
+                // --- 修复结束 ---
+                
                 messageBubble.appendChild(img);
             }
             // 表情包逻辑现在是独立的，不再嵌套
